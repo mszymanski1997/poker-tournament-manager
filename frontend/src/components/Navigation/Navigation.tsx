@@ -4,7 +4,7 @@ import MobileNav from './Mobile/MobileNav';
 import { useState, useEffect } from 'react';
 
 const Navigation = () => {
-	const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+	const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 600);
 
 	useEffect(() => {
 		const handleResize = () => setIsMobile(window.innerWidth <= 600);
