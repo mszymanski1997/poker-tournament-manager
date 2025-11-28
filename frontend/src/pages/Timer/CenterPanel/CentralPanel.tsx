@@ -1,4 +1,5 @@
 import styles from './CentralPanel.module.scss';
+import Button from '../../../components/shared/Button/Button';
 
 const CentralPanel = () => {
 	return (
@@ -14,14 +15,14 @@ const CentralPanel = () => {
 			</div>
 
 			<div className={styles.timerButtons}>
-				<button>PR</button>
-				<button>PL</button>
-				<button>NX</button>
+				<Button>PR</Button>
+				<Button>PL</Button>
+				<Button>NX</Button>
 			</div>
 
 			<div className={styles.settingsButtons}>
-				<button>Load settings</button>
-				<button>Custom settings</button>
+				<Button big>Load settings</Button>
+				<Button big>Custom settings</Button>
 			</div>
 		</div>
 	);

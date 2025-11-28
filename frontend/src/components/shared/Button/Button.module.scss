@@ -1,0 +1,28 @@
+@import '../../../colors.scss';
+
+button {
+	padding: 1rem 2rem;
+	border: 1px solid $border;
+	border-radius: 14px;
+	background: #fff;
+	font-size: 1.4rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: 0.15s ease;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+
+	&:hover {
+		background: #f0f0f0;
+		transform: translateY(-2px);
+	}
+
+	&:active {
+		transform: scale(0.97);
+	}
+}
+
+.big {
+	padding: 1rem 2.4rem;
+	font-size: 1.2rem;
+	font-weight: 500;
+}
