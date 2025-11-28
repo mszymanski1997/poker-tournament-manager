@@ -2,7 +2,11 @@ import styles from './CentralPanel.module.scss';
 import Button from '../../../components/shared/Button/Button';
 import { MdPlayArrow, MdSkipPrevious, MdSkipNext } from 'react-icons/md';
 
-const CentralPanel = () => {
+type CentralPanelProps = {
+	onOpenSettings: () => void;
+};
+
+const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 	return (
 		<div className={styles.container}>
 			<p className={styles.time}>25:00</p>
@@ -29,7 +33,9 @@ const CentralPanel = () => {
 
 			<div className={styles.settingsButtons}>
 				<Button big>Load settings</Button>
-				<Button big>Custom settings</Button>
+				<Button big onClick={onOpenSettings}>
+					Custom settings
+				</Button>
 			</div>
 		</div>
 	);

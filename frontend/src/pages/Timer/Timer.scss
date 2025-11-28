@@ -24,7 +24,7 @@
 		li {
 			display: flex;
 			flex-direction: column;
-            gap: 0.3rem;
+			gap: 0.3rem;
 			font-weight: bold;
 			font-size: 1.5rem;
 
@@ -50,4 +50,8 @@
 	.rightBar {
 		border-left: 2px solid #a6a6a6;
 	}
+}
+
+.test {
+	font-size: 2rem;
 }
