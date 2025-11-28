@@ -1,5 +1,6 @@
 import styles from './CentralPanel.module.scss';
 import Button from '../../../components/shared/Button/Button';
+import { MdPlayArrow, MdSkipPrevious, MdSkipNext } from 'react-icons/md';
 
 const CentralPanel = () => {
 	return (
@@ -15,9 +16,15 @@ const CentralPanel = () => {
 			</div>
 
 			<div className={styles.timerButtons}>
-				<Button>PR</Button>
-				<Button>PL</Button>
-				<Button>NX</Button>
+				<Button>
+					<MdSkipPrevious />
+				</Button>
+				<Button>
+					<MdPlayArrow />
+				</Button>
+				<Button>
+					<MdSkipNext />
+				</Button>
 			</div>
 
 			<div className={styles.settingsButtons}>
