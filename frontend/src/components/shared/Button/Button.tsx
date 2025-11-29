@@ -6,9 +6,9 @@ type ButtonProps = {
 	children: ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ big, children, ...props }: ButtonProps) => {
+const Button = ({ big, children, type = 'button', ...props }: ButtonProps) => {
 	return (
-		<button className={big ? styles.big : ''} {...props}>
+		<button className={big ? styles.big : ''} type={type} {...props}>
 			{children}
 		</button>
 	);

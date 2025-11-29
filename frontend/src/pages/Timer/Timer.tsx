@@ -3,6 +3,7 @@ import RightBar from './RightBar';
 import CentralPanel from './CenterPanel/CentralPanel';
 import { useState } from 'react';
 import Modal from '../../components/shared/Modal/Modal';
+import Form from '../../components/shared/Form/Form';
 
 const Timer = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -14,12 +15,7 @@ const Timer = () => {
 			<RightBar />
 
 			<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-				<p className='test'>
-					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione
-					architecto harum est nobis neque expedita officiis qui illo unde
-					corporis vitae perspiciatis tempora, veniam repudiandae suscipit alias
-					assumenda animi earum!{' '}
-				</p>
+				<Form title='Custom Settings' />
 			</Modal>
 		</div>
 	);

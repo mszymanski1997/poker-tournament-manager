@@ -7,7 +7,7 @@ const RightBar = () => {
 				</li>
 
 				<li>
-					Players-In: <span>0</span>
+					Players-In: <span>7/7</span>
 				</li>
 
 				<li>
