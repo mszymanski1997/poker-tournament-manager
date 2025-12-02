@@ -1,12 +1,27 @@
 import styles from './Form.module.scss';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
+import { useEffect, useState } from 'react';
 
 type FormProps = {
 	title: 'Custom Settings' | 'Save Settings';
 };
 
+type SettingItem = {
+	id: string;
+	type: 'blind' | 'break';
+};
+
 const Form = ({ title }: FormProps) => {
+	const [settingsInputs, setSettingsInputs] = useState<SettingItem[]>([
+		{ id: crypto.randomUUID(), type: 'blind' },
+		{ id: crypto.randomUUID(), type: 'blind' },
+	]);
+
+	useEffect(() => {
+		console.log('settingsInputs changed:', settingsInputs);
+	}, [settingsInputs]);
+
 	return (
 		<form className={styles.form}>
 			<h2 className={styles.title}>{title}</h2>
@@ -25,22 +40,63 @@ const Form = ({ title }: FormProps) => {
 
 			<h2 className={styles.subtitle}>Blinds Settings</h2>
 
-			<div className={styles.blindsSettings}>
-				<Input text='Big Blind:' id='big-blind' />
-				<Input text='Small Blind:' id='small-blind' />
-				<Input text='Ante:' id='ante' />
-				<Input text='Duration:' id='duration' />
-				<Button className={styles.xButton}>X</Button>
-			</div>
-
-			<div className={styles.breakSettings}>
-				<Input text='Break Duration:' id='break-duration' />
-				<Button className={styles.xButton}>X</Button>
-			</div>
+			{settingsInputs.map((setting) => {
+				if (setting.type === 'blind') {
+					return (
+						<div
+							className={styles.blindsSettings}
+							key={setting.id}
+							id={`settings-${setting.id}`}
+						>
+							<Input text='Big Blind:' id={`big-blind-${setting.id}`} />
+							<Input text='Small Blind:' id={`small-blind-${setting.id}`} />
+							<Input text='Ante:' id={`ante-${setting.id}`} />
+							<Input text='Duration:' id={`duration-${setting.id}`} />
+							<Button className={styles.xButton}>X</Button>
+						</div>
+					);
+				} else {
+					return (
+						<div
+							className={styles.breakSettings}
+							key={setting.id}
+							id={`settings-${setting.id}`}
+						>
+							<Input
+								text='Break Duration:'
+								id={`break-duration-${setting.id}`}
+							/>
+							<Button className={styles.xButton}>X</Button>
+						</div>
+					);
+				}
+			})}
 
 			<div className={styles.buttons}>
-				<Button big>Add Blind</Button>
-				<Button big>Add Break</Button>
+				<Button
+					big
+					onClick={() => {
+						setSettingsInputs((prev) => [
+							...prev,
+							{ id: crypto.randomUUID(), type: 'blind' },
+						]);
+					}}
+				>
+					Add Blind
+				</Button>
+
+				<Button
+					big
+					onClick={() => {
+						setSettingsInputs((prev) => [
+							...prev,
+							{ id: crypto.randomUUID(), type: 'break' },
+						]);
+					}}
+				>
+					Add Break
+				</Button>
+
 				<Button big>Save</Button>
 			</div>
 		</form>
