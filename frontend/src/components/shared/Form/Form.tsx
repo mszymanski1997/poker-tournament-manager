@@ -15,8 +15,11 @@ type SettingItem = {
 const Form = ({ title }: FormProps) => {
 	const [settingsInputs, setSettingsInputs] = useState<SettingItem[]>([
 		{ id: crypto.randomUUID(), type: 'blind' },
-		{ id: crypto.randomUUID(), type: 'blind' },
 	]);
+
+	const removeSettings = (id: string) => {
+		setSettingsInputs(settingsInputs.filter((setting) => setting.id !== id));
+	};
 
 	useEffect(() => {
 		console.log('settingsInputs changed:', settingsInputs);
@@ -52,7 +55,12 @@ const Form = ({ title }: FormProps) => {
 							<Input text='Small Blind:' id={`small-blind-${setting.id}`} />
 							<Input text='Ante:' id={`ante-${setting.id}`} />
 							<Input text='Duration:' id={`duration-${setting.id}`} />
-							<Button className={styles.xButton}>X</Button>
+							<Button
+								className={styles.xButton}
+								onClick={() => removeSettings(setting.id)}
+							>
+								X
+							</Button>
 						</div>
 					);
 				} else {
@@ -66,7 +74,12 @@ const Form = ({ title }: FormProps) => {
 								text='Break Duration:'
 								id={`break-duration-${setting.id}`}
 							/>
-							<Button className={styles.xButton}>X</Button>
+							<Button
+								className={styles.xButton}
+								onClick={() => removeSettings(setting.id)}
+							>
+								X
+							</Button>
 						</div>
 					);
 				}
