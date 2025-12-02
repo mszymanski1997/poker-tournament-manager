@@ -88,6 +88,11 @@
 		width: 100%;
 		display: flex;
 		justify-content: center;
+		gap: 1.5rem;
+
+		button {
+			align-self: flex-end;
+		}
 
 		label {
 			width: 100%;

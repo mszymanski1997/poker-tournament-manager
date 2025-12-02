@@ -1,5 +1,6 @@
 import styles from './Form.module.scss';
 import Button from '../Button/Button';
+import Input from '../Input/Input';
 
 type FormProps = {
 	title: 'Custom Settings' | 'Save Settings';
@@ -9,58 +10,32 @@ const Form = ({ title }: FormProps) => {
 	return (
 		<form className={styles.form}>
 			<h2 className={styles.title}>{title}</h2>
+
 			<div className={styles.separator}>
-				<label>
-					<span>Starting stack:</span>
-					<input type='number' min='0' />
-				</label>
-				<label>
-					<span>Buy-In value:</span>
-					<input type='number' min='0' />
-				</label>
+				<Input text='Starting stack' id='starting-stack' />
+				<Input text='Buy-In value:' id='buy-in-value' />
 			</div>
+
 			<div className={styles.separator}>
-				<label>
-					<span>Buy-ins:</span>
-					<input type='number' min='0' />
-				</label>
-				<label>
-					<span>Rebuys:</span>
-					<input type='number' min='0' />
-				</label>
+				<Input text='Buy-ins:' id='buy-ins' />
+				<Input text='Rebuys:' id='rebuys' />
 			</div>
-			<label>
-				<span>Players-In:</span>
-				<input type='number' min='0' />
-			</label>
+
+			<Input text='Players-In:' id='players-in' />
 
 			<h2 className={styles.subtitle}>Blinds Settings</h2>
 
 			<div className={styles.blindsSettings}>
-				<label>
-					<span>Big Blind:</span>
-					<input type='number' min='0' />
-				</label>
-				<label>
-					<span>Small Blind:</span>
-					<input type='number' min='0' />
-				</label>
-				<label>
-					<span>Ante:</span>
-					<input type='number' min='0' />
-				</label>
-				<label>
-					<span>Duration:</span>
-					<input type='number' min='0' />
-				</label>
+				<Input text='Big Blind:' id='big-blind' />
+				<Input text='Small Blind:' id='small-blind' />
+				<Input text='Ante:' id='ante' />
+				<Input text='Duration:' id='duration' />
 				<Button className={styles.xButton}>X</Button>
 			</div>
 
 			<div className={styles.breakSettings}>
-				<label>
-					<span>Break Duration:</span>
-					<input type='number' min='0' />
-				</label>
+				<Input text='Break Duration:' id='break-duration' />
+				<Button className={styles.xButton}>X</Button>
 			</div>
 
 			<div className={styles.buttons}>
