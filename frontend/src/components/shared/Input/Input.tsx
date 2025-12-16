@@ -2,14 +2,14 @@ import type { InputHTMLAttributes } from 'react';
 import styles from './Input.module.scss';
 
 type InputProps = {
-	text: string;
+	label: string;
 	id: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const Input = ({ text, id, type = 'number', ...props }: InputProps) => {
+const Input = ({ label, id, type = 'number', ...props }: InputProps) => {
 	return (
 		<label htmlFor={id} className={styles.label}>
-			<span>{text}</span>
+			<span>{label}</span>
 			<input
 				type={type}
 				min='0'

@@ -32,8 +32,8 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 			</div>
 
 			<div className={styles.settingsButtons}>
-				<Button big>Load settings</Button>
-				<Button big onClick={onOpenSettings}>
+				<Button size='big'>Load settings</Button>
+				<Button size='big' onClick={onOpenSettings}>
 					Custom settings
 				</Button>
 			</div>

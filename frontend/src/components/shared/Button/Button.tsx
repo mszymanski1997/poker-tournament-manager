@@ -4,11 +4,12 @@ import styles from './Button.module.scss';
 type ButtonProps = {
 	big?: boolean;
 	children: ReactNode;
+	size?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ big, children, type = 'button', ...props }: ButtonProps) => {
+const Button = ({ size, children, type = 'button', ...props }: ButtonProps) => {
 	return (
-		<button className={big ? styles.big : ''} type={type} {...props}>
+		<button className={size === 'big' ? styles.big : ''} type={type} {...props}>
 			{children}
 		</button>
 	);
