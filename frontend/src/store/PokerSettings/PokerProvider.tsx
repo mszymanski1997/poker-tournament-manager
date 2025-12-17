@@ -1,6 +1,6 @@
 import { PokerContext } from './PokerContext';
 import { type GameSettings } from './types';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const [settings, setSettings] = useState<GameSettings>({
@@ -13,6 +13,10 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		totalChips: '-',
 		totalMoney: '-',
 	});
+
+	useEffect(() => {
+		console.log(settings);
+	}, [settings]);
 
 	const setStartingStack = (stack: number) => {
 		setSettings((prev) => ({ ...prev, startingStack: stack }));

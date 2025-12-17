@@ -2,6 +2,7 @@ import styles from './Form.module.scss';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import { useEffect, useRef, useState } from 'react';
+import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
 
 type FormProps = {
 	title: 'Custom Settings' | 'Save Settings';
@@ -13,6 +14,15 @@ type SettingItem = {
 };
 
 const Form = ({ title }: FormProps) => {
+	const {
+		setStartingStack,
+		setBuyInValue,
+		setBuyInsCount,
+		setPlayersInCount,
+		setRebuysCount,
+		settings,
+	} = usePokerSettings();
+
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const [settingsInputs, setSettingsInputs] = useState<SettingItem[]>([
@@ -44,16 +54,41 @@ const Form = ({ title }: FormProps) => {
 				<h2 className={styles.title}>{title}</h2>
 
 				<div className={styles.separator}>
-					<Input label='Starting stack' id='starting-stack' />
-					<Input label='Buy-In value:' id='buy-in-value' />
+					<Input
+						label='Starting stack'
+						id='starting-stack'
+						onChange={(e) => setStartingStack(+e.target.value)}
+						value={settings.startingStack}
+					/>
+					<Input
+						label='Buy-In value:'
+						id='buy-in-value'
+						onChange={(e) => setBuyInValue(+e.target.value)}
+						value={settings.buyInValue}
+					/>
 				</div>
 
 				<div className={styles.separator}>
-					<Input label='Buy-ins:' id='buy-ins' />
-					<Input label='Rebuys:' id='rebuys' />
+					<Input
+						label='Buy-ins:'
+						id='buy-ins'
+						onChange={(e) => setBuyInsCount(+e.target.value)}
+						value={settings.buyIns}
+					/>
+					<Input
+						label='Rebuys:'
+						id='rebuys'
+						onChange={(e) => setRebuysCount(+e.target.value)}
+						value={settings.rebuys}
+					/>
 				</div>
 
-				<Input label='Players-In:' id='players-in' />
+				<Input
+					label='Players-In:'
+					id='players-in'
+					onChange={(e) => setPlayersInCount(+e.target.value)}
+					value={settings.playersIn}
+				/>
 
 				<h2 className={styles.subtitle}>Blinds Settings</h2>
 
