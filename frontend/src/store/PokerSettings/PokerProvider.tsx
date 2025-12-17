@@ -1,29 +1,6 @@
-import { createContext, useState, type ReactNode } from 'react';
-
-type GameSettings = {
-	// basic input data
-	startingStack: number;
-	buyInValue: number;
-	buyIns: number;
-	rebuys: number;
-	playersIn: number;
-
-	// calculated data
-	averageStack: number;
-	totalChips: number;
-	totalMoney: number;
-};
-
-type PokerContextSettings = {
-	settings: GameSettings;
-	setStartingStack: (count: number) => void;
-	setBuyInValue: (value: number) => void;
-	setBuyInsCount: (count: number) => void;
-	setRebuysCount: (count: number) => void;
-	setPlayersInCount: (count: number) => void;
-};
-
-const PokerContext = createContext<PokerContextSettings | undefined>(undefined);
+import { PokerContext } from './PokerContext';
+import { type GameSettings } from './types';
+import { useState, type ReactNode } from 'react';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const [settings, setSettings] = useState<GameSettings>({

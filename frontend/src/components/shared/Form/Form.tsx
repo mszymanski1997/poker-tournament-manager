@@ -73,7 +73,7 @@ const Form = ({ title }: FormProps) => {
 									className={styles.xButton}
 									onClick={() => removeSettings(setting.id)}
 								>
-									label
+									X
 								</Button>
 							</div>
 						);
