@@ -57,13 +57,14 @@ const Form = ({ title }: FormProps) => {
 					<Input
 						label='Starting stack'
 						id='starting-stack'
-						onChange={(e) => setStartingStack(+e.target.value)}
+						setSetting={setStartingStack}
+						minValue={1}
 						value={settings.startingStack}
 					/>
 					<Input
 						label='Buy-In value:'
 						id='buy-in-value'
-						onChange={(e) => setBuyInValue(+e.target.value)}
+						setSetting={setBuyInValue}
 						value={settings.buyInValue}
 					/>
 				</div>
@@ -72,13 +73,13 @@ const Form = ({ title }: FormProps) => {
 					<Input
 						label='Buy-ins:'
 						id='buy-ins'
-						onChange={(e) => setBuyInsCount(+e.target.value)}
+						setSetting={setBuyInsCount}
 						value={settings.buyIns}
 					/>
 					<Input
 						label='Rebuys:'
 						id='rebuys'
-						onChange={(e) => setRebuysCount(+e.target.value)}
+						setSetting={setRebuysCount}
 						value={settings.rebuys}
 					/>
 				</div>
@@ -86,7 +87,7 @@ const Form = ({ title }: FormProps) => {
 				<Input
 					label='Players-In:'
 					id='players-in'
-					onChange={(e) => setPlayersInCount(+e.target.value)}
+					setSetting={setPlayersInCount}
 					value={settings.playersIn}
 				/>
 

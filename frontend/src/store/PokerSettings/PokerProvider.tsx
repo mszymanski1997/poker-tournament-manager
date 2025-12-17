@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const [settings, setSettings] = useState<GameSettings>({
-		startingStack: 2500,
+		startingStack: 0,
 		buyInValue: 0,
 		buyIns: 0,
 		rebuys: 0,
