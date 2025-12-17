@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { PokerContext } from './PokerContext';
 
-export const usePoker = () => {
+export const usePokerSettings = () => {
 	const context = useContext(PokerContext);
 
 	if (!context) {

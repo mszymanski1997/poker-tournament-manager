@@ -7,9 +7,9 @@ export type GameSettings = {
 	playersIn: number;
 
 	// calculated data
-	averageStack: number;
-	totalChips: number;
-	totalMoney: number;
+	averageStack: number | '-';
+	totalChips: number | '-';
+	totalMoney: number | '-';
 };
 
 export type PokerContextSettings = {

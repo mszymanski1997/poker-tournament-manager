@@ -5,13 +5,13 @@ import { useState, type ReactNode } from 'react';
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const [settings, setSettings] = useState<GameSettings>({
 		startingStack: 2500,
-		buyInValue: 100,
-		buyIns: 7,
+		buyInValue: 0,
+		buyIns: 0,
 		rebuys: 0,
-		playersIn: 7,
-		averageStack: 2,
-		totalChips: 2,
-		totalMoney: 2,
+		playersIn: 0,
+		averageStack: '-',
+		totalChips: '-',
+		totalMoney: '-',
 	});
 
 	const setStartingStack = (stack: number) => {
@@ -56,7 +56,7 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 
 	const setPlayersInCount = (count: number) => {
 		setSettings((prev) => {
-			const newAverageStack = Math.floor(prev.totalChips / count);
+			const newAverageStack = Math.floor(+prev.totalChips / count);
 
 			return {
 				...prev,
