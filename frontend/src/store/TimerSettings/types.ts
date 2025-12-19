@@ -17,7 +17,12 @@ export type TimerContextValue = {
 	levels: Level[];
 	currentIndex: number;
 	isRunning: boolean;
-	timeLeft: number;
+	currentLevel: Level;
+	isFirstLevel: boolean;
+	isLastLevel: boolean;
 	nextLevel: () => void;
 	previousLevel: () => void;
+	startTimer: () => void;
+	stopTimer: () => void;
+	updateLevels: (levels: Level[]) => void;
 };
