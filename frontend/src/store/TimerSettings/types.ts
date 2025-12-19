@@ -1,5 +1,6 @@
 export type BlindLevel = {
 	type: 'blind';
+	id: string;
 	duration: number;
 	bigBlind: number;
 	smallBlind: number;
@@ -8,6 +9,7 @@ export type BlindLevel = {
 
 export type BreakLevel = {
 	type: 'break';
+	id: string;
 	duration: number;
 };
 
@@ -18,6 +20,7 @@ export type TimerContextValue = {
 	currentIndex: number;
 	isRunning: boolean;
 	currentLevel: Level;
+	upcomingLevel: Level | undefined;
 	isFirstLevel: boolean;
 	isLastLevel: boolean;
 	nextLevel: () => void;
@@ -25,4 +28,6 @@ export type TimerContextValue = {
 	startTimer: () => void;
 	stopTimer: () => void;
 	updateLevels: (levels: Level[]) => void;
+	addNewLevel: (level: 'break' | 'blind') => void;
+	removeLevel: (id: string) => void;
 };

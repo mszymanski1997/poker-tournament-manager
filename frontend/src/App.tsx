@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { PokerProvider } from './store/PokerSettings/PokerProvider';
+import { TimerProvider } from './store/TimerSettings/TimerProvider';
 import Navigation from './components/Navigation/Navigation';
 import Timer from './pages/Timer/Timer';
 import TableSettings from './pages/Table Settings/TableSettings';
@@ -33,9 +34,11 @@ const router = createBrowserRouter([
 
 function App() {
 	return (
-		<PokerProvider>
-			<RouterProvider router={router}></RouterProvider>
-		</PokerProvider>
+		<TimerProvider>
+			<PokerProvider>
+				<RouterProvider router={router}></RouterProvider>
+			</PokerProvider>
+		</TimerProvider>
 	);
 }
 

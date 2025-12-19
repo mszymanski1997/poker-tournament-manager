@@ -1,19 +1,17 @@
 import styles from './Form.module.scss';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
+import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 
 type FormProps = {
 	title: 'Custom Settings' | 'Save Settings';
 };
 
-type SettingItem = {
-	id: string;
-	type: 'blind' | 'break';
-};
-
 const Form = ({ title }: FormProps) => {
+	const { levels, addNewLevel, removeLevel } = useTimerSettings();
+
 	const {
 		setStartingStack,
 		setBuyInValue,
@@ -25,28 +23,13 @@ const Form = ({ title }: FormProps) => {
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	const [settingsInputs, setSettingsInputs] = useState<SettingItem[]>([
-		{ id: crypto.randomUUID(), type: 'blind' },
-	]);
-
-	const addNewSettings = (setting: 'blind' | 'break') => {
-		setSettingsInputs((prev) => [
-			...prev,
-			{ id: crypto.randomUUID(), type: setting },
-		]);
-	};
-
-	const removeSettings = (id: string) => {
-		setSettingsInputs(settingsInputs.filter((setting) => setting.id !== id));
-	};
-
 	useEffect(() => {
-		console.log('settingsInputs changed:', settingsInputs);
-
 		if (containerRef.current) {
 			containerRef.current.scrollTop = containerRef.current.scrollHeight;
 		}
-	}, [settingsInputs]);
+
+		console.log(levels);
+	}, [levels]);
 
 	return (
 		<div ref={containerRef} className={styles.container}>
@@ -93,21 +76,21 @@ const Form = ({ title }: FormProps) => {
 
 				<h2 className={styles.subtitle}>Blinds Settings</h2>
 
-				{settingsInputs.map((setting) => {
-					if (setting.type === 'blind') {
+				{levels.map((level) => {
+					if (level.type === 'blind') {
 						return (
 							<div
 								className={styles.blindsSettings}
-								key={setting.id}
-								id={`settings-${setting.id}`}
+								key={level.id}
+								id={`settings-${level.id}`}
 							>
-								<Input label='Big Blind:' id={`big-blind-${setting.id}`} />
-								<Input label='Small Blind:' id={`small-blind-${setting.id}`} />
-								<Input label='Ante:' id={`ante-${setting.id}`} />
-								<Input label='Duration:' id={`duration-${setting.id}`} />
+								<Input label='Big Blind:' id={`big-blind-${level.id}`} />
+								<Input label='Small Blind:' id={`small-blind-${level.id}`} />
+								<Input label='Ante:' id={`ante-${level.id}`} />
+								<Input label='Duration:' id={`duration-${level.id}`} />
 								<Button
 									className={styles.xButton}
-									onClick={() => removeSettings(setting.id)}
+									onClick={() => removeLevel(level.id)}
 								>
 									X
 								</Button>
@@ -118,16 +101,16 @@ const Form = ({ title }: FormProps) => {
 					return (
 						<div
 							className={styles.breakSettings}
-							key={setting.id}
-							id={`settings-${setting.id}`}
+							key={level.id}
+							id={`settings-${level.id}`}
 						>
 							<Input
 								label='Break Duration:'
-								id={`break-duration-${setting.id}`}
+								id={`break-duration-${level.id}`}
 							/>
 							<Button
 								className={styles.xButton}
-								onClick={() => removeSettings(setting.id)}
+								onClick={() => removeLevel(level.id)}
 							>
 								X
 							</Button>
@@ -139,7 +122,7 @@ const Form = ({ title }: FormProps) => {
 					<Button
 						size='big'
 						onClick={() => {
-							addNewSettings('blind');
+							addNewLevel('blind');
 						}}
 					>
 						Add Blind
@@ -148,7 +131,7 @@ const Form = ({ title }: FormProps) => {
 					<Button
 						size='big'
 						onClick={() => {
-							addNewSettings('break');
+							addNewLevel('break');
 						}}
 					>
 						Add Break
@@ -162,4 +145,3 @@ const Form = ({ title }: FormProps) => {
 };
 
 export default Form;
-
