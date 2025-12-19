@@ -30,9 +30,9 @@ const Input = ({
 				type={type}
 				min={minValue}
 				id={id}
-				{...props}
 				className={styles.formInput}
 				onChange={setSetting ? handleChange : undefined}
+				{...props}
 			/>
 		</label>
 	);
