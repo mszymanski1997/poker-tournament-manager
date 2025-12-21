@@ -1,6 +1,11 @@
 import styles from './CentralPanel.module.scss';
 import Button from '../../../components/shared/Button/Button';
-import { MdPlayArrow, MdSkipPrevious, MdSkipNext } from 'react-icons/md';
+import {
+	MdPlayArrow,
+	MdSkipPrevious,
+	MdSkipNext,
+	MdPause,
+} from 'react-icons/md';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 
 type CentralPanelProps = {
@@ -8,8 +13,16 @@ type CentralPanelProps = {
 };
 
 const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
-	const { currentLevel, nextLevel, previousLevel, isFirstLevel, isLastLevel } =
-		useTimerSettings();
+	const {
+		currentLevel,
+		nextLevel,
+		previousLevel,
+		isFirstLevel,
+		isLastLevel,
+		startTimer,
+		stopTimer,
+		isRunning,
+	} = useTimerSettings();
 
 	const isBlind = currentLevel.type === 'blind';
 
@@ -33,9 +46,16 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 				<Button onClick={previousLevel} disabled={isFirstLevel}>
 					<MdSkipPrevious />
 				</Button>
-				<Button>
-					<MdPlayArrow />
-				</Button>
+				{isRunning ? (
+					<Button onClick={stopTimer}>
+						<MdPause />
+					</Button>
+				) : (
+					<Button onClick={startTimer}>
+						<MdPlayArrow />
+					</Button>
+				)}
+
 				<Button onClick={nextLevel} disabled={isLastLevel}>
 					<MdSkipNext />
 				</Button>
