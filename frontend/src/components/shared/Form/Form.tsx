@@ -10,7 +10,15 @@ type FormProps = {
 };
 
 const Form = ({ title }: FormProps) => {
-	const { levels, addNewLevel, removeLevel } = useTimerSettings();
+	const {
+		levels,
+		addNewLevel,
+		removeLevel,
+		updateBlindLevel,
+		updateBreakLevel,
+		getBlindValue,
+		getBreakValue,
+	} = useTimerSettings();
 
 	const {
 		setStartingStack,
@@ -84,10 +92,38 @@ const Form = ({ title }: FormProps) => {
 								key={level.id}
 								id={`settings-${level.id}`}
 							>
-								<Input label='Big Blind:' id={`big-blind-${level.id}`} />
-								<Input label='Small Blind:' id={`small-blind-${level.id}`} />
-								<Input label='Ante:' id={`ante-${level.id}`} />
-								<Input label='Duration:' id={`duration-${level.id}`} />
+								<Input
+									label='Big Blind:'
+									id={`big-blind-${level.id}`}
+									onChange={(e) => {
+										updateBlindLevel(level.id, 'bigBlind', +e.target.value);
+									}}
+									value={getBlindValue('bigBlind', level.id)}
+								/>
+								<Input
+									label='Small Blind:'
+									id={`small-blind-${level.id}`}
+									onChange={(e) => {
+										updateBlindLevel(level.id, 'smallBlind', +e.target.value);
+									}}
+									value={getBlindValue('smallBlind', level.id)}
+								/>
+								<Input
+									label='Ante:'
+									id={`ante-${level.id}`}
+									onChange={(e) => {
+										updateBlindLevel(level.id, 'ante', +e.target.value);
+									}}
+									value={getBlindValue('ante', level.id)}
+								/>
+								<Input
+									label='Duration:'
+									id={`duration-${level.id}`}
+									onChange={(e) => {
+										updateBlindLevel(level.id, 'duration', +e.target.value);
+									}}
+									value={getBlindValue('duration', level.id)}
+								/>
 								<Button
 									className={styles.xButton}
 									onClick={() => removeLevel(level.id)}
@@ -107,6 +143,8 @@ const Form = ({ title }: FormProps) => {
 							<Input
 								label='Break Duration:'
 								id={`break-duration-${level.id}`}
+								onChange={(e) => updateBreakLevel(level.id, +e.target.value)}
+								value={getBreakValue(level.id)}
 							/>
 							<Button
 								className={styles.xButton}

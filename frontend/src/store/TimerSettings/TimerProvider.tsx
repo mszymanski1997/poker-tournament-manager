@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import { TimerContext } from './TimerContext';
-import type { Level } from './types';
+import type { Level, BlindLevel, blindInputValue, BreakLevel } from './types';
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const [levels, setLevels] = useState<Level[]>([
@@ -68,8 +68,51 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		setLevels(levels.filter((level) => level.id !== id));
 	};
 
-	const updateLevels = (newLevels: Level[]) => {
-		setLevels(newLevels);
+	const updateBlindLevel = (
+		id: string,
+		key: keyof BlindLevel,
+		value: number
+	) => {
+		setLevels((prev) =>
+			prev.map((level) =>
+				level.id === id && level.type === 'blind'
+					? { ...level, [key]: value }
+					: level
+			)
+		);
+	};
+
+	const updateBreakLevel = (id: string, value: number) => {
+		setLevels((prev) =>
+			prev.map((level) =>
+				level.id === id && level.type === 'break'
+					? { ...level, duration: value }
+					: level
+			)
+		);
+	};
+
+	const getBlindValue = (
+		key: keyof blindInputValue,
+		id: string
+	): number | undefined => {
+		const level = levels.find(
+			(level): level is BlindLevel => level.id === id && level.type === 'blind'
+		);
+
+		if (level) return level[key];
+
+		return undefined;
+	};
+
+	const getBreakValue = (id: string): number | undefined => {
+		const level = levels.find(
+			(level): level is BreakLevel => level.id === id && level.type === 'break'
+		);
+
+		if (level) return level.duration;
+
+		return undefined;
 	};
 
 	const nextLevel = () => {
@@ -102,9 +145,12 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				isLastLevel,
 				startTimer,
 				stopTimer,
-				updateLevels,
+				updateBlindLevel,
+				updateBreakLevel,
 				addNewLevel,
 				removeLevel,
+				getBlindValue,
+				getBreakValue,
 			}}
 		>
 			{children}

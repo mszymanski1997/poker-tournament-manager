@@ -1,13 +1,15 @@
 import { usePokerSettings } from '../../store/PokerSettings/usePokerSettings';
+import { useTimerSettings } from '../../store/TimerSettings/useTimerSettings';
 
 const RightBar = () => {
 	const { settings } = usePokerSettings();
+	const { currentIndex } = useTimerSettings();
 
 	return (
 		<div className='rightBar'>
 			<ul>
 				<li>
-					Current level: <span>1</span>
+					Current level: <span>{currentIndex + 1}</span>
 				</li>
 
 				<li>
