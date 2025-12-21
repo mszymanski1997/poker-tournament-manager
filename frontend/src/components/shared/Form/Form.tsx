@@ -35,9 +35,17 @@ const Form = ({ title }: FormProps) => {
 		if (containerRef.current) {
 			containerRef.current.scrollTop = containerRef.current.scrollHeight;
 		}
-
-		console.log(levels);
 	}, [levels]);
+
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		setSetting: (value: number) => void,
+		minValue: number = 0
+	) => {
+		const value = Math.max(minValue, +e.target.value);
+
+		setSetting(value);
+	};
 
 	return (
 		<div ref={containerRef} className={styles.container}>
@@ -47,15 +55,13 @@ const Form = ({ title }: FormProps) => {
 				<div className={styles.separator}>
 					<Input
 						label='Starting stack'
-						id='starting-stack'
-						setSetting={setStartingStack}
+						onChange={(e) => handleChange(e, setStartingStack, 1)}
 						minValue={1}
 						value={settings.startingStack}
 					/>
 					<Input
 						label='Buy-In value:'
-						id='buy-in-value'
-						setSetting={setBuyInValue}
+						onChange={(e) => handleChange(e, setBuyInValue)}
 						value={settings.buyInValue}
 					/>
 				</div>
@@ -63,22 +69,19 @@ const Form = ({ title }: FormProps) => {
 				<div className={styles.separator}>
 					<Input
 						label='Buy-ins:'
-						id='buy-ins'
-						setSetting={setBuyInsCount}
+						onChange={(e) => handleChange(e, setBuyInsCount)}
 						value={settings.buyIns}
 					/>
 					<Input
 						label='Rebuys:'
-						id='rebuys'
-						setSetting={setRebuysCount}
+						onChange={(e) => handleChange(e, setRebuysCount)}
 						value={settings.rebuys}
 					/>
 				</div>
 
 				<Input
 					label='Players-In:'
-					id='players-in'
-					setSetting={setPlayersInCount}
+					onChange={(e) => handleChange(e, setPlayersInCount)}
 					value={settings.playersIn}
 				/>
 
@@ -94,7 +97,6 @@ const Form = ({ title }: FormProps) => {
 							>
 								<Input
 									label='Big Blind:'
-									id={`big-blind-${level.id}`}
 									onChange={(e) => {
 										updateBlindLevel(level.id, 'bigBlind', +e.target.value);
 									}}
@@ -102,7 +104,6 @@ const Form = ({ title }: FormProps) => {
 								/>
 								<Input
 									label='Small Blind:'
-									id={`small-blind-${level.id}`}
 									onChange={(e) => {
 										updateBlindLevel(level.id, 'smallBlind', +e.target.value);
 									}}
@@ -110,7 +111,6 @@ const Form = ({ title }: FormProps) => {
 								/>
 								<Input
 									label='Ante:'
-									id={`ante-${level.id}`}
 									onChange={(e) => {
 										updateBlindLevel(level.id, 'ante', +e.target.value);
 									}}
@@ -118,7 +118,6 @@ const Form = ({ title }: FormProps) => {
 								/>
 								<Input
 									label='Duration:'
-									id={`duration-${level.id}`}
 									onChange={(e) => {
 										updateBlindLevel(level.id, 'duration', +e.target.value);
 									}}
@@ -135,11 +134,7 @@ const Form = ({ title }: FormProps) => {
 					}
 
 					return (
-						<div
-							className={styles.breakSettings}
-							key={level.id}
-							id={`settings-${level.id}`}
-						>
+						<div className={styles.breakSettings} key={level.id}>
 							<Input
 								label='Break Duration:'
 								id={`break-duration-${level.id}`}
