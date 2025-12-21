@@ -1,5 +1,6 @@
 import styles from './CentralPanel.module.scss';
 import Button from '../../../components/shared/Button/Button';
+import TimerCounter from './TimerCounter';
 import {
 	MdPlayArrow,
 	MdSkipPrevious,
@@ -28,7 +29,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 
 	return (
 		<div className={styles.container}>
-			<p className={styles.time}>25:00</p>
+			<TimerCounter />
 
 			<div className={styles.blindsInfo}>
 				<p>Current Blinds:</p>
