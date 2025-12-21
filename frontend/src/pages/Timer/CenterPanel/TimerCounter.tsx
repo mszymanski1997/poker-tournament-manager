@@ -1,7 +1,39 @@
+import { useEffect, useState } from 'react';
+import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 import styles from './TimerCounter.module.scss';
 
 const TimerCounter = () => {
-	return <p className={styles.counter}>25:00</p>;
+	const { currentLevel, isRunning, nextLevel } = useTimerSettings();
+
+	const [timeLeft, setTimeLeft] = useState<number>(currentLevel.duration * 60);
+
+	useEffect(() => {
+		if (!isRunning) return;
+
+		const interval = setInterval(() => {
+			setTimeLeft((prev) => prev - 1);
+			if (timeLeft === 0) {
+				nextLevel();
+			}
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, [isRunning, nextLevel, timeLeft]);
+
+	useEffect(() => {
+		setTimeLeft(currentLevel.duration * 60);
+	}, [currentLevel]);
+
+	const minutes = Math.floor(timeLeft / 60);
+	const seconds = timeLeft % 60;
+
+	const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+	return (
+		<p className={styles.counter}>
+			{minutes}:{formattedSeconds}
+		</p>
+	);
 };
 
 export default TimerCounter;
