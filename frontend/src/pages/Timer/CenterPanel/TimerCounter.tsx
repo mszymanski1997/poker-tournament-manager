@@ -11,10 +11,12 @@ const TimerCounter = () => {
 		if (!isRunning) return;
 
 		const interval = setInterval(() => {
-			setTimeLeft((prev) => prev - 1);
 			if (timeLeft === 0) {
 				nextLevel();
+				return;
 			}
+
+			setTimeLeft((prev) => prev - 1);
 		}, 1000);
 
 		return () => clearInterval(interval);
