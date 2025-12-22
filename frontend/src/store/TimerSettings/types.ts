@@ -26,18 +26,21 @@ export type TimerContextValue = {
 	levels: Level[];
 	currentIndex: number;
 	isRunning: boolean;
+
 	currentLevel: Level;
 	upcomingLevel: Level | undefined;
-
 	isFirstLevel: boolean;
 	isLastLevel: boolean;
+
 	nextLevel: () => void;
 	previousLevel: () => void;
-	startTimer: () => void;
 
+	startTimer: () => void;
 	stopTimer: () => void;
+
 	updateBlindLevel: (id: string, key: keyof BlindLevel, value: number) => void;
 	updateBreakLevel: (id: string, value: number) => void;
+
 	addNewLevel: (level: 'break' | 'blind') => void;
 	removeLevel: (id: string) => void;
 

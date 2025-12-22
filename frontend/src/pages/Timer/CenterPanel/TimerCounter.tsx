@@ -7,6 +7,8 @@ const TimerCounter = () => {
 
 	const [timeLeft, setTimeLeft] = useState<number>(currentLevel.duration * 60);
 
+	const isLastMinute: boolean = timeLeft <= 60;
+
 	useEffect(() => {
 		if (!isRunning) return;
 
@@ -32,7 +34,7 @@ const TimerCounter = () => {
 	const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
 	return (
-		<p className={styles.counter}>
+		<p className={`${styles.counter} ${isLastMinute && styles.warning}`}>
 			{minutes}:{formattedSeconds}
 		</p>
 	);
