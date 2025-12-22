@@ -1,5 +1,5 @@
 import { PokerContext } from './PokerContext';
-import { type GameSettings } from './types';
+import { type GameSettings, type PayoutsSettings } from './types';
 import { useState, type ReactNode } from 'react';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
@@ -66,6 +66,30 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		});
 	};
 
+	const setPayouts = (): PayoutsSettings => {
+		if (settings.buyIns > 0 && settings.buyIns <= 5) {
+			return +settings.totalMoney;
+		} else if (settings.buyIns > 5 && settings.buyIns <= 10) {
+			return {
+				first: +settings.totalMoney * 0.7,
+				second: +settings.totalMoney * 0.3,
+			};
+		} else if (settings.buyIns > 10 && settings.buyIns <= 20) {
+			return {
+				first: +settings.totalMoney * 0.6,
+				second: +settings.totalMoney * 0.25,
+				third: +settings.totalMoney * 0.15,
+			};
+		} else if (settings.buyIns > 20) {
+			return {
+				first: +settings.totalMoney * 0.45,
+				second: +settings.totalMoney * 0.27,
+				third: +settings.totalMoney * 0.18,
+				fourth: +settings.totalMoney * 0.1,
+			};
+		} else return 'Add players';
+	};
+
 	return (
 		<PokerContext.Provider
 			value={{
@@ -75,6 +99,7 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				setBuyInsCount,
 				setRebuysCount,
 				setPlayersInCount,
+				setPayouts,
 			}}
 		>
 			{children}

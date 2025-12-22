@@ -2,8 +2,17 @@ import { usePokerSettings } from '../../store/PokerSettings/usePokerSettings';
 import { useTimerSettings } from '../../store/TimerSettings/useTimerSettings';
 
 const RightBar = () => {
-	const { settings } = usePokerSettings();
+	const { settings, setPayouts } = usePokerSettings();
 	const { currentIndex } = useTimerSettings();
+
+	const payouts = setPayouts();
+
+	const payoutArray =
+		payouts && typeof payouts === 'object'
+			? [payouts.first, payouts.second, payouts.third, payouts.fourth].filter(
+					Boolean
+			  )
+			: [payouts];
 
 	return (
 		<div className='rightBar'>
@@ -21,6 +30,23 @@ const RightBar = () => {
 
 				<li>
 					Total money pot: <span>{settings.totalMoney}</span>
+				</li>
+
+				<li>
+					Payouts:
+					<span>
+						{payoutArray?.map((amount, index) => (
+							<div key={index}>
+								{typeof payouts !== 'string' ? (
+									<>
+										<strong>{index + 1}.</strong> {amount}
+									</>
+								) : (
+									payouts
+								)}
+							</div>
+						))}
+					</span>
 				</li>
 			</ul>
 		</div>
