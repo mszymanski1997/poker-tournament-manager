@@ -65,6 +65,10 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const isFirstLevel = currentIndex === 0;
 	const isLastLevel = currentIndex === levels.length - 1;
 
+	const currentBlindIndex = levels
+		.slice(0, currentIndex + 1)
+		.filter((level) => level.type === 'blind').length;
+
 	const addNewLevel = (type: 'blind' | 'break') => {
 		if (type === 'blind') {
 			setLevels((prev) => [
@@ -177,6 +181,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				removeLevel,
 				getBlindValue,
 				getBreakValue,
+				currentBlindIndex,
 			}}
 		>
 			{children}

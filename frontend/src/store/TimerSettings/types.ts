@@ -27,6 +27,7 @@ export type TimerContextValue = {
 	currentIndex: number;
 	isRunning: boolean;
 
+	currentBlindIndex: number;
 	currentLevel: Level;
 	upcomingLevel: Level | undefined;
 	isFirstLevel: boolean;

@@ -4,7 +4,7 @@ import BreakTimerCounter from './BreakTimerCounter';
 
 const RightBar = () => {
 	const { settings, setPayouts } = usePokerSettings();
-	const { currentIndex } = useTimerSettings();
+	const { currentBlindIndex } = useTimerSettings();
 
 	const payouts = setPayouts();
 
@@ -21,7 +21,7 @@ const RightBar = () => {
 				<BreakTimerCounter />
 
 				<li>
-					Current level: <span>{currentIndex + 1}</span>
+					Current level: <span>{currentBlindIndex}</span>
 				</li>
 
 				<li>
