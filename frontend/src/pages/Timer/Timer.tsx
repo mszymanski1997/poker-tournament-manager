@@ -1,5 +1,5 @@
 import LeftBar from './LeftBar';
-import RightBar from './RightBar';
+import RightBar from './RightBar/RightBar';
 import CentralPanel from './CenterPanel/CentralPanel';
 import { useState } from 'react';
 import Modal from '../../components/shared/Modal/Modal';

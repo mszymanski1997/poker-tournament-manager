@@ -1,5 +1,6 @@
-import { usePokerSettings } from '../../store/PokerSettings/usePokerSettings';
-import { useTimerSettings } from '../../store/TimerSettings/useTimerSettings';
+import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
+import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
+import BreakTimerCounter from './BreakTimerCounter';
 
 const RightBar = () => {
 	const { settings, setPayouts } = usePokerSettings();
@@ -17,6 +18,8 @@ const RightBar = () => {
 	return (
 		<div className='rightBar'>
 			<ul>
+				<BreakTimerCounter />
+
 				<li>
 					Current level: <span>{currentIndex + 1}</span>
 				</li>

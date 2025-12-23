@@ -71,21 +71,21 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 			return +settings.totalMoney;
 		} else if (settings.buyIns > 5 && settings.buyIns <= 10) {
 			return {
-				first: +settings.totalMoney * 0.7,
-				second: +settings.totalMoney * 0.3,
+				first: Math.round(+settings.totalMoney * 0.7),
+				second: Math.round(+settings.totalMoney * 0.3),
 			};
 		} else if (settings.buyIns > 10 && settings.buyIns <= 20) {
 			return {
-				first: +settings.totalMoney * 0.6,
-				second: +settings.totalMoney * 0.25,
-				third: +settings.totalMoney * 0.15,
+				first: Math.round(+settings.totalMoney * 0.6),
+				second: Math.round(+settings.totalMoney * 0.25),
+				third: Math.round(+settings.totalMoney * 0.15),
 			};
 		} else if (settings.buyIns > 20) {
 			return {
-				first: +settings.totalMoney * 0.45,
-				second: +settings.totalMoney * 0.27,
-				third: +settings.totalMoney * 0.18,
-				fourth: +settings.totalMoney * 0.1,
+				first: Math.round(+settings.totalMoney * 0.45),
+				second: Math.round(+settings.totalMoney * 0.27),
+				third: Math.round(+settings.totalMoney * 0.18),
+				fourth: Math.round(+settings.totalMoney * 0.1),
 			};
 		} else return 'Add players';
 	};

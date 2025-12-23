@@ -18,8 +18,11 @@ const TimerCounter = () => {
 		if (!isRunning) return;
 
 		const interval = setInterval(() => {
-			if (timeLeft === 0) {
+			if (timeLeft - 1 === 0) {
 				nextBlindSoundRef.current?.play();
+			}
+
+			if (timeLeft === 0) {
 				nextLevel();
 				return;
 			}
