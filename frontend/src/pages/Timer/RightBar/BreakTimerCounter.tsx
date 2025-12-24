@@ -22,6 +22,10 @@ const BreakTimerCounter = () => {
 		(currentLevel.duration + timeToTheNextBreak) * 60
 	);
 
+	const willBeNextBreak = levels
+		.slice(currentIndex)
+		.some((level) => level.type === 'break');
+
 	useEffect(() => {
 		if (!isRunning) return;
 
@@ -53,8 +57,14 @@ const BreakTimerCounter = () => {
 			<li>
 				Next break in:
 				<span>
-					{hours > 0 && `${hours}:`}
-					{formattedMinutes}:{formattedSeconds}
+					{willBeNextBreak ? (
+						<>
+							{hours > 0 && `${hours}:`}
+							{formattedMinutes}:{formattedSeconds}
+						</>
+					) : (
+						'-'
+					)}
 				</span>
 			</li>
 		)

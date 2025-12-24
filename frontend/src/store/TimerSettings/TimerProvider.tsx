@@ -49,11 +49,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 			ante: 60,
 			id: crypto.randomUUID(),
 		},
-		{
-			type: 'break',
-			id: crypto.randomUUID(),
-			duration: 10,
-		},
 	]);
 
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
