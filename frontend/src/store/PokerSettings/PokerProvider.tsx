@@ -15,11 +15,25 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	});
 
 	const setStartingStack = (stack: number) => {
-		setSettings((prev) => ({ ...prev, startingStack: stack }));
+		setSettings((prev) => {
+			const newTotalChips = (prev.buyIns + prev.rebuys) * stack;
+			const newAverageStack = Math.floor(newTotalChips / prev.playersIn);
+
+			return {
+				...prev,
+				startingStack: stack,
+				totalChips: newTotalChips,
+				averageStack: newAverageStack,
+			};
+		});
 	};
 
 	const setBuyInValue = (value: number) => {
-		setSettings((prev) => ({ ...prev, buyInValue: value }));
+		setSettings((prev) => ({
+			...prev,
+			buyInValue: value,
+			totalMoney: (prev.buyIns + prev.rebuys) * value,
+		}));
 	};
 
 	const setBuyInsCount = (count: number) => {
