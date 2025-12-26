@@ -30,8 +30,13 @@ export type TimerContextValue = {
 	currentBlindIndex: number;
 	currentLevel: Level;
 	upcomingLevel: Level | undefined;
+
 	isFirstLevel: boolean;
 	isLastLevel: boolean;
+	isTournamentFinished: boolean;
+
+	finishTournament: () => void;
+	resumeTournament: () => void;
 
 	nextLevel: () => void;
 	previousLevel: () => void;

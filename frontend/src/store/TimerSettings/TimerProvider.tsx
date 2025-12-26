@@ -6,7 +6,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const [levels, setLevels] = useState<Level[]>([
 		{
 			type: 'blind',
-			duration: 25,
+			duration: 0.05,
 			bigBlind: 10,
 			smallBlind: 5,
 			ante: 10,
@@ -14,7 +14,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 25,
+			duration: 0.05,
 			bigBlind: 20,
 			smallBlind: 10,
 			ante: 20,
@@ -22,20 +22,15 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 25,
+			duration: 0.05,
 			bigBlind: 30,
 			smallBlind: 15,
 			ante: 30,
 			id: crypto.randomUUID(),
 		},
 		{
-			type: 'break',
-			id: crypto.randomUUID(),
-			duration: 10,
-		},
-		{
 			type: 'blind',
-			duration: 25,
+			duration: 0.05,
 			bigBlind: 40,
 			smallBlind: 20,
 			ante: 40,
@@ -43,10 +38,18 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 25,
+			duration: 0.05,
 			bigBlind: 60,
 			smallBlind: 30,
 			ante: 60,
+			id: crypto.randomUUID(),
+		},
+		{
+			type: 'blind',
+			duration: 0.05,
+			bigBlind: 80,
+			smallBlind: 40,
+			ante: 80,
 			id: crypto.randomUUID(),
 		},
 	]);
@@ -54,6 +57,9 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
 	const [isRunning, setIsRunning] = useState<boolean>(false);
+
+	const [isTournamentFinished, setIsTournamentFinished] =
+		useState<boolean>(false);
 
 	const currentLevel = levels[currentIndex];
 	const upcomingLevel = levels[currentIndex + 1];
@@ -156,6 +162,14 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		setIsRunning(false);
 	};
 
+	const finishTournament = () => {
+		setIsTournamentFinished(true);
+	};
+
+	const resumeTournament = () => {
+		setIsTournamentFinished(false);
+	};
+
 	return (
 		<TimerContext.Provider
 			value={{
@@ -177,6 +191,9 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				getBlindValue,
 				getBreakValue,
 				currentBlindIndex,
+				isTournamentFinished,
+				finishTournament,
+				resumeTournament,
 			}}
 		>
 			{children}

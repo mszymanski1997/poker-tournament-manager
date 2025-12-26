@@ -17,14 +17,15 @@ const TimerCounter = () => {
 	useEffect(() => {
 		if (!isRunning) return;
 
+		if (timeLeft === 0) {
+			setTimeout(() => {
+				nextLevel();
+			}, 900);
+		}
+
 		const interval = setInterval(() => {
 			if (timeLeft - 1 === 0) {
 				nextBlindSoundRef.current?.play();
-			}
-
-			if (timeLeft === 0) {
-				nextLevel();
-				return;
 			}
 
 			if (timeLeft - 1 === 60) {
@@ -52,9 +53,11 @@ const TimerCounter = () => {
 	const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
 	return (
-		<p className={`${styles.counter} ${isLastMinute && styles.warning}`}>
-			{minutes}:{formattedSeconds}
-		</p>
+		<>
+			<p className={`${styles.counter} ${isLastMinute && styles.warning}`}>
+				{minutes}:{formattedSeconds}
+			</p>
+		</>
 	);
 };
 
