@@ -8,16 +8,24 @@ const TimerCounter = () => {
 	const lastMinuteSoundRef = useRef<HTMLAudioElement | null>(null);
 	const nextBlindSoundRef = useRef<HTMLAudioElement | null>(null);
 
-	const { currentLevel, isRunning, nextLevel } = useTimerSettings();
+	const {
+		currentLevel,
+		isRunning,
+		nextLevel,
+		isTournamentFinished,
+		isLastLevel,
+		finishTournament,
+		stopTimer,
+	} = useTimerSettings();
 
 	const [timeLeft, setTimeLeft] = useState<number>(currentLevel.duration * 60);
 
 	const isLastMinute: boolean = timeLeft <= 60;
 
 	useEffect(() => {
-		if (!isRunning) return;
+		if (!isRunning || isTournamentFinished) return;
 
-		if (timeLeft === 0) {
+		if (timeLeft === 0 && !isLastLevel) {
 			setTimeout(() => {
 				nextLevel();
 			}, 900);
@@ -26,6 +34,11 @@ const TimerCounter = () => {
 		const interval = setInterval(() => {
 			if (timeLeft - 1 === 0) {
 				nextBlindSoundRef.current?.play();
+				if (isLastLevel) {
+					stopTimer();
+					finishTournament();
+					return;
+				}
 			}
 
 			if (timeLeft - 1 === 60) {
@@ -36,7 +49,15 @@ const TimerCounter = () => {
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [isRunning, nextLevel, timeLeft]);
+	}, [
+		isRunning,
+		nextLevel,
+		timeLeft,
+		finishTournament,
+		isLastLevel,
+		isTournamentFinished,
+		stopTimer,
+	]);
 
 	useEffect(() => {
 		setTimeLeft(currentLevel.duration * 60);
@@ -54,9 +75,13 @@ const TimerCounter = () => {
 
 	return (
 		<>
-			<p className={`${styles.counter} ${isLastMinute && styles.warning}`}>
-				{minutes}:{formattedSeconds}
-			</p>
+			{isTournamentFinished ? (
+				<p className={styles.finished}>Tournament Finished</p>
+			) : (
+				<p className={`${styles.counter} ${isLastMinute && styles.warning}`}>
+					{minutes}:{formattedSeconds}
+				</p>
+			)}
 		</>
 	);
 };

@@ -23,6 +23,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 		startTimer,
 		stopTimer,
 		isRunning,
+		isTournamentFinished,
 	} = useTimerSettings();
 
 	const isBlind = currentLevel.type === 'blind';
@@ -30,18 +31,19 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 	return (
 		<div className={styles.container}>
 			<TimerCounter />
-
-			<div className={styles.blindsInfo}>
-				<p>Current Blinds:</p>
-				<p className={styles.blinds}>
-					{isBlind
-						? currentLevel.bigBlind + ' / ' + currentLevel.smallBlind
-						: 'BREAK'}
-				</p>
-				<p>
-					Ante: <span>{isBlind ? currentLevel.ante : '-'}</span>
-				</p>
-			</div>
+			{!isTournamentFinished && (
+				<div className={styles.blindsInfo}>
+					<p>Current Blinds:</p>
+					<p className={styles.blinds}>
+						{isBlind
+							? currentLevel.bigBlind + ' / ' + currentLevel.smallBlind
+							: 'BREAK'}
+					</p>
+					<p>
+						Ante: <span>{isBlind ? currentLevel.ante : '-'}</span>
+					</p>
+				</div>
+			)}
 
 			<div className={styles.timerButtons}>
 				<Button onClick={previousLevel} disabled={isFirstLevel}>
@@ -52,7 +54,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 						<MdPause />
 					</Button>
 				) : (
-					<Button onClick={startTimer}>
+					<Button onClick={startTimer} disabled={isTournamentFinished}>
 						<MdPlayArrow />
 					</Button>
 				)}
@@ -65,7 +67,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 			<div className={styles.settingsButtons}>
 				<Button size='big'>Load settings</Button>
 				<Button size='big' onClick={onOpenSettings}>
-					Custom settings
+					{isTournamentFinished ? 'Add new blinds' : 'Custom settings'}
 				</Button>
 			</div>
 		</div>
