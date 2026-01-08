@@ -34,6 +34,7 @@ const TimerCounter = () => {
 		const interval = setInterval(() => {
 			if (timeLeft - 1 === 0) {
 				nextBlindSoundRef.current?.play();
+
 				if (isLastLevel) {
 					stopTimer();
 					finishTournament();

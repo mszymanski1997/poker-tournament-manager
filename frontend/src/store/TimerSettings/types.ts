@@ -37,6 +37,7 @@ export type TimerContextValue = {
 
 	finishTournament: () => void;
 	resumeTournament: () => void;
+	restartTournament: () => void;
 
 	nextLevel: () => void;
 	previousLevel: () => void;

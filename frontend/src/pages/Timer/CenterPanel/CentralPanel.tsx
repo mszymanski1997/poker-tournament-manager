@@ -24,6 +24,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 		stopTimer,
 		isRunning,
 		isTournamentFinished,
+		restartTournament,
 	} = useTimerSettings();
 
 	const isBlind = currentLevel.type === 'blind';
@@ -66,6 +67,9 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 
 			<div className={styles.settingsButtons}>
 				<Button size='big'>Load settings</Button>
+				<Button size='big' onClick={restartTournament}>
+					Restart
+				</Button>
 				<Button size='big' onClick={onOpenSettings}>
 					{isTournamentFinished ? 'Add new blinds' : 'Custom settings'}
 				</Button>

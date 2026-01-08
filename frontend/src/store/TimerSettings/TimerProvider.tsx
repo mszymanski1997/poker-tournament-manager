@@ -20,6 +20,22 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 			ante: 20,
 			id: crypto.randomUUID(),
 		},
+		{
+			type: 'blind',
+			duration: 0.05,
+			bigBlind: 30,
+			smallBlind: 15,
+			ante: 30,
+			id: crypto.randomUUID(),
+		},
+		{
+			type: 'blind',
+			duration: 0.05,
+			bigBlind: 40,
+			smallBlind: 20,
+			ante: 40,
+			id: crypto.randomUUID(),
+		},
 	]);
 
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -62,9 +78,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 			]);
 		}
 
-		if (isTournamentFinished) {
-			setIsTournamentFinished(false);
-		}
+		setIsTournamentFinished(false);
 	};
 
 	const removeLevel = (id: string) => {
@@ -124,10 +138,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const previousLevel = () => {
 		setCurrentIndex((index) => index - 1);
-
-		if (isTournamentFinished) {
-			setIsTournamentFinished(false);
-		}
+		setIsTournamentFinished(false);
 	};
 
 	const startTimer = () => {
@@ -144,6 +155,12 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const resumeTournament = () => {
 		setIsTournamentFinished(false);
+	};
+
+	const restartTournament = () => {
+		setIsTournamentFinished(false);
+		setCurrentIndex(0);
+		stopTimer();
 	};
 
 	return (
@@ -170,6 +187,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				isTournamentFinished,
 				finishTournament,
 				resumeTournament,
+				restartTournament,
 			}}
 		>
 			{children}
