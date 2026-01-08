@@ -1,5 +1,5 @@
 .container {
-	max-height: 800px;
+	max-height: 850px;
 	overflow-y: auto;
 }
 
@@ -79,6 +79,31 @@
 		label {
 			width: 100%;
 			max-width: 600px;
+		}
+	}
+
+	.warningMessage {
+		color: #b42318;
+		font-size: 1.5rem;
+		opacity: 0;
+		animation: showWarning 5s;
+	}
+
+	@keyframes showWarning {
+		0% {
+			opacity: 0;
+		}
+
+		30% {
+			opacity: 1;
+		}
+
+		70% {
+			opacity: 1;
+		}
+
+		100% {
+			opacity: 0;
 		}
 	}
 }

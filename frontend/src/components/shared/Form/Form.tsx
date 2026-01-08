@@ -18,6 +18,7 @@ const Form = ({ title }: FormProps) => {
 		updateBreakLevel,
 		getBlindValue,
 		getBreakValue,
+		isWarningMessageVisible,
 	} = useTimerSettings();
 
 	const {
@@ -150,6 +151,12 @@ const Form = ({ title }: FormProps) => {
 						</div>
 					);
 				})}
+
+				{isWarningMessageVisible && (
+					<p className={styles.warningMessage}>
+						You must have at least one blind level
+					</p>
+				)}
 
 				<div className={styles.buttons}>
 					<Button

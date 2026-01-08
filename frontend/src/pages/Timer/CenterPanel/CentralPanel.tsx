@@ -1,5 +1,6 @@
 import styles from './CentralPanel.module.scss';
 import Button from '../../../components/shared/Button/Button';
+import Modal from '../../../components/shared/Modal/Modal';
 import TimerCounter from './TimerCounter';
 import {
 	MdPlayArrow,
@@ -8,7 +9,6 @@ import {
 	MdPause,
 } from 'react-icons/md';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
-import Modal from '../../../components/shared/Modal/Modal';
 import { useState } from 'react';
 
 type CentralPanelProps = {
@@ -31,7 +31,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 
 	const isBlind = currentLevel.type === 'blind';
 
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 	const closeModal = () => {
 		setIsModalOpen(false);
@@ -55,6 +55,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 					</div>
 				</div>
 			</Modal>
+			
 			<div className={styles.container}>
 				<TimerCounter />
 				{!isTournamentFinished && (

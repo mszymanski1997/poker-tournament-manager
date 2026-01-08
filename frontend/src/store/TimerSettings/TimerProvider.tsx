@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { TimerContext } from './TimerContext';
 import type { Level, BlindLevel, blindInputValue, BreakLevel } from './types';
 
@@ -45,6 +45,17 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const [isTournamentFinished, setIsTournamentFinished] =
 		useState<boolean>(false);
 
+	const [isWarningMessageVisible, setisWarningMessageVisible] =
+		useState<boolean>(false);
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setisWarningMessageVisible(false);
+		}, 5000);
+
+		return () => clearTimeout(timer);
+	}, [isWarningMessageVisible]);
+
 	const currentLevel = levels[currentIndex];
 	const upcomingLevel = levels[currentIndex + 1];
 	const isFirstLevel = currentIndex === 0;
@@ -55,6 +66,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		.filter((level) => level.type === 'blind').length;
 
 	const addNewLevel = (type: 'blind' | 'break') => {
+		setisWarningMessageVisible(false);
+
 		if (type === 'blind') {
 			setLevels((prev) => [
 				...prev,
@@ -82,6 +95,10 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	const removeLevel = (id: string) => {
+		if (levels.length === 1) {
+			setisWarningMessageVisible(true);
+			return;
+		}
 		setLevels(levels.filter((level) => level.id !== id));
 	};
 
@@ -188,6 +205,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				finishTournament,
 				resumeTournament,
 				restartTournament,
+				isWarningMessageVisible,
 			}}
 		>
 			{children}

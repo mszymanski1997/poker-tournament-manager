@@ -34,6 +34,7 @@ export type TimerContextValue = {
 	isFirstLevel: boolean;
 	isLastLevel: boolean;
 	isTournamentFinished: boolean;
+	isWarningMessageVisible: boolean;
 
 	finishTournament: () => void;
 	resumeTournament: () => void;
