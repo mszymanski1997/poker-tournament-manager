@@ -35,10 +35,14 @@ export type TimerContextValue = {
 	isLastLevel: boolean;
 	isTournamentFinished: boolean;
 	isWarningMessageVisible: boolean;
+	isFormModalOpen: boolean;
 
 	finishTournament: () => void;
 	resumeTournament: () => void;
 	restartTournament: () => void;
+
+	closeFormModal: () => void;
+	openFormModal: () => void;
 
 	nextLevel: () => void;
 	previousLevel: () => void;

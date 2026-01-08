@@ -6,7 +6,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const [levels, setLevels] = useState<Level[]>([
 		{
 			type: 'blind',
-			duration: 0.05,
+			duration: 2,
 			bigBlind: 10,
 			smallBlind: 5,
 			ante: 10,
@@ -14,7 +14,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 0.05,
+			duration: 2,
 			bigBlind: 20,
 			smallBlind: 10,
 			ante: 20,
@@ -22,7 +22,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 0.05,
+			duration: 2,
 			bigBlind: 30,
 			smallBlind: 15,
 			ante: 30,
@@ -30,7 +30,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 0.05,
+			duration: 2,
 			bigBlind: 40,
 			smallBlind: 20,
 			ante: 40,
@@ -47,6 +47,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const [isWarningMessageVisible, setisWarningMessageVisible] =
 		useState<boolean>(false);
+
+	const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -180,6 +182,14 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		stopTimer();
 	};
 
+	const openFormModal = () => {
+		setIsFormModalOpen(true);
+	};
+
+	const closeFormModal = () => {
+		setIsFormModalOpen(false);
+	};
+
 	return (
 		<TimerContext.Provider
 			value={{
@@ -206,6 +216,9 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				resumeTournament,
 				restartTournament,
 				isWarningMessageVisible,
+				isFormModalOpen,
+				closeFormModal,
+				openFormModal,
 			}}
 		>
 			{children}

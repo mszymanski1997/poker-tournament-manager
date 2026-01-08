@@ -1,20 +1,20 @@
 import LeftBar from './LeftBar';
 import RightBar from './RightBar/RightBar';
 import CentralPanel from './CenterPanel/CentralPanel';
-import { useState } from 'react';
 import Modal from '../../components/shared/Modal/Modal';
 import Form from '../../components/shared/Form/Form';
+import { useTimerSettings } from '../../store/TimerSettings/useTimerSettings';
 
 const Timer = () => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const { isFormModalOpen, closeFormModal } = useTimerSettings();
 
 	return (
 		<div className='timer'>
 			<LeftBar />
-			<CentralPanel onOpenSettings={() => setIsOpen(true)} />
+			<CentralPanel />
 			<RightBar />
 
-			<Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+			<Modal isOpen={isFormModalOpen} onClose={closeFormModal}>
 				<Form title='Custom Settings' />
 			</Modal>
 		</div>

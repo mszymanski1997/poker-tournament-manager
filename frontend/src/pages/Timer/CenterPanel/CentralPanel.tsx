@@ -11,11 +11,7 @@ import {
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 import { useState } from 'react';
 
-type CentralPanelProps = {
-	onOpenSettings: () => void;
-};
-
-const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
+const CentralPanel = () => {
 	const {
 		currentLevel,
 		nextLevel,
@@ -27,6 +23,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 		isRunning,
 		isTournamentFinished,
 		restartTournament,
+		openFormModal,
 	} = useTimerSettings();
 
 	const isBlind = currentLevel.type === 'blind';
@@ -55,7 +52,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 					</div>
 				</div>
 			</Modal>
-			
+
 			<div className={styles.container}>
 				<TimerCounter />
 				{!isTournamentFinished && (
@@ -96,7 +93,7 @@ const CentralPanel = ({ onOpenSettings }: CentralPanelProps) => {
 					<Button size='big' onClick={() => setIsModalOpen(true)}>
 						Restart
 					</Button>
-					<Button size='big' onClick={onOpenSettings}>
+					<Button size='big' onClick={openFormModal}>
 						{isTournamentFinished ? 'Add new blinds' : 'Custom settings'}
 					</Button>
 				</div>

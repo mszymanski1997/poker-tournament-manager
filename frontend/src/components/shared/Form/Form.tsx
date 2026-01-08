@@ -19,6 +19,7 @@ const Form = ({ title }: FormProps) => {
 		getBlindValue,
 		getBreakValue,
 		isWarningMessageVisible,
+		closeFormModal,
 	} = useTimerSettings();
 
 	const {
@@ -48,9 +49,14 @@ const Form = ({ title }: FormProps) => {
 		setSetting(value);
 	};
 
+	const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		closeFormModal();
+	};
+
 	return (
 		<div ref={containerRef} className={styles.container}>
-			<form className={styles.form}>
+			<form className={styles.form} onSubmit={submitForm}>
 				<h2 className={styles.title}>{title}</h2>
 
 				<div className={styles.separator}>
@@ -177,7 +183,9 @@ const Form = ({ title }: FormProps) => {
 						Add Break
 					</Button>
 
-					<Button size='big'>Save</Button>
+					<Button size='big' type='submit'>
+						Save
+					</Button>
 				</div>
 			</form>
 		</div>
