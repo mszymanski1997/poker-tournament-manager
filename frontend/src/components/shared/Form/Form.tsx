@@ -4,6 +4,7 @@ import Input from '../Input/Input';
 import { useEffect, useRef } from 'react';
 import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
+import { useSubmitTopSettings } from '../../../hooks/useSubmitTopSettings';
 
 type FormProps = {
 	title: 'Custom Settings' | 'Save Settings';
@@ -19,7 +20,6 @@ const Form = ({ title }: FormProps) => {
 		getBlindValue,
 		getBreakValue,
 		isWarningMessageVisible,
-		closeFormModal,
 	} = useTimerSettings();
 
 	const {
@@ -29,7 +29,7 @@ const Form = ({ title }: FormProps) => {
 		setPlayersInCount,
 		setRebuysCount,
 		settings,
-		validateSettings,
+
 		validationErrors,
 	} = usePokerSettings();
 
@@ -51,18 +51,12 @@ const Form = ({ title }: FormProps) => {
 		setSetting(value);
 	};
 
+	const submitTopSettings = useSubmitTopSettings();
+
 	const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const errors = validateSettings();
-
-		if (Object.keys(errors).length > 0) return;
-
-		closeFormModal();
+		submitTopSettings();
 	};
-
-	useEffect(() => {
-		console.log(validationErrors);
-	}, [validationErrors]);
 
 	return (
 		<div ref={containerRef} className={styles.container}>

@@ -4,9 +4,11 @@ import CentralPanel from './CenterPanel/CentralPanel';
 import Modal from '../../components/shared/Modal/Modal';
 import Form from '../../components/shared/Form/Form';
 import { useTimerSettings } from '../../store/TimerSettings/useTimerSettings';
+import { useSubmitTopSettings } from '../../hooks/useSubmitTopSettings';
 
 const Timer = () => {
-	const { isFormModalOpen, closeFormModal } = useTimerSettings();
+	const { isFormModalOpen } = useTimerSettings();
+	const checkErrors = useSubmitTopSettings();
 
 	return (
 		<div className='timer'>
@@ -14,7 +16,7 @@ const Timer = () => {
 			<CentralPanel />
 			<RightBar />
 
-			<Modal isOpen={isFormModalOpen} onClose={closeFormModal}>
+			<Modal isOpen={isFormModalOpen} onClose={checkErrors}>
 				<Form title='Custom Settings' />
 			</Modal>
 		</div>
