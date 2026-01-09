@@ -1,5 +1,9 @@
 import { PokerContext } from './PokerContext';
-import { type GameSettings, type PayoutsSettings } from './types';
+import {
+	type GameSettings,
+	type GameSettingsErrors,
+	type PayoutsSettings,
+} from './types';
 import { useState, type ReactNode } from 'react';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
@@ -14,6 +18,57 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		totalMoney: '-',
 	});
 
+	const [validationErrors, setValidationErrors] = useState<GameSettingsErrors>(
+		{}
+	);
+
+	const validateSettings = () => {
+		setValidationErrors({});
+		const newErrors: GameSettingsErrors = {};
+
+		if (settings.startingStack <= 0) {
+			newErrors.startingStack = 'Starting stack must be greater than 0';
+		}
+
+		if (settings.buyInValue <= 0) {
+			newErrors.buyInValue = 'Buy-in value must be greater than 0';
+		}
+
+		if (settings.buyIns <= 1) {
+			newErrors.buyIns = 'Minimum 2 players required';
+		}
+
+		if (settings.playersIn <= 1) {
+			newErrors.playersIn = 'Minimum 2 players required';
+		}
+
+		if (settings.playersIn > settings.buyIns) {
+			newErrors.playersIn = 'Players in cannot exceed the number of buy-ins.';
+		}
+
+		if (settings.playersIn > settings.buyIns + settings.rebuys) {
+			newErrors.playersIn =
+				'Players in cannot exceed the total number of buy-ins and rebuys.';
+		}
+
+		setValidationErrors(newErrors);
+		return newErrors;
+	};
+
+	const updateValidationErrors = (
+		value: number,
+		field: keyof GameSettingsErrors
+	) => {
+		if (value > 0) {
+			setValidationErrors((prev) => {
+				if (!prev[field]) return prev;
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				const { [field]: _, ...rest } = prev;
+				return rest;
+			});
+		}
+	};
+
 	const setStartingStack = (stack: number) => {
 		setSettings((prev) => {
 			const newTotalChips = (prev.buyIns + prev.rebuys) * stack;
@@ -26,6 +81,8 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				averageStack: newAverageStack,
 			};
 		});
+
+		updateValidationErrors(stack, 'startingStack');
 	};
 
 	const setBuyInValue = (value: number) => {
@@ -34,6 +91,8 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 			buyInValue: value,
 			totalMoney: (prev.buyIns + prev.rebuys) * value,
 		}));
+
+		updateValidationErrors(value, 'buyInValue');
 	};
 
 	const setBuyInsCount = (count: number) => {
@@ -50,6 +109,8 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				totalMoney: newTotalMoney,
 			};
 		});
+
+		updateValidationErrors(count, 'buyIns');
 	};
 
 	const setRebuysCount = (count: number) => {
@@ -78,6 +139,8 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				averageStack: newAverageStack,
 			};
 		});
+
+		updateValidationErrors(count, 'playersIn');
 	};
 
 	const setPayouts = (): PayoutsSettings => {
@@ -114,6 +177,8 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				setRebuysCount,
 				setPlayersInCount,
 				setPayouts,
+				validateSettings,
+				validationErrors,
 			}}
 		>
 			{children}

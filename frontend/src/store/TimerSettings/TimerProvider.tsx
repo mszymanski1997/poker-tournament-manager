@@ -6,7 +6,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const [levels, setLevels] = useState<Level[]>([
 		{
 			type: 'blind',
-			duration: 2,
+			duration: 1,
 			bigBlind: 10,
 			smallBlind: 5,
 			ante: 10,
@@ -14,7 +14,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 2,
+			duration: 1,
 			bigBlind: 20,
 			smallBlind: 10,
 			ante: 20,
@@ -22,18 +22,10 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 2,
+			duration: 1,
 			bigBlind: 30,
 			smallBlind: 15,
 			ante: 30,
-			id: crypto.randomUUID(),
-		},
-		{
-			type: 'blind',
-			duration: 2,
-			bigBlind: 40,
-			smallBlind: 20,
-			ante: 40,
 			id: crypto.randomUUID(),
 		},
 	]);

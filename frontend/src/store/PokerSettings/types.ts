@@ -22,6 +22,13 @@ export type PayoutsSettings =
 	  }
 	| 'Add players';
 
+export type GameSettingsErrors = {
+	startingStack?: string;
+	buyInValue?: string;
+	buyIns?: string;
+	playersIn?: string;
+};
+
 export type PokerContextSettings = {
 	settings: GameSettings;
 	setStartingStack: (count: number) => void;
@@ -29,5 +36,7 @@ export type PokerContextSettings = {
 	setBuyInsCount: (count: number) => void;
 	setRebuysCount: (count: number) => void;
 	setPlayersInCount: (count: number) => void;
+	validateSettings: () => GameSettingsErrors;
 	setPayouts: () => PayoutsSettings;
+	validationErrors: GameSettingsErrors;
 };

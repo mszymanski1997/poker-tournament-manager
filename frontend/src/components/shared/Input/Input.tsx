@@ -5,13 +5,16 @@ type InputProps = {
 	label: string;
 	minValue?: number;
 	warning?: boolean;
+	error?: boolean;
+	warningText?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const Input = ({
 	label,
 	type = 'number',
 	minValue = 0,
-	warning = false,
+	error = false,
+	warningText,
 	...props
 }: InputProps) => {
 	return (
@@ -21,11 +24,11 @@ const Input = ({
 				type={type}
 				min={minValue}
 				className={`${styles.input} ${
-					warning ? styles.warningBackground : styles.normalInput
+					error ? styles.warningBackground : styles.normalInput
 				}`}
 				{...props}
 			/>
-			{warning && <p className={styles.warningMessage}>warnig text</p>}
+			{error && <p className={styles.warningMessage}>{warningText}</p>}
 		</label>
 	);
 };

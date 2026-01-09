@@ -29,6 +29,8 @@ const Form = ({ title }: FormProps) => {
 		setPlayersInCount,
 		setRebuysCount,
 		settings,
+		validateSettings,
+		validationErrors,
 	} = usePokerSettings();
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -51,8 +53,16 @@ const Form = ({ title }: FormProps) => {
 
 	const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		const errors = validateSettings();
+
+		if (Object.keys(errors).length > 0) return;
+
 		closeFormModal();
 	};
+
+	useEffect(() => {
+		console.log(validationErrors);
+	}, [validationErrors]);
 
 	return (
 		<div ref={containerRef} className={styles.container}>
@@ -63,13 +73,16 @@ const Form = ({ title }: FormProps) => {
 					<Input
 						label='Starting stack'
 						onChange={(e) => handleChange(e, setStartingStack, 1)}
-						minValue={1}
 						value={settings.startingStack}
+						error={!!validationErrors.startingStack}
+						warningText={validationErrors.startingStack}
 					/>
 					<Input
 						label='Buy-In value:'
 						onChange={(e) => handleChange(e, setBuyInValue)}
 						value={settings.buyInValue}
+						error={!!validationErrors.buyInValue}
+						warningText={validationErrors.buyInValue}
 					/>
 				</div>
 
@@ -78,6 +91,8 @@ const Form = ({ title }: FormProps) => {
 						label='Buy-ins:'
 						onChange={(e) => handleChange(e, setBuyInsCount)}
 						value={settings.buyIns}
+						error={!!validationErrors.buyIns}
+						warningText={validationErrors.buyIns}
 					/>
 					<Input
 						label='Rebuys:'
@@ -90,6 +105,8 @@ const Form = ({ title }: FormProps) => {
 					label='Players-In:'
 					onChange={(e) => handleChange(e, setPlayersInCount)}
 					value={settings.playersIn}
+					error={!!validationErrors.playersIn}
+					warningText={validationErrors.playersIn}
 				/>
 
 				<h2 className={styles.subtitle}>Blinds Settings</h2>
