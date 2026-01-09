@@ -42,10 +42,6 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 			newErrors.playersIn = 'Minimum 2 players required';
 		}
 
-		if (settings.playersIn > settings.buyIns) {
-			newErrors.playersIn = 'Players in cannot exceed the number of buy-ins.';
-		}
-
 		if (settings.playersIn > settings.buyIns + settings.rebuys) {
 			newErrors.playersIn =
 				'Players in cannot exceed the total number of buy-ins and rebuys.';
@@ -140,7 +136,11 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 			};
 		});
 
-		updateValidationErrors(count, 'playersIn');
+		if (count > settings.buyIns + settings.rebuys) {
+			return;
+		} else {
+			updateValidationErrors(count, 'playersIn');
+		}
 	};
 
 	const setPayouts = (): PayoutsSettings => {
