@@ -23,42 +23,32 @@ const TimerCounter = () => {
 	const isLastMinute: boolean = timeLeft <= 60;
 
 	useEffect(() => {
-		if (!isRunning || isTournamentFinished) return;
-
-		if (timeLeft === 0 && !isLastLevel) {
-			setTimeout(() => {
-				nextLevel();
-			}, 900);
+		if (timeLeft === 60) {
+			lastMinuteSoundRef.current?.play();
 		}
 
+		if (!isLastLevel && timeLeft === -1) {
+			nextBlindSoundRef.current?.play();
+			nextLevel();
+			return;
+		}
+
+		if (isLastLevel && timeLeft === 0) {
+			stopTimer();
+			finishTournament();
+			return;
+		}
+	}, [nextLevel, timeLeft, finishTournament, isLastLevel, stopTimer]);
+
+	useEffect(() => {
+		if (!isRunning || isTournamentFinished) return;
+
 		const interval = setInterval(() => {
-			if (timeLeft - 1 === 0) {
-				nextBlindSoundRef.current?.play();
-
-				if (isLastLevel) {
-					stopTimer();
-					finishTournament();
-					return;
-				}
-			}
-
-			if (timeLeft - 1 === 60) {
-				lastMinuteSoundRef.current?.play();
-			}
-
 			setTimeLeft((prev) => prev - 1);
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [
-		isRunning,
-		nextLevel,
-		timeLeft,
-		finishTournament,
-		isLastLevel,
-		isTournamentFinished,
-		stopTimer,
-	]);
+	}, [isRunning, isTournamentFinished]);
 
 	useEffect(() => {
 		setTimeLeft(currentLevel.duration * 60);
