@@ -18,18 +18,21 @@ const Input = ({
 	...props
 }: InputProps) => {
 	return (
-		<label className={styles.label}>
-			<span>{label}</span>
-			<input
-				type={type}
-				min={minValue}
-				className={`${styles.input} ${
-					error ? styles.warningBackground : styles.normalInput
-				}`}
-				{...props}
-			/>
-			{error && <p className={styles.warningMessage}>{warningText}</p>}
-		</label>
+		<div className={styles.wrapper}>
+			<label className={styles.label}>
+				<span>{label}</span>
+
+				<input
+					type={type}
+					min={minValue}
+					className={`${styles.input} ${
+						error ? styles.warningBackground : styles.normalInput
+					}`}
+					{...props}
+				/>
+			</label>
+			<p className={styles.warningMessage}>{error ? warningText : '\u00A0'}</p>
+		</div>
 	);
 };
 export default Input;

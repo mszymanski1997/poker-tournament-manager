@@ -4,7 +4,7 @@ import TopSettingsSection from './TopSettingsSection/TopSettingsSection';
 import BlindsSettingsSection from './BlindsSettingsSection/BlindsSettingsSection';
 import { useEffect, useRef } from 'react';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
-import { useSubmitTopSettings } from '../../../hooks/useSubmitTopSettings';
+import { useSubmit } from '../../../hooks/useSubmit';
 
 type FormProps = {
 	title: 'Custom Settings' | 'Save Settings';
@@ -21,7 +21,7 @@ const Form = ({ title }: FormProps) => {
 		}
 	}, [levels]);
 
-	const submitTopSettings = useSubmitTopSettings();
+	const submitTopSettings = useSubmit();
 
 	const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

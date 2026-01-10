@@ -4,11 +4,11 @@ import CentralPanel from './CenterPanel/CentralPanel';
 import Modal from '../../components/shared/Modal/Modal';
 import Form from '../../components/shared/Form/Form';
 import { useTimerSettings } from '../../store/TimerSettings/useTimerSettings';
-import { useSubmitTopSettings } from '../../hooks/useSubmitTopSettings';
+import { useSubmit } from '../../hooks/useSubmit';
 
 const Timer = () => {
 	const { isFormModalOpen } = useTimerSettings();
-	const checkErrors = useSubmitTopSettings();
+	const checkErrors = useSubmit();
 
 	return (
 		<div className='timer'>

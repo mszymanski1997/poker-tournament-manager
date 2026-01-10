@@ -1,6 +1,12 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { TimerContext } from './TimerContext';
-import type { Level, BlindLevel, blindInputValue, BreakLevel } from './types';
+import type {
+	Level,
+	BlindLevel,
+	blindInputValue,
+	BreakLevel,
+	LevelErrors,
+} from './types';
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const [levels, setLevels] = useState<Level[]>([
@@ -41,6 +47,12 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		useState<boolean>(false);
 
 	const [isFormModalOpen, setIsFormModalOpen] = useState<boolean>(false);
+
+	const [levelsErrors, setLevelsErrors] = useState<LevelErrors>({});
+
+	const updateLevelsErrors = (errors: LevelErrors) => {
+		setLevelsErrors(errors);
+	};
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -211,6 +223,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				isFormModalOpen,
 				closeFormModal,
 				openFormModal,
+				levelsErrors,
+				updateLevelsErrors,
 			}}
 		>
 			{children}

@@ -22,6 +22,12 @@ export type BreakLevel = {
 
 export type Level = BlindLevel | BreakLevel;
 
+type LevelField = 'duration' | 'bigBlind' | 'smallBlind' | 'ante';
+
+export type LevelErrors = {
+	[levelId: string]: Partial<Record<LevelField, string>>;
+};
+
 export type TimerContextValue = {
 	levels: Level[];
 	currentIndex: number;
@@ -58,4 +64,7 @@ export type TimerContextValue = {
 
 	getBlindValue: (key: keyof blindInputValue, id: string) => number | undefined;
 	getBreakValue: (id: string) => number | undefined;
+
+	levelsErrors: LevelErrors;
+	updateLevelsErrors: (errors: LevelErrors) => void;
 };

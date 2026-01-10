@@ -11,6 +11,7 @@ const BlindsSettingsSection = () => {
 		updateBlindLevel,
 		updateBreakLevel,
 		removeLevel,
+		levelsErrors,
 	} = useTimerSettings();
 
 	return (
@@ -29,6 +30,8 @@ const BlindsSettingsSection = () => {
 									updateBlindLevel(level.id, 'bigBlind', +e.target.value)
 								}
 								value={getBlindValue('bigBlind', level.id)}
+								error={!!levelsErrors[level.id]?.bigBlind}
+								warningText={levelsErrors[level.id]?.bigBlind}
 							/>
 							<Input
 								label='Small Blind:'
@@ -36,6 +39,8 @@ const BlindsSettingsSection = () => {
 									updateBlindLevel(level.id, 'smallBlind', +e.target.value)
 								}
 								value={getBlindValue('smallBlind', level.id)}
+								error={!!levelsErrors[level.id]?.smallBlind}
+								warningText={levelsErrors[level.id]?.smallBlind}
 							/>
 							<Input
 								label='Ante:'
@@ -43,6 +48,8 @@ const BlindsSettingsSection = () => {
 									updateBlindLevel(level.id, 'ante', +e.target.value)
 								}
 								value={getBlindValue('ante', level.id)}
+								error={!!levelsErrors[level.id]?.ante}
+								warningText={levelsErrors[level.id]?.ante}
 							/>
 							<Input
 								label='Duration:'
@@ -50,6 +57,8 @@ const BlindsSettingsSection = () => {
 									updateBlindLevel(level.id, 'duration', +e.target.value)
 								}
 								value={getBlindValue('duration', level.id)}
+								error={!!levelsErrors[level.id]?.duration}
+								warningText={levelsErrors[level.id]?.duration}
 							/>
 							<Button
 								className={styles.xButton}
@@ -67,6 +76,8 @@ const BlindsSettingsSection = () => {
 							label='Break Duration:'
 							onChange={(e) => updateBreakLevel(level.id, +e.target.value)}
 							value={getBreakValue(level.id)}
+							error={!!levelsErrors[level.id]?.duration}
+							warningText={levelsErrors[level.id]?.duration}
 						/>
 						<Button
 							className={styles.xButton}
