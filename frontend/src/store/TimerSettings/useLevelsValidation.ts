@@ -7,7 +7,7 @@ type LevelErrors = {
 };
 
 export const useLevelsValidation = () => {
-	const { levels, updateLevelsErrors } = useTimerSettings();
+	const { levels, updateLevelsErrors, levelsErrors } = useTimerSettings();
 
 	const validateAllLevels = () => {
 		const newErrors: LevelErrors = {};
@@ -46,7 +46,29 @@ export const useLevelsValidation = () => {
 		return newErrors;
 	};
 
+	const clearFieldError = (levelId: string, field: LevelField) => {
+		const prev = levelsErrors;
+
+		if (!prev[levelId]?.[field]) return;
+
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { [field]: _, ...restFields } = prev[levelId];
+
+		if (Object.keys(restFields).length === 0) {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const { [levelId]: __, ...restLevels } = prev;
+			updateLevelsErrors(restLevels);
+			return;
+		}
+
+		updateLevelsErrors({
+			...prev,
+			[levelId]: restFields,
+		});
+	};
+
 	return {
 		validateAllLevels,
+		clearFieldError,
 	};
 };

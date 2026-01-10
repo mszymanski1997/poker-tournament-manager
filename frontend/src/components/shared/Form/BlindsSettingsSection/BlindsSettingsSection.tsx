@@ -1,7 +1,9 @@
-import { useTimerSettings } from '../../../../store/TimerSettings/useTimerSettings';
 import styles from './BlindsSettingsSection.module.scss';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
+import { useLevelsValidation } from '../../../../store/TimerSettings/useLevelsValidation';
+import { useTimerSettings } from '../../../../store/TimerSettings/useTimerSettings';
+import { type LevelField } from '../../../../store/TimerSettings/types';
 
 const BlindsSettingsSection = () => {
 	const {
@@ -13,6 +15,23 @@ const BlindsSettingsSection = () => {
 		removeLevel,
 		levelsErrors,
 	} = useTimerSettings();
+
+	const { clearFieldError } = useLevelsValidation();
+
+	const handleLevelFieldChange = (
+		levelId: string,
+		field: LevelField,
+		value: number,
+		type: 'blind' | 'break'
+	) => {
+		if (type === 'blind') {
+			updateBlindLevel(levelId, field, value);
+			clearFieldError(levelId, field);
+		} else if (type === 'break') {
+			updateBreakLevel(levelId, value);
+			clearFieldError(levelId, field);
+		}
+	};
 
 	return (
 		<>
@@ -27,7 +46,12 @@ const BlindsSettingsSection = () => {
 							<Input
 								label='Big Blind:'
 								onChange={(e) =>
-									updateBlindLevel(level.id, 'bigBlind', +e.target.value)
+									handleLevelFieldChange(
+										level.id,
+										'bigBlind',
+										+e.target.value,
+										level.type
+									)
 								}
 								value={getBlindValue('bigBlind', level.id)}
 								error={!!levelsErrors[level.id]?.bigBlind}
@@ -36,7 +60,12 @@ const BlindsSettingsSection = () => {
 							<Input
 								label='Small Blind:'
 								onChange={(e) =>
-									updateBlindLevel(level.id, 'smallBlind', +e.target.value)
+									handleLevelFieldChange(
+										level.id,
+										'smallBlind',
+										+e.target.value,
+										level.type
+									)
 								}
 								value={getBlindValue('smallBlind', level.id)}
 								error={!!levelsErrors[level.id]?.smallBlind}
@@ -45,7 +74,12 @@ const BlindsSettingsSection = () => {
 							<Input
 								label='Ante:'
 								onChange={(e) =>
-									updateBlindLevel(level.id, 'ante', +e.target.value)
+									handleLevelFieldChange(
+										level.id,
+										'ante',
+										+e.target.value,
+										level.type
+									)
 								}
 								value={getBlindValue('ante', level.id)}
 								error={!!levelsErrors[level.id]?.ante}
@@ -54,7 +88,12 @@ const BlindsSettingsSection = () => {
 							<Input
 								label='Duration:'
 								onChange={(e) =>
-									updateBlindLevel(level.id, 'duration', +e.target.value)
+									handleLevelFieldChange(
+										level.id,
+										'duration',
+										+e.target.value,
+										level.type
+									)
 								}
 								value={getBlindValue('duration', level.id)}
 								error={!!levelsErrors[level.id]?.duration}
@@ -74,7 +113,14 @@ const BlindsSettingsSection = () => {
 					<div className={styles.breakSettings} key={level.id}>
 						<Input
 							label='Break Duration:'
-							onChange={(e) => updateBreakLevel(level.id, +e.target.value)}
+							onChange={(e) =>
+								handleLevelFieldChange(
+									level.id,
+									'duration',
+									+e.target.value,
+									level.type
+								)
+							}
 							value={getBreakValue(level.id)}
 							error={!!levelsErrors[level.id]?.duration}
 							warningText={levelsErrors[level.id]?.duration}

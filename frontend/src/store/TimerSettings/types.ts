@@ -22,7 +22,7 @@ export type BreakLevel = {
 
 export type Level = BlindLevel | BreakLevel;
 
-type LevelField = 'duration' | 'bigBlind' | 'smallBlind' | 'ante';
+export type LevelField = 'duration' | 'bigBlind' | 'smallBlind' | 'ante';
 
 export type LevelErrors = {
 	[levelId: string]: Partial<Record<LevelField, string>>;
