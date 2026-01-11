@@ -26,10 +26,10 @@ const BlindsSettingsSection = () => {
 	) => {
 		if (type === 'blind') {
 			updateBlindLevel(levelId, field, value);
-			clearFieldError(levelId, field);
+			clearFieldError(levelId, field, value);
 		} else if (type === 'break') {
 			updateBreakLevel(levelId, value);
-			clearFieldError(levelId, field);
+			clearFieldError(levelId, field, value);
 		}
 	};
 

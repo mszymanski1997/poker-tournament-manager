@@ -30,7 +30,7 @@ const Form = ({ title }: FormProps) => {
 
 	return (
 		<div ref={containerRef} className={styles.container}>
-			<form className={styles.form} onSubmit={submitForm}>
+			<form className={styles.form} onSubmit={submitForm} noValidate>
 				<h2 className={styles.title}>{title}</h2>
 
 				<TopSettingsSection />

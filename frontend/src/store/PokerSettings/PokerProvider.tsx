@@ -23,7 +23,6 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	);
 
 	const validateSettings = () => {
-		setValidationErrors({});
 		const newErrors: GameSettingsErrors = {};
 
 		if (settings.startingStack <= 0) {
@@ -47,6 +46,19 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				'Players in cannot exceed the total number of buy-ins and rebuys.';
 		}
 
+		const integers: (keyof GameSettingsErrors)[] = [
+			'startingStack',
+			'buyInValue',
+			'buyIns',
+			'playersIn',
+		];
+
+		integers.forEach((field) => {
+			if (!Number.isInteger(settings[field])) {
+				newErrors[field] = 'The value must be an integer';
+			}
+		});
+
 		setValidationErrors(newErrors);
 		return newErrors;
 	};
@@ -55,7 +67,7 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		value: number,
 		field: keyof GameSettingsErrors
 	) => {
-		if (value > 0) {
+		if (value > 0 && Number.isInteger(value)) {
 			setValidationErrors((prev) => {
 				if (!prev[field]) return prev;
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars

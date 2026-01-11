@@ -16,9 +16,12 @@ export const useLevelsValidation = () => {
 			const levelErrors: Partial<Record<LevelField, string>> = {};
 
 			if (level.type === 'blind') {
-				if (level.duration <= 0) {
-					levelErrors.duration = 'Duration must be greater than 0';
-				}
+				const integerFields: LevelField[] = [
+					'bigBlind',
+					'smallBlind',
+					'ante',
+					'duration',
+				];
 
 				if (level.bigBlind <= 0) {
 					levelErrors.bigBlind = 'Big blind must be greater than 0';
@@ -31,12 +34,25 @@ export const useLevelsValidation = () => {
 				if (level.ante < 0) {
 					levelErrors.ante = 'Ante cannot be negative';
 				}
+
+				if (level.duration <= 0) {
+					levelErrors.duration = 'Duration must be greater than 0';
+				}
+
+				integerFields.forEach((field) => {
+					if (!Number.isInteger(level[field])) {
+						levelErrors[field] = 'The value must be an integer';
+					}
+				});
 			}
 
 			if (level.type === 'break' && level.duration <= 0) {
 				levelErrors.duration = 'Duration must be greater than 0';
 			}
 
+			if (level.type === 'break' && !Number.isInteger(level.duration)) {
+				levelErrors.duration = 'The value must be an integer';
+			}
 			if (Object.keys(levelErrors).length > 0) {
 				newErrors[level.id] = levelErrors;
 			}
@@ -46,25 +62,36 @@ export const useLevelsValidation = () => {
 		return newErrors;
 	};
 
-	const clearFieldError = (levelId: string, field: LevelField) => {
+	const clearFieldError = (
+		levelId: string,
+		field: LevelField,
+		value: number
+	) => {
 		const prev = levelsErrors;
 
 		if (!prev[levelId]?.[field]) return;
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { [field]: _, ...restFields } = prev[levelId];
-
-		if (Object.keys(restFields).length === 0) {
+		if (
+			(prev[levelId]?.[field] !== 'The value must be an integer' &&
+				value > 0) ||
+			(prev[levelId]?.[field] === 'The value must be an integer' &&
+				Number.isInteger(value))
+		) {
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { [levelId]: __, ...restLevels } = prev;
-			updateLevelsErrors(restLevels);
-			return;
-		}
+			const { [field]: _, ...restFields } = prev[levelId];
 
-		updateLevelsErrors({
-			...prev,
-			[levelId]: restFields,
-		});
+			if (Object.keys(restFields).length === 0) {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				const { [levelId]: __, ...restLevels } = prev;
+				updateLevelsErrors(restLevels);
+				return;
+			}
+
+			updateLevelsErrors({
+				...prev,
+				[levelId]: restFields,
+			});
+		}
 	};
 
 	return {
