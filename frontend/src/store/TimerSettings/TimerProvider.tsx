@@ -2,8 +2,8 @@ import {
 	useEffect,
 	useState,
 	useRef,
-	type ReactNode,
 	useCallback,
+	type ReactNode,
 } from 'react';
 import { TimerContext } from './TimerContext';
 import lastMinuteSound from '../../assets/audio/lastMinuteSound.wav';
@@ -21,7 +21,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const [levels, setLevels] = useState<Level[]>([
 		{
 			type: 'blind',
-			duration: 1,
+			duration: 0.05,
 			bigBlind: 10,
 			smallBlind: 5,
 			ante: 10,
@@ -165,14 +165,14 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		return undefined;
 	};
 
-	const nextLevel = useCallback(() => {
-		setCurrentIndex((index) => index + 1);
-	}, []);
-
 	const previousLevel = () => {
 		setCurrentIndex((index) => index - 1);
 		setIsTournamentFinished(false);
 	};
+
+	const nextLevel = useCallback(() => {
+		setCurrentIndex((index) => index + 1);
+	}, []);
 
 	const startTimer = () => {
 		setIsRunning(true);
@@ -214,23 +214,30 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (!isRunning || isTournamentFinished) return;
 
+		setTimeout(() => {
+			setTimeLeft(currentLevel.duration * 60);
+		}, 0);
+
 		const interval = setInterval(() => {
-			setTimeLeft((prev) => prev - 1);
+			setTimeLeft((prev) => {
+				if (prev <= 0) return 0;
+				return prev - 1;
+			});
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [isRunning, isTournamentFinished]);
+	}, [isRunning, isTournamentFinished, currentLevel]);
 
 	useEffect(() => {
 		if (timeLeft === 60) {
 			lastMinuteSoundRef.current?.play();
 		}
 
-		if (!isLastLevel && timeLeft === -1) {
+		if (!isLastLevel && timeLeft === 0) {
 			setTimeout(() => {
 				nextBlindSoundRef.current?.play();
 				nextLevel();
-			}, 0);
+			}, 1000);
 			return;
 		}
 
@@ -247,9 +254,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		nextBlindSoundRef.current = new Audio(nextBlindSound);
 	}, []);
 
-	useEffect(() => {
-		setTimeLeft(currentLevel.duration * 60);
-	}, [currentLevel]);
 	// End of counting time logic
 
 	return (
