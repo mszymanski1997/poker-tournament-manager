@@ -67,4 +67,6 @@ export type TimerContextValue = {
 
 	levelsErrors: LevelErrors;
 	updateLevelsErrors: (errors: LevelErrors) => void;
+
+	timeLeft: number;
 };

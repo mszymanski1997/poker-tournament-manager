@@ -1,5 +1,14 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import {
+	useEffect,
+	useState,
+	useRef,
+	type ReactNode,
+	useCallback,
+} from 'react';
 import { TimerContext } from './TimerContext';
+import lastMinuteSound from '../../assets/audio/lastMinuteSound.wav';
+import nextBlindSound from '../../assets/audio/nextBlindSound.wav';
+
 import type {
 	Level,
 	BlindLevel,
@@ -34,6 +43,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 			ante: 30,
 			id: crypto.randomUUID(),
 		},
+		{ type: 'break', duration: 1, id: crypto.randomUUID() },
 	]);
 
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -155,9 +165,9 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		return undefined;
 	};
 
-	const nextLevel = () => {
+	const nextLevel = useCallback(() => {
 		setCurrentIndex((index) => index + 1);
-	};
+	}, []);
 
 	const previousLevel = () => {
 		setCurrentIndex((index) => index - 1);
@@ -168,13 +178,13 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		setIsRunning(true);
 	};
 
-	const stopTimer = () => {
+	const stopTimer = useCallback(() => {
 		setIsRunning(false);
-	};
+	}, []);
 
-	const finishTournament = () => {
+	const finishTournament = useCallback(() => {
 		setIsTournamentFinished(true);
-	};
+	}, []);
 
 	const resumeTournament = () => {
 		setIsTournamentFinished(false);
@@ -193,6 +203,54 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const closeFormModal = () => {
 		setIsFormModalOpen(false);
 	};
+
+	// counting time logic
+
+	const [timeLeft, setTimeLeft] = useState<number>(currentLevel.duration * 60);
+
+	const lastMinuteSoundRef = useRef<HTMLAudioElement | null>(null);
+	const nextBlindSoundRef = useRef<HTMLAudioElement | null>(null);
+
+	useEffect(() => {
+		if (!isRunning || isTournamentFinished) return;
+
+		const interval = setInterval(() => {
+			setTimeLeft((prev) => prev - 1);
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, [isRunning, isTournamentFinished]);
+
+	useEffect(() => {
+		if (timeLeft === 60) {
+			lastMinuteSoundRef.current?.play();
+		}
+
+		if (!isLastLevel && timeLeft === -1) {
+			setTimeout(() => {
+				nextBlindSoundRef.current?.play();
+				nextLevel();
+			}, 0);
+			return;
+		}
+
+		if (isLastLevel && timeLeft === 0) {
+			setTimeout(() => {
+				stopTimer();
+				finishTournament();
+			}, 0);
+		}
+	}, [nextLevel, timeLeft, finishTournament, isLastLevel, stopTimer]);
+
+	useEffect(() => {
+		lastMinuteSoundRef.current = new Audio(lastMinuteSound);
+		nextBlindSoundRef.current = new Audio(nextBlindSound);
+	}, []);
+
+	useEffect(() => {
+		setTimeLeft(currentLevel.duration * 60);
+	}, [currentLevel]);
+	// End of counting time logic
 
 	return (
 		<TimerContext.Provider
@@ -225,6 +283,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				openFormModal,
 				levelsErrors,
 				updateLevelsErrors,
+				timeLeft,
 			}}
 		>
 			{children}

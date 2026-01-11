@@ -1,48 +1,32 @@
-import { useEffect, useState } from 'react';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 
 const BreakTimerCounter = () => {
-	const { currentLevel, isRunning, nextLevel, levels, currentIndex } =
-		useTimerSettings();
+	const { currentLevel, levels, currentIndex, timeLeft } = useTimerSettings();
 
-	const nextBreakIndex: number = levels
+	const nextBreakIndex = levels
 		.slice(currentIndex)
 		.findIndex((level) => level.type === 'break');
 
-	const levelsToTheNextBreak = levels.slice(
-		currentIndex,
-		currentIndex + nextBreakIndex
-	);
+	const willBeNextBreak = nextBreakIndex !== -1;
 
-	const timeToTheNextBreak = levelsToTheNextBreak
-		.slice(1)
-		.reduce((sum, level) => sum + level.duration, 0);
+	let totalSecondsToNextBreak = 0;
 
-	const [timeLeft, setTimeLeft] = useState<number>(
-		(currentLevel.duration + timeToTheNextBreak) * 60
-	);
+	if (willBeNextBreak) {
+		const levelsToNextBreak = levels.slice(
+			currentIndex,
+			currentIndex + nextBreakIndex + 1
+		);
 
-	const willBeNextBreak = levels
-		.slice(currentIndex)
-		.some((level) => level.type === 'break');
+		totalSecondsToNextBreak = timeLeft;
 
-	useEffect(() => {
-		if (!isRunning) return;
+		for (let i = 1; i < levelsToNextBreak.length - 1; i++) {
+			totalSecondsToNextBreak += levelsToNextBreak[i].duration * 60;
+		}
+	}
 
-		const interval = setInterval(() => {
-			setTimeLeft((prev) => prev - 1);
-		}, 1000);
-
-		return () => clearInterval(interval);
-	}, [isRunning, nextLevel, timeLeft]);
-
-	useEffect(() => {
-		setTimeLeft((currentLevel.duration + timeToTheNextBreak) * 60);
-	}, [currentLevel, timeToTheNextBreak]);
-
-	const hours = Math.floor(timeLeft / 3600);
-	const minutes = Math.floor((timeLeft % 3600) / 60);
-	const seconds = timeLeft % 60;
+	const hours = Math.floor(totalSecondsToNextBreak / 3600);
+	const minutes = Math.floor((totalSecondsToNextBreak % 3600) / 60);
+	const seconds = totalSecondsToNextBreak % 60;
 
 	const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 	const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
