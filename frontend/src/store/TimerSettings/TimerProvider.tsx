@@ -29,7 +29,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 1,
+			duration: 0.05,
 			bigBlind: 20,
 			smallBlind: 10,
 			ante: 20,
@@ -37,13 +37,20 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			type: 'blind',
-			duration: 1,
+			duration: 0.05,
 			bigBlind: 30,
 			smallBlind: 15,
 			ante: 30,
 			id: crypto.randomUUID(),
 		},
-		{ type: 'break', duration: 1, id: crypto.randomUUID() },
+		{
+			type: 'blind',
+			duration: 0.05,
+			bigBlind: 40,
+			smallBlind: 20,
+			ante: 40,
+			id: crypto.randomUUID(),
+		},
 	]);
 
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -115,6 +122,11 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 			setisWarningMessageVisible(true);
 			return;
 		}
+
+		if (currentIndex === levels.length - 1) {
+			setCurrentIndex((prev) => prev - 1);
+		}
+
 		setLevels(levels.filter((level) => level.id !== id));
 	};
 
@@ -167,7 +179,12 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const previousLevel = () => {
 		setCurrentIndex((index) => index - 1);
-		setIsTournamentFinished(false);
+
+		if (isTournamentFinished) {
+			setCurrentIndex(levels.length - 1);
+			setTimeLeft(currentLevel.duration * 60);
+			setIsTournamentFinished(false);
+		}
 	};
 
 	const nextLevel = useCallback(() => {
@@ -190,9 +207,12 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		setIsTournamentFinished(false);
 	};
 
+	const [timeLeft, setTimeLeft] = useState<number>(currentLevel.duration * 60);
+
 	const restartTournament = () => {
 		setIsTournamentFinished(false);
 		setCurrentIndex(0);
+		setTimeLeft(currentLevel.duration * 60);
 		stopTimer();
 	};
 
@@ -206,48 +226,54 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	// counting time logic
 
-	const [timeLeft, setTimeLeft] = useState<number>(currentLevel.duration * 60);
-
 	const lastMinuteSoundRef = useRef<HTMLAudioElement | null>(null);
 	const nextBlindSoundRef = useRef<HTMLAudioElement | null>(null);
 
 	useEffect(() => {
 		if (!isRunning || isTournamentFinished) return;
 
-		setTimeout(() => {
-			setTimeLeft(currentLevel.duration * 60);
-		}, 0);
-
 		const interval = setInterval(() => {
 			setTimeLeft((prev) => {
-				if (prev <= 0) return 0;
+				if (prev === 61) {
+					lastMinuteSoundRef.current?.play();
+				}
+
+				if (prev === 0) {
+					nextBlindSoundRef.current?.play();
+				}
+
+				if (isLastLevel && prev === 0) {
+					stopTimer();
+					finishTournament();
+				}
+
 				return prev - 1;
 			});
 		}, 1000);
 
 		return () => clearInterval(interval);
-	}, [isRunning, isTournamentFinished, currentLevel]);
+	}, [
+		isRunning,
+		isTournamentFinished,
+		currentLevel,
+		nextLevel,
+		isLastLevel,
+		stopTimer,
+		finishTournament,
+		timeLeft,
+	]);
 
 	useEffect(() => {
-		if (timeLeft === 60) {
-			lastMinuteSoundRef.current?.play();
-		}
-
-		if (!isLastLevel && timeLeft === 0) {
+		if (!isLastLevel && timeLeft < 0) {
 			setTimeout(() => {
-				nextBlindSoundRef.current?.play();
 				nextLevel();
-			}, 1000);
-			return;
-		}
-
-		if (isLastLevel && timeLeft === 0) {
-			setTimeout(() => {
-				stopTimer();
-				finishTournament();
 			}, 0);
 		}
-	}, [nextLevel, timeLeft, finishTournament, isLastLevel, stopTimer]);
+	}, [nextLevel, isLastLevel, timeLeft]);
+
+	useEffect(() => {
+		setTimeLeft(currentLevel.duration * 60);
+	}, [currentLevel]);
 
 	useEffect(() => {
 		lastMinuteSoundRef.current = new Audio(lastMinuteSound);
