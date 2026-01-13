@@ -21,11 +21,11 @@ const Form = ({ title }: FormProps) => {
 		}
 	}, [levels]);
 
-	const submitTopSettings = useSubmit();
+	const submit = useSubmit();
 
 	const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		submitTopSettings();
+		submit();
 	};
 
 	return (

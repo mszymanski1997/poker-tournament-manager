@@ -8,6 +8,7 @@ import {
 import { TimerContext } from './TimerContext';
 import lastMinuteSound from '../../assets/audio/lastMinuteSound.wav';
 import nextBlindSound from '../../assets/audio/nextBlindSound.wav';
+import { useLocalStorage } from '../../hooks/useLocalStorage.ts';
 
 import type {
 	Level,
@@ -16,42 +17,14 @@ import type {
 	BreakLevel,
 	LevelErrors,
 } from './types';
+import { DEFAULT_LEVELS } from './defaultLevels';
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
-	const [levels, setLevels] = useState<Level[]>([
-		{
-			type: 'blind',
-			duration: 0.05,
-			bigBlind: 10,
-			smallBlind: 5,
-			ante: 10,
-			id: crypto.randomUUID(),
-		},
-		{
-			type: 'blind',
-			duration: 0.05,
-			bigBlind: 20,
-			smallBlind: 10,
-			ante: 20,
-			id: crypto.randomUUID(),
-		},
-		{
-			type: 'blind',
-			duration: 0.05,
-			bigBlind: 30,
-			smallBlind: 15,
-			ante: 30,
-			id: crypto.randomUUID(),
-		},
-		{
-			type: 'blind',
-			duration: 0.05,
-			bigBlind: 40,
-			smallBlind: 20,
-			ante: 40,
-			id: crypto.randomUUID(),
-		},
-	]);
+	const { getValue } = useLocalStorage<Level[]>('levels');
+
+	const [levels, setLevels] = useState<Level[]>(() => {
+		return getValue() ?? DEFAULT_LEVELS;
+	});
 
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -211,8 +184,13 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const restartTournament = () => {
 		setIsTournamentFinished(false);
-		setCurrentIndex(0);
-		setTimeLeft(currentLevel.duration * 60);
+
+		if (currentIndex === 0) {
+			setTimeLeft(currentLevel.duration * 60);
+		} else {
+			setCurrentIndex(0);
+		}
+
 		stopTimer();
 	};
 
