@@ -38,5 +38,6 @@ export type PokerContextSettings = {
 	setPlayersInCount: (count: number) => void;
 	validateSettings: () => GameSettingsErrors;
 	setPayouts: () => PayoutsSettings;
+	restartPokerSettings: () => void;
 	validationErrors: GameSettingsErrors;
 };

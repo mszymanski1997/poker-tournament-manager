@@ -10,6 +10,7 @@ import {
 } from 'react-icons/md';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 import { useState } from 'react';
+import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
 
 const CentralPanel = () => {
 	const {
@@ -26,6 +27,8 @@ const CentralPanel = () => {
 		openFormModal,
 	} = useTimerSettings();
 
+	const { restartPokerSettings } = usePokerSettings();
+
 	const isBlind = currentLevel.type === 'blind';
 
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -36,6 +39,7 @@ const CentralPanel = () => {
 
 	const restart = () => {
 		restartTournament();
+		restartPokerSettings();
 		setIsModalOpen(false);
 	};
 

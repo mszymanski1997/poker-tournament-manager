@@ -19,6 +19,10 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		{}
 	);
 
+	const restartPokerSettings = () => {
+		setSettings(INITIAL_SETTINGS);
+	};
+
 	const validateSettings = () => {
 		const newErrors: GameSettingsErrors = {};
 
@@ -188,6 +192,7 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				setPayouts,
 				validateSettings,
 				validationErrors,
+				restartPokerSettings,
 			}}
 		>
 			{children}

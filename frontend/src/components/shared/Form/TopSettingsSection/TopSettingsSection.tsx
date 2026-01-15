@@ -23,6 +23,8 @@ const TopSettingsSection = () => {
 		setSetting(value);
 	};
 
+	
+
 	return (
 		<>
 			<div className={styles.separator}>
