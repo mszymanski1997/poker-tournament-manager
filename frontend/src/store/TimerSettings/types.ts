@@ -28,6 +28,12 @@ export type LevelErrors = {
 	[levelId: string]: Partial<Record<LevelField, string>>;
 };
 
+export type LevelLocalStorageData = {
+	levelIndex: number;
+	levelStartedAt: number;
+	levelDuration: number;
+};
+
 export type TimerContextValue = {
 	levels: Level[];
 	currentIndex: number;

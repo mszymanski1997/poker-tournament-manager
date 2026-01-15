@@ -15,8 +15,10 @@ export const useSubmit = (): (() => void) => {
 	const submit = () => {
 		const errors = validateSettings();
 		const levelsErrors = validateAllLevels();
-		const totalTournamentDuration =
-			levels.reduce((sum, level) => sum + level.duration, 0) * 60 * 1000;
+		const totalTournamentDuration = levels.reduce(
+			(sum, level) => sum + level.duration,
+			0
+		);
 
 		if (Object.keys(errors).length > 0 || Object.keys(levelsErrors).length > 0)
 			return;

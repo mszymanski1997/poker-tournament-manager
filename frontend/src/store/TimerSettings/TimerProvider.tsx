@@ -16,20 +16,39 @@ import type {
 	blindInputValue,
 	BreakLevel,
 	LevelErrors,
+	LevelLocalStorageData,
 } from './types';
 import { DEFAULT_LEVELS } from './defaultLevels';
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const { getValue } = useLocalStorage<Level[]>('levels');
 	const { setValueWithExpiry, getValueWithExpiry } =
-		useLocalStorage<number>('currentIndex');
+		useLocalStorage<LevelLocalStorageData>('level');
 
 	const [levels, setLevels] = useState<Level[]>(() => {
 		return getValue() ?? DEFAULT_LEVELS;
 	});
 
+	const saveLevelToLocalStorage = useCallback(
+		(levelIndex: number) => {
+			const level = levels[levelIndex];
+
+			setValueWithExpiry(
+				{
+					levelIndex,
+					levelStartedAt: Date.now(),
+					levelDuration: level.duration,
+				},
+				level.duration * 60 * 2
+			);
+		},
+		[setValueWithExpiry, levels]
+	);
+
 	const [currentIndex, setCurrentIndex] = useState<number>(() => {
-		return getValueWithExpiry() ?? 0;
+		const localStorageData = getValueWithExpiry();
+
+		return localStorageData?.levelIndex ?? 0;
 	});
 
 	const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -156,6 +175,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const previousLevel = () => {
 		setCurrentIndex((index) => index - 1);
+		saveLevelToLocalStorage(currentIndex - 1);
 
 		if (isTournamentFinished) {
 			setCurrentIndex(levels.length - 1);
@@ -166,7 +186,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const nextLevel = useCallback(() => {
 		setCurrentIndex((index) => index + 1);
-	}, []);
+		saveLevelToLocalStorage(currentIndex + 1);
+	}, [saveLevelToLocalStorage, currentIndex]);
 
 	const startTimer = () => {
 		setIsRunning(true);
@@ -242,7 +263,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		isLastLevel,
 		stopTimer,
 		finishTournament,
-		timeLeft,
 	]);
 
 	useEffect(() => {
@@ -255,10 +275,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		setTimeLeft(currentLevel.duration * 60);
-
-		setValueWithExpiry(currentIndex, currentLevel.duration * 2);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentLevel]);
 
 	useEffect(() => {
@@ -267,6 +283,25 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	}, []);
 
 	// End of counting time logic
+
+	useEffect(() => {
+		const storedLevel = getValueWithExpiry();
+		if (!storedLevel) return;
+
+		const elapsedSeconds = Math.floor(
+			(Date.now() - storedLevel.levelStartedAt) / 1000
+		);
+
+		const levelDurationSeconds = storedLevel.levelDuration * 60;
+
+		const remainingSeconds = levelDurationSeconds - elapsedSeconds;
+
+		if (remainingSeconds > 0) {
+			setTimeLeft(remainingSeconds);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<TimerContext.Provider
