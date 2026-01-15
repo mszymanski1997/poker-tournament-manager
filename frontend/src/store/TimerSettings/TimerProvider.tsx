@@ -21,12 +21,16 @@ import { DEFAULT_LEVELS } from './defaultLevels';
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const { getValue } = useLocalStorage<Level[]>('levels');
+	const { setValueWithExpiry, getValueWithExpiry } =
+		useLocalStorage<number>('currentIndex');
 
 	const [levels, setLevels] = useState<Level[]>(() => {
 		return getValue() ?? DEFAULT_LEVELS;
 	});
 
-	const [currentIndex, setCurrentIndex] = useState<number>(0);
+	const [currentIndex, setCurrentIndex] = useState<number>(() => {
+		return getValueWithExpiry() ?? 0;
+	});
 
 	const [isRunning, setIsRunning] = useState<boolean>(false);
 
@@ -251,6 +255,10 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		setTimeLeft(currentLevel.duration * 60);
+
+		setValueWithExpiry(currentIndex, currentLevel.duration * 2);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentLevel]);
 
 	useEffect(() => {

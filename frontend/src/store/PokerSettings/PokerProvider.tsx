@@ -1,3 +1,4 @@
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { PokerContext } from './PokerContext';
 import {
 	type GameSettings,
@@ -5,17 +6,13 @@ import {
 	type PayoutsSettings,
 } from './types';
 import { useState, type ReactNode } from 'react';
+import { INITIAL_SETTINGS } from './initialSettings';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
-	const [settings, setSettings] = useState<GameSettings>({
-		startingStack: 0,
-		buyInValue: 0,
-		buyIns: 0,
-		rebuys: 0,
-		playersIn: 0,
-		averageStack: '-',
-		totalChips: '-',
-		totalMoney: '-',
+	const { getValueWithExpiry } = useLocalStorage<GameSettings>('settings');
+
+	const [settings, setSettings] = useState<GameSettings>(() => {
+		return getValueWithExpiry() ?? INITIAL_SETTINGS;
 	});
 
 	const [validationErrors, setValidationErrors] = useState<GameSettingsErrors>(
