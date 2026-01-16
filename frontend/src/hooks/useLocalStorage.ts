@@ -32,7 +32,7 @@ export const useLocalStorage = <T>(key: string) => {
 		localStorage.setItem(key, JSON.stringify(value));
 	};
 
-	const setValueWithExpiry = (value: T, minutes: number) => {
+	const setValueWithExpiryToLocalStorage = (value: T, minutes: number) => {
 		const now = Date.now();
 
 		const item = {
@@ -43,5 +43,10 @@ export const useLocalStorage = <T>(key: string) => {
 		localStorage.setItem(key, JSON.stringify(item));
 	};
 
-	return { getValue, getValueWithExpiry, setValue, setValueWithExpiry };
+	return {
+		getValue,
+		getValueWithExpiry,
+		setValue,
+		setValueWithExpiry: setValueWithExpiryToLocalStorage,
+	};
 };

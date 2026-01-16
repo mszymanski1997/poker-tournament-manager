@@ -30,8 +30,7 @@ export type LevelErrors = {
 
 export type LevelLocalStorageData = {
 	levelIndex: number;
-	levelStartedAt: number;
-	levelDuration: number;
+	timeLeft: number;
 };
 
 export type TimerContextValue = {

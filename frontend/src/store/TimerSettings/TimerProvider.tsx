@@ -29,22 +29,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		return getValue() ?? DEFAULT_LEVELS;
 	});
 
-	const saveLevelToLocalStorage = useCallback(
-		(levelIndex: number) => {
-			const level = levels[levelIndex];
-
-			setValueWithExpiry(
-				{
-					levelIndex,
-					levelStartedAt: Date.now(),
-					levelDuration: level.duration,
-				},
-				level.duration * 60 * 2
-			);
-		},
-		[setValueWithExpiry, levels]
-	);
-
 	const [currentIndex, setCurrentIndex] = useState<number>(() => {
 		const localStorageData = getValueWithExpiry();
 
@@ -173,9 +157,14 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		return undefined;
 	};
 
+	const [timeLeft, setTimeLeft] = useState<number>(() => {
+		const storedLevel = getValueWithExpiry();
+
+		return storedLevel?.timeLeft ?? currentLevel.duration * 60;
+	});
+
 	const previousLevel = () => {
 		setCurrentIndex((index) => index - 1);
-		saveLevelToLocalStorage(currentIndex - 1);
 
 		if (isTournamentFinished) {
 			setCurrentIndex(levels.length - 1);
@@ -186,8 +175,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const nextLevel = useCallback(() => {
 		setCurrentIndex((index) => index + 1);
-		saveLevelToLocalStorage(currentIndex + 1);
-	}, [saveLevelToLocalStorage, currentIndex]);
+	}, [setCurrentIndex]);
 
 	const startTimer = () => {
 		setIsRunning(true);
@@ -195,7 +183,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const stopTimer = useCallback(() => {
 		setIsRunning(false);
-	}, []);
+	}, [setIsRunning]);
 
 	const finishTournament = useCallback(() => {
 		setIsTournamentFinished(true);
@@ -204,8 +192,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const resumeTournament = () => {
 		setIsTournamentFinished(false);
 	};
-
-	const [timeLeft, setTimeLeft] = useState<number>(currentLevel.duration * 60);
 
 	const restartTournament = () => {
 		setIsTournamentFinished(false);
@@ -216,6 +202,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 			setCurrentIndex(0);
 		}
 
+		localStorage.removeItem('settings');
+		localStorage.removeItem('level');
 		stopTimer();
 	};
 
@@ -241,6 +229,16 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 					lastMinuteSoundRef.current?.play();
 				}
 
+				if (prev > 0) {
+					setValueWithExpiry(
+						{
+							levelIndex: currentIndex,
+							timeLeft: timeLeft - 1,
+						},
+						currentLevel.duration * 2
+					);
+				}
+
 				if (prev === 0) {
 					nextBlindSoundRef.current?.play();
 				}
@@ -255,14 +253,16 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		}, 1000);
 
 		return () => clearInterval(interval);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		isRunning,
 		isTournamentFinished,
 		currentLevel,
-		nextLevel,
 		isLastLevel,
 		stopTimer,
 		finishTournament,
+		setValueWithExpiry,
+		currentIndex,
 	]);
 
 	useEffect(() => {
@@ -286,19 +286,10 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		const storedLevel = getValueWithExpiry();
+
 		if (!storedLevel) return;
 
-		const elapsedSeconds = Math.floor(
-			(Date.now() - storedLevel.levelStartedAt) / 1000
-		);
-
-		const levelDurationSeconds = storedLevel.levelDuration * 60;
-
-		const remainingSeconds = levelDurationSeconds - elapsedSeconds;
-
-		if (remainingSeconds > 0) {
-			setTimeLeft(remainingSeconds);
-		}
+		setTimeLeft(storedLevel.timeLeft);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
