@@ -10,9 +10,12 @@
 .input {
 	outline: none;
 	border-radius: 0.5rem;
-	padding: 0.6rem 1rem;
+	padding: 0.6rem 2rem 0.6rem 1rem;
 	font-size: 1rem;
-	transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+	transition:
+		border-color 0.3s,
+		box-shadow 0.3s,
+		background-color 0.3s;
 }
 
 .normalInput {
@@ -38,5 +41,5 @@
 	margin: 0.3rem 0;
 	font-weight: normal;
 	color: #b42318;
-	font-size: 0.9rem;
+	font-size: 0.7rem;
 }
