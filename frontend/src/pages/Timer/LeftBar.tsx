@@ -17,20 +17,24 @@ const LeftBar = () => {
 		<div className='leftBar'>
 			<ul>
 				<li>
-					Next Blinds:
-					<span>{renderNextBlind()}</span>
+					<span className='label'>Next Blinds:</span>
+					<span className='value'>{renderNextBlind()}</span>
 				</li>
 				<li>
-					Buy-ins: <span>{settings.buyIns}</span>
+					<span className='label'>Buy-ins:</span>
+					<span className='value'>{settings.buyIns}</span>
 				</li>
 				<li>
-					Rebuys: <span>{settings.rebuys}</span>
+					<span className='label'>Rebuys:</span>{' '}
+					<span className='value'>{settings.rebuys}</span>
 				</li>
 				<li>
-					Total chips: <span>{settings.totalChips}</span>
+					<span className='label'>Total chips:</span>
+					<span className='value'>{settings.totalChips}</span>
 				</li>
 				<li>
-					Averege stack: <span>{settings.averageStack}</span>
+					<span className='label'>Averege stack:</span>
+					<span className='value'>{settings.averageStack}</span>
 				</li>
 			</ul>
 		</div>

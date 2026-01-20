@@ -14,7 +14,7 @@ const BreakTimerCounter = () => {
 	if (willBeNextBreak) {
 		const levelsToNextBreak = levels.slice(
 			currentIndex,
-			currentIndex + nextBreakIndex + 1
+			currentIndex + nextBreakIndex + 1,
 		);
 
 		totalSecondsToNextBreak = timeLeft;
@@ -34,8 +34,8 @@ const BreakTimerCounter = () => {
 	return (
 		currentLevel.type === 'blind' && (
 			<li>
-				Next break in:
-				<span>
+				<span className='label'>Next break in:</span>
+				<span className='value'>
 					{willBeNextBreak ? (
 						<>
 							{hours > 0 && `${hours}:`}

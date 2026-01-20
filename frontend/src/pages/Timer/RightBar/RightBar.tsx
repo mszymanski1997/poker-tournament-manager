@@ -11,8 +11,8 @@ const RightBar = () => {
 	const payoutArray =
 		payouts && typeof payouts === 'object'
 			? [payouts.first, payouts.second, payouts.third, payouts.fourth].filter(
-					Boolean
-			  )
+					Boolean,
+				)
 			: [payouts];
 
 	return (
@@ -21,25 +21,27 @@ const RightBar = () => {
 				<BreakTimerCounter />
 
 				<li>
-					Current level: <span>{currentBlindIndex}</span>
+					<span className='label'>Current level:</span>
+					<span className='value'>{currentBlindIndex}</span>
 				</li>
 
 				<li>
-					Players-In:
-					<span>
+					<span className='label'>Players-In:</span>
+					<span className='value'>
 						{settings.playersIn}/{settings.buyIns}
 					</span>
 				</li>
 
 				<li>
-					Total money pot: <span>{settings.totalMoney}</span>
+					<span className='label'>Total money pot:</span>{' '}
+					<span className='value'>{settings.totalMoney}</span>
 				</li>
 
-				<li>
-					Payouts:
+				<li className='last-list-element'>
+					<span className='label payouts'>Payouts:</span>
 					<span>
 						{payoutArray?.map((amount, index) => (
-							<div key={index}>
+							<div key={index} className='value'>
 								{typeof payouts !== 'string' ? (
 									<>
 										<strong>{index + 1}.</strong> {amount}
