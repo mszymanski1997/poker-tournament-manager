@@ -1,7 +1,7 @@
 .timer {
-	width: 1600px;
-	height: 800px;
-	background-color: red;
+	margin: 0 auto;
+	width: 85vw;
+	height: 85vh;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -39,7 +39,7 @@
 	.rightBar {
 		height: 100%;
 		text-align: center;
-		width: 400px;
+		width: 25%;
 		padding-top: 1rem;
 	}
 
@@ -49,5 +49,19 @@
 
 	.rightBar {
 		border-left: 2px solid #a6a6a6;
+	}
+}
+
+@media (max-width: 1400px) {
+	.timer {
+		height: 80vh;
+		ul {
+			li {
+				font-size: 1.24rem;
+				span {
+					font-size: 1.2rem;
+				}
+			}
+		}
 	}
 }

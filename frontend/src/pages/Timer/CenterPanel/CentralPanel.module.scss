@@ -89,3 +89,25 @@ $bg-panel: #eeeeee;
 		background-color: #912018;
 	}
 }
+
+@media (max-width: 1400px) {
+	.blindsInfo {
+		gap: 0rem;
+		padding: 1.6rem 3rem;
+
+		p {
+			font-size: 2rem;
+			font-weight: 600;
+
+			span {
+				font-weight: 800;
+			}
+		}
+
+		.blinds {
+			font-size: 4rem;
+			font-weight: 700;
+			color: #1e1e1e;
+		}
+	}
+}
