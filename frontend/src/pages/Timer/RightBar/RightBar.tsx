@@ -33,7 +33,7 @@ const RightBar = () => {
 				</li>
 
 				<li>
-					<span className='label'>Total money pot:</span>{' '}
+					<span className='label'>Total money:</span>
 					<span className='value'>{settings.totalMoney}</span>
 				</li>
 
