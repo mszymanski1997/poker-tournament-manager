@@ -1,14 +1,16 @@
 import { usePokerSettings } from '../../store/PokerSettings/usePokerSettings';
 import { useTimerSettings } from '../../store/TimerSettings/useTimerSettings';
+import { useBlindsFormatter } from '../../hooks/useBlindsFormatter';
 
 const LeftBar = () => {
 	const { settings } = usePokerSettings();
 	const { upcomingLevel } = useTimerSettings();
+	const formatBlind = useBlindsFormatter();
 
 	const renderNextBlind = () => {
 		if (!upcomingLevel) return 'Game Over';
 		if (upcomingLevel.type === 'blind') {
-			return `${upcomingLevel.bigBlind} / ${upcomingLevel.smallBlind}`;
+			return `${formatBlind(upcomingLevel.bigBlind, 10000)} / ${formatBlind(upcomingLevel.smallBlind, 5000)}`;
 		}
 		if (upcomingLevel.type === 'break') return 'BREAK';
 	};

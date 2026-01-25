@@ -105,14 +105,28 @@ $bg-panel: #eeeeee;
 		}
 
 		.blinds {
-			font-size: 4rem;
+			font-size: 3.8rem;
 			font-weight: 700;
 			color: #1e1e1e;
 		}
 	}
 }
 
-@media (min-width: 481px) and (max-width: 731px) {
+@media (min-width: 731px) and (max-width: 930px) {
+	.blindsInfo {
+		.blinds {
+			font-size: 3rem;
+			font-weight: 700;
+			color: #1e1e1e;
+		}
+	}
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+	.container {
+		padding: 3rem 2rem;
+	}
+
 	.blindsInfo {
 		gap: 0rem;
 		padding: 1.6rem 3rem;
@@ -127,7 +141,7 @@ $bg-panel: #eeeeee;
 		}
 
 		.blinds {
-			font-size: 2.5rem;
+			font-size: 2rem;
 			font-weight: 700;
 			color: #1e1e1e;
 		}
@@ -160,7 +174,7 @@ $bg-panel: #eeeeee;
 		}
 
 		.blinds {
-			font-size: 3rem;
+			font-size: 2.6rem;
 			font-weight: 700;
 			color: #1e1e1e;
 		}
@@ -192,7 +206,7 @@ $bg-panel: #eeeeee;
 		}
 
 		.blinds {
-			font-size: 2.5rem;
+			font-size: 2.2rem;
 			font-weight: 700;
 			color: #1e1e1e;
 		}
@@ -212,12 +226,6 @@ $bg-panel: #eeeeee;
 			span {
 				font-weight: 800;
 			}
-		}
-
-		.blinds {
-			font-size: rem;
-			font-weight: 700;
-			color: #1e1e1e;
 		}
 	}
 }

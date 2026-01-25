@@ -11,6 +11,7 @@ import {
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 import { useState } from 'react';
 import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
+import { useBlindsFormatter } from '../../../hooks/useBlindsFormatter';
 
 const CentralPanel = () => {
 	const {
@@ -28,6 +29,8 @@ const CentralPanel = () => {
 	} = useTimerSettings();
 
 	const { restartPokerSettings } = usePokerSettings();
+
+	const formatBlind = useBlindsFormatter();
 
 	const isBlind = currentLevel.type === 'blind';
 
@@ -64,11 +67,16 @@ const CentralPanel = () => {
 						<p>Current Blinds:</p>
 						<p className={styles.blinds}>
 							{isBlind
-								? currentLevel.bigBlind + ' / ' + currentLevel.smallBlind
+								? formatBlind(currentLevel.bigBlind, 10000) +
+									' / ' +
+									formatBlind(currentLevel.smallBlind, 5000)
 								: 'BREAK'}
 						</p>
 						<p>
-							Ante: <span>{isBlind ? currentLevel.ante : '-'}</span>
+							Ante:{' '}
+							<span>
+								{isBlind ? formatBlind(currentLevel.ante, 10000) : '-'}
+							</span>
 						</p>
 					</div>
 				)}
