@@ -16,7 +16,7 @@ const Timer = () => {
 			<CentralPanel />
 			<RightBar />
 
-			<Modal isOpen={isFormModalOpen} onClose={checkErrors}>
+			<Modal isOpen={isFormModalOpen} onClose={checkErrors} isFormModal>
 				<Form title='Custom Settings' />
 			</Modal>
 		</div>

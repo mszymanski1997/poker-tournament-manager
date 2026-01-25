@@ -22,7 +22,7 @@ const BlindsSettingsSection = () => {
 		levelId: string,
 		field: LevelField,
 		value: number,
-		type: 'blind' | 'break'
+		type: 'blind' | 'break',
 	) => {
 		if (type === 'blind') {
 			updateBlindLevel(levelId, field, value);
@@ -43,62 +43,66 @@ const BlindsSettingsSection = () => {
 							key={level.id}
 							id={`settings-${level.id}`}
 						>
-							<Input
-								label='Big Blind:'
-								onChange={(e) =>
-									handleLevelFieldChange(
-										level.id,
-										'bigBlind',
-										+e.target.value,
-										level.type
-									)
-								}
-								value={getBlindValue('bigBlind', level.id)}
-								error={!!levelsErrors[level.id]?.bigBlind}
-								warningText={levelsErrors[level.id]?.bigBlind}
-							/>
-							<Input
-								label='Small Blind:'
-								onChange={(e) =>
-									handleLevelFieldChange(
-										level.id,
-										'smallBlind',
-										+e.target.value,
-										level.type
-									)
-								}
-								value={getBlindValue('smallBlind', level.id)}
-								error={!!levelsErrors[level.id]?.smallBlind}
-								warningText={levelsErrors[level.id]?.smallBlind}
-							/>
-							<Input
-								label='Ante:'
-								onChange={(e) =>
-									handleLevelFieldChange(
-										level.id,
-										'ante',
-										+e.target.value,
-										level.type
-									)
-								}
-								value={getBlindValue('ante', level.id)}
-								error={!!levelsErrors[level.id]?.ante}
-								warningText={levelsErrors[level.id]?.ante}
-							/>
-							<Input
-								label='Duration:'
-								onChange={(e) =>
-									handleLevelFieldChange(
-										level.id,
-										'duration',
-										+e.target.value,
-										level.type
-									)
-								}
-								value={getBlindValue('duration', level.id)}
-								error={!!levelsErrors[level.id]?.duration}
-								warningText={levelsErrors[level.id]?.duration}
-							/>
+							<div className={styles.fieldsRow}>
+								<Input
+									label='Big Blind:'
+									onChange={(e) =>
+										handleLevelFieldChange(
+											level.id,
+											'bigBlind',
+											+e.target.value,
+											level.type,
+										)
+									}
+									value={getBlindValue('bigBlind', level.id)}
+									error={!!levelsErrors[level.id]?.bigBlind}
+									warningText={levelsErrors[level.id]?.bigBlind}
+								/>
+								<Input
+									label='Small Blind:'
+									onChange={(e) =>
+										handleLevelFieldChange(
+											level.id,
+											'smallBlind',
+											+e.target.value,
+											level.type,
+										)
+									}
+									value={getBlindValue('smallBlind', level.id)}
+									error={!!levelsErrors[level.id]?.smallBlind}
+									warningText={levelsErrors[level.id]?.smallBlind}
+								/>
+							</div>
+							<div className={styles.fieldsRow}>
+								<Input
+									label='Ante:'
+									onChange={(e) =>
+										handleLevelFieldChange(
+											level.id,
+											'ante',
+											+e.target.value,
+											level.type,
+										)
+									}
+									value={getBlindValue('ante', level.id)}
+									error={!!levelsErrors[level.id]?.ante}
+									warningText={levelsErrors[level.id]?.ante}
+								/>
+								<Input
+									label='Duration:'
+									onChange={(e) =>
+										handleLevelFieldChange(
+											level.id,
+											'duration',
+											+e.target.value,
+											level.type,
+										)
+									}
+									value={getBlindValue('duration', level.id)}
+									error={!!levelsErrors[level.id]?.duration}
+									warningText={levelsErrors[level.id]?.duration}
+								/>
+							</div>
 							<Button
 								className={styles.xButton}
 								onClick={() => removeLevel(level.id)}
@@ -118,7 +122,7 @@ const BlindsSettingsSection = () => {
 									level.id,
 									'duration',
 									+e.target.value,
-									level.type
+									level.type,
 								)
 							}
 							value={getBreakValue(level.id)}

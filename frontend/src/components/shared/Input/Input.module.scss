@@ -57,7 +57,7 @@
 
 	.warningMessage {
 		margin: 0.2rem 0;
-		font-size: 0.55rem;
+		font-size: 0.6rem;
 	}
 }
 
@@ -70,5 +70,30 @@
 	.label {
 		gap: 0.3rem;
 		font-size: 0.9rem;
+	}
+
+	.warningMessage {
+		font-size: 0.53rem;
+	}
+}
+
+@media (max-width: 1024px) {
+	.input {
+		font-size: 1rem;
+	}
+
+	.label {
+		gap: 0.3rem;
+		font-size: 1rem;
+	}
+
+	.warningMessage {
+		font-size: 0.7rem;
+	}
+}
+
+@media (min-width: 579px) and (max-width: 697px) {
+	.input {
+		font-size: 0.6rem;
 	}
 }

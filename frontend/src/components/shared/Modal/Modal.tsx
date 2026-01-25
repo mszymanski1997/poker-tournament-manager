@@ -6,17 +6,20 @@ type ModalProps = {
 	isOpen: boolean;
 	onClose: () => void;
 	children: ReactNode;
+	isFormModal?: boolean;
 };
 
-const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+const Modal = ({ isOpen, onClose, isFormModal, children }: ModalProps) => {
 	if (!isOpen) return null;
 
 	return createPortal(
 		<>
 			<div className={styles.background} onClick={onClose}></div>
-			<div className={styles.modal}>{children}</div>
+			<div className={`${styles.modal} ${isFormModal ? styles.formModal : ''}`}>
+				{children}
+			</div>
 		</>,
-		document.body
+		document.body,
 	);
 };
 

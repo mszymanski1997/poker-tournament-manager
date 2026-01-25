@@ -9,6 +9,14 @@
 	label span {
 		white-space: nowrap;
 	}
+
+	&__group {
+		width: 100%;
+	}
+}
+
+.fieldsRow {
+	display: contents;
 }
 
 .xButton {
@@ -45,6 +53,70 @@
 
 	label {
 		width: 100%;
-		max-width: 600px;
+	}
+}
+
+@media (max-width: 1024px) {
+	.blindsSettings {
+		flex-direction: column;
+		border: 1px solid #ddd;
+		border-radius: 0.5rem;
+		padding: 2rem 1rem;
+		margin-bottom: 1rem;
+		background: #fafafa;
+		gap: 0;
+	}
+
+	.fieldsRow {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2rem;
+		margin-bottom: 0.5rem;
+		justify-content: space-between;
+	}
+
+	.fieldsRow input {
+		flex: 1;
+		min-width: 48%;
+	}
+
+	.xButton {
+		width: 100%;
+		margin-top: 0.5rem;
+		font-size: 1.5rem;
+	}
+
+	.breakSettings {
+		flex-direction: column;
+		border: 1px solid #ddd;
+		border-radius: 0.5rem;
+		padding: 1rem;
+		margin-bottom: 1rem;
+		gap: 0;
+
+		input,
+		button {
+			width: 100%;
+		}
+	}
+}
+
+@media (max-width: 578px) {
+	.fieldsRow > * {
+		width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+	.blindsSettings {
+		gap: 0rem;
+	}
+
+	.breakSettings {
+		gap: 0rem;
+	}
+
+	.fieldsRow {
+		gap: 0rem;
 	}
 }
