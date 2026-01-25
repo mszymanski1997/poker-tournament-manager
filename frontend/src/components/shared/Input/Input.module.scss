@@ -43,3 +43,32 @@
 	color: #b42318;
 	font-size: 0.7rem;
 }
+
+@media (max-width: 1400px) {
+	.input {
+		padding: 0.5rem 1.6rem 0.5rem 0.8rem;
+		font-size: 0.9rem;
+	}
+
+	.label {
+		gap: 0.3rem;
+		font-size: 1rem;
+	}
+
+	.warningMessage {
+		margin: 0.2rem 0;
+		font-size: 0.55rem;
+	}
+}
+
+@media (max-width: 1200px) {
+	.input {
+		padding: 0.5rem 1.6rem 0.5rem 0.8rem;
+		font-size: 0.7rem;
+	}
+
+	.label {
+		gap: 0.3rem;
+		font-size: 0.9rem;
+	}
+}
