@@ -7,24 +7,30 @@ import type { GameSettings } from '../store/PokerSettings/types';
 
 export const useSubmit = (): (() => void) => {
 	const { validateSettings, settings } = usePokerSettings();
+
 	const { validateAllLevels } = useLevelsValidation();
-	const { closeFormModal, levels } = useTimerSettings();
-	const { setValue } = useLocalStorage<Level[]>('levels');
-	const { setValueWithExpiry } = useLocalStorage<GameSettings>('settings');
+
+	const { closeFormModal, levels, totalTournamentDuration } =
+		useTimerSettings();
+
+	const levelsStorage = useLocalStorage<Level[]>('levels');
+
+	const levelsToExpireStorage = useLocalStorage<Level[]>('levelsToExpiry');
+
+	const settingsStorage = useLocalStorage<GameSettings>('settings');
 
 	const submit = () => {
 		const errors = validateSettings();
 		const levelsErrors = validateAllLevels();
-		const totalTournamentDuration = levels.reduce(
-			(sum, level) => sum + level.duration,
-			0
-		);
 
 		if (Object.keys(errors).length > 0 || Object.keys(levelsErrors).length > 0)
 			return;
 
-		setValue(levels);
-		setValueWithExpiry(settings, totalTournamentDuration);
+		levelsStorage.setValue(levels);
+
+		levelsToExpireStorage.setValueWithExpiry(levels, totalTournamentDuration);
+
+		settingsStorage.setValueWithExpiry(settings, totalTournamentDuration);
 
 		closeFormModal();
 	};

@@ -21,12 +21,15 @@ import type {
 import { DEFAULT_LEVELS } from './defaultLevels';
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
-	const { getValue } = useLocalStorage<Level[]>('levels');
+	const levelsStorage = useLocalStorage<Level[]>('levels');
+
+	const levelsToExpiryStorage = useLocalStorage<Level[]>('levelsToExpiry');
+
 	const { setValueWithExpiry, getValueWithExpiry } =
 		useLocalStorage<LevelLocalStorageData>('level');
 
 	const [levels, setLevels] = useState<Level[]>(() => {
-		return getValue() ?? DEFAULT_LEVELS;
+		return levelsToExpiryStorage.getValueWithExpiry() ?? DEFAULT_LEVELS;
 	});
 
 	const [currentIndex, setCurrentIndex] = useState<number>(() => {
@@ -63,6 +66,11 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const upcomingLevel = levels[currentIndex + 1];
 	const isFirstLevel = currentIndex === 0;
 	const isLastLevel = currentIndex === levels.length - 1;
+
+	const totalTournamentDuration = levels.reduce(
+		(sum, level) => sum + level.duration,
+		0,
+	);
 
 	const currentBlindIndex = levels
 		.slice(0, currentIndex + 1)
@@ -113,14 +121,14 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const updateBlindLevel = (
 		id: string,
 		key: keyof BlindLevel,
-		value: number
+		value: number,
 	) => {
 		setLevels((prev) =>
 			prev.map((level) =>
 				level.id === id && level.type === 'blind'
 					? { ...level, [key]: value }
-					: level
-			)
+					: level,
+			),
 		);
 	};
 
@@ -129,17 +137,17 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 			prev.map((level) =>
 				level.id === id && level.type === 'break'
 					? { ...level, duration: value }
-					: level
-			)
+					: level,
+			),
 		);
 	};
 
 	const getBlindValue = (
 		key: keyof blindInputValue,
-		id: string
+		id: string,
 	): number | undefined => {
 		const level = levels.find(
-			(level): level is BlindLevel => level.id === id && level.type === 'blind'
+			(level): level is BlindLevel => level.id === id && level.type === 'blind',
 		);
 
 		if (level) return level[key];
@@ -149,7 +157,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const getBreakValue = (id: string): number | undefined => {
 		const level = levels.find(
-			(level): level is BreakLevel => level.id === id && level.type === 'break'
+			(level): level is BreakLevel => level.id === id && level.type === 'break',
 		);
 
 		if (level) return level.duration;
@@ -191,6 +199,19 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 
 	const resumeTournament = () => {
 		setIsTournamentFinished(false);
+	};
+
+	const loadLastSettings = () => {
+		const savedLevels = levelsStorage.getValue();
+
+		if (!savedLevels) return;
+
+		setLevels(savedLevels);
+
+		levelsToExpiryStorage.setValueWithExpiry(
+			savedLevels,
+			totalTournamentDuration,
+		);
 	};
 
 	const restartTournament = () => {
@@ -235,7 +256,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 							levelIndex: currentIndex,
 							timeLeft: timeLeft - 1,
 						},
-						currentLevel.duration * 2
+						currentLevel.duration * 2,
 					);
 				}
 
@@ -326,6 +347,8 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				levelsErrors,
 				updateLevelsErrors,
 				timeLeft,
+				loadLastSettings,
+				totalTournamentDuration,
 			}}
 		>
 			{children}

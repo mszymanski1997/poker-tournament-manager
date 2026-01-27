@@ -26,6 +26,7 @@ const CentralPanel = () => {
 		isTournamentFinished,
 		restartTournament,
 		openFormModal,
+		loadLastSettings,
 	} = useTimerSettings();
 
 	const { restartPokerSettings } = usePokerSettings();
@@ -101,7 +102,9 @@ const CentralPanel = () => {
 				</div>
 
 				<div className={styles.settingsButtons}>
-					<Button size='big'>Load settings</Button>
+					<Button size='big' onClick={loadLastSettings}>
+						Load last structure
+					</Button>
 					<Button size='big' onClick={() => setIsModalOpen(true)}>
 						Restart
 					</Button>

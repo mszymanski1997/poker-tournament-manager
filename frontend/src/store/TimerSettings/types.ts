@@ -41,6 +41,7 @@ export type TimerContextValue = {
 	currentBlindIndex: number;
 	currentLevel: Level;
 	upcomingLevel: Level | undefined;
+	totalTournamentDuration: number;
 
 	isFirstLevel: boolean;
 	isLastLevel: boolean;
@@ -51,6 +52,7 @@ export type TimerContextValue = {
 	finishTournament: () => void;
 	resumeTournament: () => void;
 	restartTournament: () => void;
+	loadLastSettings: () => void;
 
 	closeFormModal: () => void;
 	openFormModal: () => void;
