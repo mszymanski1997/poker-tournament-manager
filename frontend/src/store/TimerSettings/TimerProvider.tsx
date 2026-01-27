@@ -66,6 +66,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	const upcomingLevel = levels[currentIndex + 1];
 	const isFirstLevel = currentIndex === 0;
 	const isLastLevel = currentIndex === levels.length - 1;
+	const middleTournamentIndex = Math.ceil(levels.length / 2);
 
 	const totalTournamentDuration = levels.reduce(
 		(sum, level) => sum + level.duration,
@@ -248,6 +249,10 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 			setTimeLeft((prev) => {
 				if (prev === 61) {
 					lastMinuteSoundRef.current?.play();
+				}
+
+				if (middleTournamentIndex === currentIndex && prev === 50) {
+					levelsStorage.setValue(levels);
 				}
 
 				if (prev > 0) {

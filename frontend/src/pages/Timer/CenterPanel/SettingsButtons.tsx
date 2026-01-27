@@ -4,6 +4,8 @@ import styles from './SettingsButtons.module.scss';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 import { useState } from 'react';
 import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import type { Level } from '../../../store/TimerSettings/types';
 
 const SettingsButtons = () => {
 	const {
@@ -13,14 +15,15 @@ const SettingsButtons = () => {
 		restartTournament,
 	} = useTimerSettings();
 
+	const { getValue } = useLocalStorage<Level[]>('levels');
+	const storedLevels = getValue();
+
 	const { restartPokerSettings } = usePokerSettings();
 
 	const [isRestartModalOpen, setIsRestartModalOpen] = useState<boolean>(false);
 
 	const [isSettingsLoadingModalOpen, setIsSettingsLoadingModalOpen] =
 		useState<boolean>(false);
-
-	const [isSettingsLoaded, setIsSettingsLoaded] = useState<boolean>(false);
 
 	const closeModal = () => {
 		setIsRestartModalOpen(false);
@@ -32,17 +35,11 @@ const SettingsButtons = () => {
 		setIsRestartModalOpen(false);
 	};
 
-	const handleSettingsLoading = () => {
-		if (!isSettingsLoaded) {
-			loadLastSettings();
-			setIsSettingsLoaded(true);
-			restart();
-		} else {
-			setIsSettingsLoadingModalOpen(true);
-		}
+	const showLoadingSettingsModal = () => {
+		setIsSettingsLoadingModalOpen(true);
 	};
 
-	const loadSettingsFromModal = () => {
+	const loadSettings = () => {
 		loadLastSettings();
 		setIsSettingsLoadingModalOpen(false);
 		restart();
@@ -51,7 +48,7 @@ const SettingsButtons = () => {
 	return (
 		<>
 			<Modal isOpen={isRestartModalOpen} onClose={closeModal}>
-				<div className={styles.restartContainer}>
+				<div className={styles.modalContainer}>
 					<h2>Are you sure that you want to restart tournament?</h2>
 					<div className={styles.restartButtons}>
 						<Button onClick={closeModal}>Cancel</Button>
@@ -63,7 +60,7 @@ const SettingsButtons = () => {
 			</Modal>
 
 			<Modal isOpen={isSettingsLoadingModalOpen} onClose={closeModal}>
-				<div className={styles.restartContainer}>
+				<div className={styles.modalContainer}>
 					<h2>Are you sure that you want to load last settings again?</h2>
 
 					<div className={styles.warning}>
@@ -74,10 +71,7 @@ const SettingsButtons = () => {
 						<Button onClick={() => setIsSettingsLoadingModalOpen(false)}>
 							Cancel
 						</Button>
-						<Button
-							onClick={loadSettingsFromModal}
-							className={styles.buttonDanger}
-						>
+						<Button onClick={loadSettings} className={styles.buttonDanger}>
 							Load settings
 						</Button>
 					</div>
@@ -85,7 +79,11 @@ const SettingsButtons = () => {
 			</Modal>
 
 			<div className={styles.settingsButtons}>
-				<Button size='big' onClick={handleSettingsLoading}>
+				<Button
+					size='big'
+					onClick={showLoadingSettingsModal}
+					disabled={!storedLevels}
+				>
 					Load last structure
 				</Button>
 				<Button size='big' onClick={() => setIsRestartModalOpen(true)}>

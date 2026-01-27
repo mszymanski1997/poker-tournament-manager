@@ -22,11 +22,12 @@ export const useSubmit = (): (() => void) => {
 	const submit = () => {
 		const errors = validateSettings();
 		const levelsErrors = validateAllLevels();
+		const levelsFromStorage = levelsStorage.getValue();
 
 		if (Object.keys(errors).length > 0 || Object.keys(levelsErrors).length > 0)
 			return;
 
-		levelsStorage.setValue(levels);
+		if (!levelsFromStorage) levelsStorage.setValue(levels);
 
 		levelsToExpireStorage.setValueWithExpiry(levels, totalTournamentDuration);
 
