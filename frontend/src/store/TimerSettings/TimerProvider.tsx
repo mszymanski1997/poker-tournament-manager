@@ -18,6 +18,7 @@ import type {
 	LevelErrors,
 	LevelLocalStorageData,
 } from './types';
+
 import { DEFAULT_LEVELS } from './defaultLevels';
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {

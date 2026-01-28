@@ -61,7 +61,7 @@ const SettingsButtons = () => {
 
 			<Modal isOpen={isSettingsLoadingModalOpen} onClose={closeModal}>
 				<div className={styles.modalContainer}>
-					<h2>Are you sure that you want to load last settings again?</h2>
+					<h2>Are you sure that you want to load last settings?</h2>
 
 					<div className={styles.warning}>
 						<p>Loading the structure will restart the tournament.</p>
