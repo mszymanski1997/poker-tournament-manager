@@ -6,7 +6,6 @@ This project was built as a **portfolio application**, focusing on real-world lo
 
 ---
 
-
 ## 🌐 Live Demo
 
 The application is deployed using **GitHub Pages** and can be accessed here:
@@ -50,6 +49,11 @@ Even for people unfamiliar with poker, you can think of it as:
   - a **"Tournament Finished"** message is shown
 
 The tournament can be reset or restored at any time, with confirmation modals to prevent accidental data loss.
+
+> **Note:**  
+> Default tournament settings are optimized for demonstration purposes.  
+> Short blind durations and a limited number of levels allow users and recruiters to quickly observe blind progression, warning states, level transitions, and tournament completion.  
+> All values can be fully customized via the settings form.
 
 ---
 

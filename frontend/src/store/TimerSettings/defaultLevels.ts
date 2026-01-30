@@ -3,7 +3,7 @@ import type { Level } from './types';
 export const DEFAULT_LEVELS: Level[] = [
 	{
 		type: 'blind',
-		duration: 1,
+		duration: 2,
 		bigBlind: 100,
 		smallBlind: 50,
 		ante: 100,
@@ -11,7 +11,7 @@ export const DEFAULT_LEVELS: Level[] = [
 	},
 	{
 		type: 'blind',
-		duration: 1,
+		duration: 2,
 		bigBlind: 200,
 		smallBlind: 100,
 		ante: 200,
@@ -19,7 +19,7 @@ export const DEFAULT_LEVELS: Level[] = [
 	},
 	{
 		type: 'blind',
-		duration: 1,
+		duration: 2,
 		bigBlind: 300,
 		smallBlind: 150,
 		ante: 300,
@@ -27,7 +27,7 @@ export const DEFAULT_LEVELS: Level[] = [
 	},
 	{
 		type: 'blind',
-		duration: 1,
+		duration: 2,
 		bigBlind: 400,
 		smallBlind: 200,
 		ante: 400,
