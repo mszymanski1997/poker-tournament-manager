@@ -6,6 +6,15 @@ This project was built as a **portfolio application**, focusing on real-world lo
 
 ---
 
+
+## 🌐 Live Demo
+
+The application is deployed using **GitHub Pages** and can be accessed here:
+
+👉 **https://mszymanski1997.github.io/poker-tournament-manager/**
+
+---
+
 ## 🃏 What is a Poker Timer?
 
 In poker tournaments, the game is divided into **blind levels**.  
