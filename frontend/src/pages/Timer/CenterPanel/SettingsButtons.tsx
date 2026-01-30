@@ -39,6 +39,10 @@ const SettingsButtons = () => {
 		setIsSettingsLoadingModalOpen(true);
 	};
 
+	const closeLoadingSettingsModal = () => {
+		setIsSettingsLoadingModalOpen(false);
+	};
+
 	const loadSettings = () => {
 		loadLastSettings();
 		setIsSettingsLoadingModalOpen(false);
@@ -59,7 +63,10 @@ const SettingsButtons = () => {
 				</div>
 			</Modal>
 
-			<Modal isOpen={isSettingsLoadingModalOpen} onClose={closeModal}>
+			<Modal
+				isOpen={isSettingsLoadingModalOpen}
+				onClose={closeLoadingSettingsModal}
+			>
 				<div className={styles.modalContainer}>
 					<h2>Are you sure that you want to load last settings?</h2>
 
@@ -68,9 +75,7 @@ const SettingsButtons = () => {
 					</div>
 
 					<div className={styles.restartButtons}>
-						<Button onClick={() => setIsSettingsLoadingModalOpen(false)}>
-							Cancel
-						</Button>
+						<Button onClick={closeLoadingSettingsModal}>Cancel</Button>
 						<Button onClick={loadSettings} className={styles.buttonDanger}>
 							Load settings
 						</Button>
