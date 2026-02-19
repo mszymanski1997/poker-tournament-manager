@@ -14,11 +14,16 @@ const Form = ({ title }: FormProps) => {
 	const { levels, addNewLevel, isWarningMessageVisible } = useTimerSettings();
 
 	const containerRef = useRef<HTMLDivElement>(null);
+	const prevLenghtRef = useRef<number>(levels.length);
 
 	useEffect(() => {
-		if (containerRef.current) {
-			containerRef.current.scrollTop = containerRef.current.scrollHeight;
+		if (levels.length > prevLenghtRef.current) {
+			if (containerRef.current) {
+				containerRef.current.scrollTop = containerRef.current.scrollHeight;
+			}
 		}
+		
+		prevLenghtRef.current = levels.length;
 	}, [levels]);
 
 	const submit = useSubmit();
