@@ -59,13 +59,14 @@ export const useLevelsValidation = () => {
 		});
 
 		updateLevelsErrors(newErrors);
+
 		return newErrors;
 	};
 
 	const clearFieldError = (
 		levelId: string,
 		field: LevelField,
-		value: number
+		value: number,
 	) => {
 		const prev = levelsErrors;
 

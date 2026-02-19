@@ -16,14 +16,12 @@ const TopSettingsSection = () => {
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
 		setSetting: (value: number) => void,
-		minValue: number = 0
+		minValue: number = 0,
 	) => {
 		const value = Math.max(minValue, +e.target.value);
 
 		setSetting(value);
 	};
-
-	
 
 	return (
 		<>
@@ -34,6 +32,7 @@ const TopSettingsSection = () => {
 					value={settings.startingStack}
 					error={!!validationErrors.startingStack}
 					warningText={validationErrors.startingStack}
+					id='startingStack'
 				/>
 				<Input
 					label='Buy-In value:'
@@ -41,6 +40,7 @@ const TopSettingsSection = () => {
 					value={settings.buyInValue}
 					error={!!validationErrors.buyInValue}
 					warningText={validationErrors.buyInValue}
+					id='buyInValue'
 				/>
 			</div>
 
@@ -51,6 +51,7 @@ const TopSettingsSection = () => {
 					value={settings.buyIns}
 					error={!!validationErrors.buyIns}
 					warningText={validationErrors.buyIns}
+					id='buyIns'
 				/>
 				<Input
 					label='Rebuys:'
@@ -65,6 +66,7 @@ const TopSettingsSection = () => {
 				value={settings.playersIn}
 				error={!!validationErrors.playersIn}
 				warningText={validationErrors.playersIn}
+				id='playersIn'
 			/>
 		</>
 	);

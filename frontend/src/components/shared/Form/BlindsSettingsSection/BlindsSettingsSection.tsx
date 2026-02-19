@@ -114,7 +114,11 @@ const BlindsSettingsSection = () => {
 				}
 
 				return (
-					<div className={styles.breakSettings} key={level.id}>
+					<div
+						className={styles.breakSettings}
+						key={level.id}
+						id={`settings-${level.id}`}
+					>
 						<Input
 							label='Break Duration:'
 							onChange={(e) =>

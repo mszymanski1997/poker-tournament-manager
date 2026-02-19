@@ -16,7 +16,7 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	});
 
 	const [validationErrors, setValidationErrors] = useState<GameSettingsErrors>(
-		{}
+		{},
 	);
 
 	const restartPokerSettings = () => {
@@ -61,12 +61,13 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		});
 
 		setValidationErrors(newErrors);
+
 		return newErrors;
 	};
 
 	const updateValidationErrors = (
 		value: number,
-		field: keyof GameSettingsErrors
+		field: keyof GameSettingsErrors,
 	) => {
 		if (value > 0 && Number.isInteger(value)) {
 			setValidationErrors((prev) => {

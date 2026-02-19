@@ -5,13 +5,16 @@ import BlindsSettingsSection from './BlindsSettingsSection/BlindsSettingsSection
 import { useEffect, useRef } from 'react';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 import { useSubmit } from '../../../hooks/useSubmit';
+import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
 
 type FormProps = {
 	title: 'Custom Settings' | 'Save Settings';
 };
 
 const Form = ({ title }: FormProps) => {
-	const { levels, addNewLevel, isWarningMessageVisible } = useTimerSettings();
+	const { levels, addNewLevel, isWarningMessageVisible, levelsErrors } =
+		useTimerSettings();
+	const { validationErrors } = usePokerSettings();
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	const prevLenghtRef = useRef<number>(levels.length);
@@ -22,9 +25,39 @@ const Form = ({ title }: FormProps) => {
 				containerRef.current.scrollTop = containerRef.current.scrollHeight;
 			}
 		}
-		
+
 		prevLenghtRef.current = levels.length;
 	}, [levels]);
+
+	useEffect(() => {
+		if (!containerRef.current) return;
+
+		const firstTopError = Object.keys(validationErrors)[0];
+
+		if (firstTopError) {
+			const element = containerRef.current.querySelector(`#${firstTopError}`);
+
+			element?.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start',
+			});
+
+			return;
+		}
+
+		const firstErrorLevel = levels.find((level) => levelsErrors[level.id]);
+
+		if (!firstErrorLevel) return;
+
+		const element = containerRef.current.querySelector(
+			`#settings-${firstErrorLevel.id}`,
+		);
+
+		element?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start',
+		});
+	}, [validationErrors, levelsErrors, levels]);
 
 	const submit = useSubmit();
 
