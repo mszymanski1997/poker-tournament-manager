@@ -3,32 +3,14 @@ import Input from '../../Input/Input';
 import styles from './TopSettingsSection.module.scss';
 
 const TopSettingsSection = () => {
-	const {
-		settings,
-		validationErrors,
-		setStartingStack,
-		setBuyInValue,
-		setBuyInsCount,
-		setRebuysCount,
-		setPlayersInCount,
-	} = usePokerSettings();
-
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		setSetting: (value: number) => void,
-		minValue: number = 0,
-	) => {
-		const value = Math.max(minValue, +e.target.value);
-
-		setSetting(value);
-	};
+	const { settings, validationErrors, updateOneSetting } = usePokerSettings();
 
 	return (
 		<>
 			<div className={styles.separator}>
 				<Input
 					label='Starting stack'
-					onChange={(e) => handleChange(e, setStartingStack, 1)}
+					onChange={(e) => updateOneSetting('startingStack', +e.target.value)}
 					value={settings.startingStack}
 					error={!!validationErrors.startingStack}
 					warningText={validationErrors.startingStack}
@@ -36,7 +18,7 @@ const TopSettingsSection = () => {
 				/>
 				<Input
 					label='Buy-In value:'
-					onChange={(e) => handleChange(e, setBuyInValue)}
+					onChange={(e) => updateOneSetting('buyInValue', +e.target.value)}
 					value={settings.buyInValue}
 					error={!!validationErrors.buyInValue}
 					warningText={validationErrors.buyInValue}
@@ -47,7 +29,7 @@ const TopSettingsSection = () => {
 			<div className={styles.separator}>
 				<Input
 					label='Buy-ins:'
-					onChange={(e) => handleChange(e, setBuyInsCount)}
+					onChange={(e) => updateOneSetting('buyIns', +e.target.value)}
 					value={settings.buyIns}
 					error={!!validationErrors.buyIns}
 					warningText={validationErrors.buyIns}
@@ -55,14 +37,17 @@ const TopSettingsSection = () => {
 				/>
 				<Input
 					label='Rebuys:'
-					onChange={(e) => handleChange(e, setRebuysCount)}
+					onChange={(e) => updateOneSetting('rebuys', +e.target.value)}
 					value={settings.rebuys}
+					error={!!validationErrors.rebuys}
+					warningText={validationErrors.rebuys}
+					id='rebuys'
 				/>
 			</div>
 
 			<Input
 				label='Players-In:'
-				onChange={(e) => handleChange(e, setPlayersInCount)}
+				onChange={(e) => updateOneSetting('playersIn', +e.target.value)}
 				value={settings.playersIn}
 				error={!!validationErrors.playersIn}
 				warningText={validationErrors.playersIn}

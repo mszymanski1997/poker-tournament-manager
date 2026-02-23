@@ -1,15 +1,9 @@
 export type GameSettings = {
-	// basic input data
 	startingStack: number;
 	buyInValue: number;
 	buyIns: number;
 	rebuys: number;
 	playersIn: number;
-
-	// calculated data
-	averageStack: number | '-';
-	totalChips: number | '-';
-	totalMoney: number | '-';
 };
 
 export type PayoutsSettings =
@@ -27,17 +21,13 @@ export type GameSettingsErrors = {
 	buyInValue?: string;
 	buyIns?: string;
 	playersIn?: string;
+	rebuys?: string;
 };
 
 export type PokerContextSettings = {
 	settings: GameSettings;
-	setStartingStack: (count: number) => void;
-	setBuyInValue: (value: number) => void;
-	setBuyInsCount: (count: number) => void;
-	setRebuysCount: (count: number) => void;
-	setPlayersInCount: (count: number) => void;
 	validateSettings: () => GameSettingsErrors;
-	setPayouts: () => PayoutsSettings;
 	restartPokerSettings: () => void;
 	validationErrors: GameSettingsErrors;
+	updateOneSetting: (setting: keyof GameSettings, value: number) => void;
 };
