@@ -1,11 +1,13 @@
 import { usePokerSettings } from '../../store/PokerSettings/usePokerSettings';
 import { useTimerSettings } from '../../store/TimerSettings/useTimerSettings';
 import { useBlindsFormatter } from '../../hooks/useBlindsFormatter';
+import { useGameCalculation } from '../../store/PokerSettings/useGameCalculation';
 
 const LeftBar = () => {
 	const { settings } = usePokerSettings();
 	const { upcomingLevel } = useTimerSettings();
 	const formatBlind = useBlindsFormatter();
+	const { totalChips, averageStack } = useGameCalculation();
 
 	const renderNextBlind = () => {
 		if (!upcomingLevel) return 'Game Over';
@@ -32,11 +34,11 @@ const LeftBar = () => {
 				</li>
 				<li>
 					<span className='label'>Total chips:</span>
-					<span className='value'>{settings.totalChips}</span>
+					<span className='value'>{totalChips}</span>
 				</li>
 				<li>
 					<span className='label'>Averege stack:</span>
-					<span className='value'>{settings.averageStack}</span>
+					<span className='value'>{averageStack}</span>
 				</li>
 			</ul>
 		</div>
