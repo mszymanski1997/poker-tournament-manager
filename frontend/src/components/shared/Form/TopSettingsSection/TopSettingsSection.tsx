@@ -1,9 +1,17 @@
+import type { Currency } from '../../../../store/PokerSettings/types';
 import { usePokerSettings } from '../../../../store/PokerSettings/usePokerSettings';
-import Input from '../../Input/Input';
+import Input from '../../FormElements/Input';
+import CurrencySelect from '../../FormElements/CurrencySelect';
 import styles from './TopSettingsSection.module.scss';
 
 const TopSettingsSection = () => {
-	const { settings, validationErrors, updateOneSetting } = usePokerSettings();
+	const {
+		settings,
+		validationErrors,
+		updateOneSetting,
+		updateCurrency,
+		currency,
+	} = usePokerSettings();
 
 	return (
 		<>
@@ -45,14 +53,22 @@ const TopSettingsSection = () => {
 				/>
 			</div>
 
-			<Input
-				label='Players-In:'
-				onChange={(e) => updateOneSetting('playersIn', +e.target.value)}
-				value={settings.playersIn}
-				error={!!validationErrors.playersIn}
-				warningText={validationErrors.playersIn}
-				id='playersIn'
-			/>
+			<div className={styles.separator}>
+				<Input
+					label='Players-In:'
+					onChange={(e) => updateOneSetting('playersIn', +e.target.value)}
+					value={settings.playersIn}
+					error={!!validationErrors.playersIn}
+					warningText={validationErrors.playersIn}
+					id='playersIn'
+				/>
+
+				<CurrencySelect
+					label='Choose currency'
+					onChange={(e) => updateCurrency(e.target.value as Currency)}
+					value={currency}
+				/>
+			</div>
 		</>
 	);
 };

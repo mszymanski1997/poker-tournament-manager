@@ -1,7 +1,11 @@
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { PokerContext } from './PokerContext';
-import { type GameSettings, type GameSettingsErrors } from './types';
-import { useState, type ReactNode } from 'react';
+import {
+	type Currency,
+	type GameSettings,
+	type GameSettingsErrors,
+} from './types';
+import { useEffect, useState, type ReactNode } from 'react';
 import { INITIAL_SETTINGS } from './initialSettings';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
@@ -14,6 +18,16 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const [validationErrors, setValidationErrors] = useState<GameSettingsErrors>(
 		{},
 	);
+
+	const [currency, setCurrency] = useState<Currency>('$');
+
+	useEffect(() => {
+		console.log(currency);
+	}, [currency]);
+
+	const updateCurrency = (currency: Currency) => {
+		setCurrency(currency);
+	};
 
 	const restartPokerSettings = () => {
 		setSettings(INITIAL_SETTINGS);
@@ -52,6 +66,7 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 			'buyInValue',
 			'buyIns',
 			'playersIn',
+			'rebuys',
 		];
 
 		integers.forEach((field) => {
@@ -94,10 +109,12 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		<PokerContext.Provider
 			value={{
 				settings,
+				currency,
 				validateSettings,
 				validationErrors,
 				restartPokerSettings,
 				updateOneSetting,
+				updateCurrency,
 			}}
 		>
 			{children}

@@ -24,10 +24,14 @@ export type GameSettingsErrors = {
 	rebuys?: string;
 };
 
+export type Currency = 'zł' | '$' | '£' | 'Kč' | '£';
+
 export type PokerContextSettings = {
 	settings: GameSettings;
+	currency: Currency;
 	validateSettings: () => GameSettingsErrors;
 	restartPokerSettings: () => void;
 	validationErrors: GameSettingsErrors;
 	updateOneSetting: (setting: keyof GameSettings, value: number) => void;
+	updateCurrency: (currency: Currency) => void;
 };

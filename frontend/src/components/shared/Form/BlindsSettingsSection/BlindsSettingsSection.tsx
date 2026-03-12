@@ -1,5 +1,5 @@
 import styles from './BlindsSettingsSection.module.scss';
-import Input from '../../Input/Input';
+import Input from '../../FormElements/Input';
 import Button from '../../Button/Button';
 import { useLevelsValidation } from '../../../../store/TimerSettings/useLevelsValidation';
 import { useTimerSettings } from '../../../../store/TimerSettings/useTimerSettings';

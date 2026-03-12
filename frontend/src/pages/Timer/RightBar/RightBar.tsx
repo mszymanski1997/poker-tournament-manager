@@ -4,7 +4,7 @@ import { useGameCalculation } from '../../../store/PokerSettings/useGameCalculat
 import BreakTimerCounter from './BreakTimerCounter';
 
 const RightBar = () => {
-	const { settings } = usePokerSettings();
+	const { settings, currency } = usePokerSettings();
 	const { currentBlindIndex } = useTimerSettings();
 	const { totalMoney, setPayouts } = useGameCalculation();
 
@@ -36,7 +36,9 @@ const RightBar = () => {
 
 				<li>
 					<span className='label'>Total money:</span>
-					<span className='value'>{totalMoney}</span>
+					<span className='value'>
+						{settings.playersIn ? `${totalMoney}${currency}` : '-'}
+					</span>
 				</li>
 
 				<li className='last-list-element'>
@@ -47,6 +49,7 @@ const RightBar = () => {
 								{typeof payouts !== 'string' ? (
 									<>
 										<strong>{index + 1}.</strong> {amount}
+										{currency}
 									</>
 								) : (
 									payouts
