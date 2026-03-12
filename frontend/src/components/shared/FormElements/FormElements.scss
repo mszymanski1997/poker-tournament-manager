@@ -1,0 +1,145 @@
+.label {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+	font-size: 1.2rem;
+	color: #333;
+	font-weight: bold;
+}
+
+.input,
+.select {
+	scroll-margin-top: 100px;
+	outline: none;
+	border-radius: 0.5rem;
+	padding: 0.5rem 1.6rem 0.5rem 0.8rem;
+	font-size: 1rem;
+	transition:
+		border-color 0.3s,
+		box-shadow 0.3s,
+		background-color 0.3s;
+}
+
+.selectWrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.select {
+	font-size: 0.8rem;
+	width: 240px;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.arrow {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translate(-50%, -50%);
+}
+
+.normalInput,
+.select {
+	border: 1px solid #888888;
+
+	&:focus {
+		border-color: #007bff;
+		box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+	}
+}
+
+.warningBackground {
+	min-height: 1.2em;
+	border: 1.5px solid #b42318;
+	background-color: rgba(180, 35, 24, 0.05);
+
+	&:focus {
+		background-color: rgba(180, 35, 24, 0.1);
+	}
+}
+
+.warningMessage {
+	margin: 0.3rem 0;
+	font-weight: normal;
+	color: #b42318;
+	font-size: 0.7rem;
+}
+
+@media (max-width: 1400px) {
+	.input,
+	.select {
+		padding: 0.5rem 1.6rem 0.5rem 0.8rem;
+		font-size: 0.9rem;
+	}
+
+	.select {
+		font-size: 0.75rem;
+		width: 220px;
+	}
+
+	.label {
+		gap: 0.3rem;
+		font-size: 1rem;
+	}
+
+	.warningMessage {
+		margin: 0.2rem 0;
+		font-size: 0.6rem;
+	}
+}
+
+@media (max-width: 1200px) {
+	.input,
+	.select {
+		padding: 0.5rem 1.6rem 0.5rem 0.8rem;
+		font-size: 0.7rem;
+	}
+
+	.select {
+		width: 185px;
+		padding-top: 0.4rem;
+		padding-bottom: 0.35rem;
+	}
+
+	.label {
+		gap: 0.3rem;
+		font-size: 0.9rem;
+	}
+
+	.warningMessage {
+		font-size: 0.53rem;
+	}
+}
+
+@media (max-width: 1024px) {
+	.input,
+	.select {
+		font-size: 1rem;
+	}
+
+	.select {
+		width: 235px;
+	}
+
+	.label {
+		gap: 0.3rem;
+		font-size: 1rem;
+	}
+
+	.warningMessage {
+		font-size: 0.7rem;
+	}
+}
+
+@media (min-width: 579px) and (max-width: 697px) {
+	.input,
+	.select {
+		font-size: 0.6rem;
+	}
+
+	.select {
+		width: 160px;
+	}
+}

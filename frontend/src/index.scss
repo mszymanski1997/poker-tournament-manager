@@ -1,4 +1,5 @@
 @import './pages/Timer/Timer.scss';
+@import './components/shared/FormElements/FormElements.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 * {
@@ -22,7 +23,8 @@ h1 {
 	font-size: 4rem;
 }
 
-button {
+button,
+select {
 	font-family: inherit;
 }
 
