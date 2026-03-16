@@ -3,6 +3,7 @@ import { usePokerSettings } from '../../../../store/PokerSettings/usePokerSettin
 import Input from '../../FormElements/Input';
 import CurrencySelect from '../../FormElements/CurrencySelect';
 import styles from './TopSettingsSection.module.scss';
+import AdvancedSettings from './AdvancedSettings';
 
 const TopSettingsSection = () => {
 	const {
@@ -69,6 +70,8 @@ const TopSettingsSection = () => {
 					value={currency}
 				/>
 			</div>
+
+			<AdvancedSettings />
 		</>
 	);
 };

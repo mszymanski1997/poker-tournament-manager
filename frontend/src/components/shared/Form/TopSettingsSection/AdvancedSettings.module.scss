@@ -1,0 +1,86 @@
+.advancedSettingsContainer {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1rem;
+}
+
+.advancedSetting {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	gap: 6rem;
+
+	.question {
+		text-align: left;
+		font-size: 1.3rem;
+		flex: 1;
+	}
+
+	.checkbox {
+		width: 20px;
+		height: 20px;
+		accent-color: #4a90e2;
+		cursor: pointer;
+	}
+}
+
+.checkbox:hover {
+	transform: scale(1.1);
+	transition: transform 0.2s;
+}
+
+@media (max-width: 1400px) {
+	.advancedSetting {
+		gap: 4rem;
+
+		.question {
+			font-size: 1.25rem;
+		}
+	}
+}
+
+@media (max-width: 1200px) {
+	.advancedSetting {
+		gap: 2rem;
+
+		.question {
+			font-size: 1.15rem;
+		}
+	}
+}
+
+@media (min-width: 698px) and (max-width: 1024px) {
+	.advancedSetting {
+		gap: 6rem;
+
+		.question {
+			font-size: 1.3rem;
+		}
+	}
+}
+
+@media (min-width: 579px) and (max-width: 697px) {
+	.advancedSetting {
+		gap: 2rem;
+
+		.question {
+			font-size: 1rem;
+		}
+	}
+}
+
+@media (max-width: 579px) {
+	.advancedSettingsContainer {
+		margin-top: 1rem;
+		row-gap: 1.5rem;
+	}
+
+	.advancedSetting {
+		gap: 1rem;
+
+		.question {
+			font-size: 0.85rem;
+		}
+	}
+}
