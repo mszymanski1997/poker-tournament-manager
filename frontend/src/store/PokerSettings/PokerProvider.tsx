@@ -5,25 +5,24 @@ import {
 	type GameSettings,
 	type GameSettingsErrors,
 } from './types';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { INITIAL_SETTINGS } from './initialSettings';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
-	const { getValueWithExpiry } = useLocalStorage<GameSettings>('settings');
+	const settingsStorage = useLocalStorage<GameSettings>('settings');
+	const currencyStorage = useLocalStorage<Currency>('currency');
 
 	const [settings, setSettings] = useState<GameSettings>(() => {
-		return getValueWithExpiry() ?? INITIAL_SETTINGS;
+		return settingsStorage.getValueWithExpiry() ?? INITIAL_SETTINGS;
+	});
+
+	const [currency, setCurrency] = useState<Currency>(() => {
+		return currencyStorage.getValueWithExpiry() ?? '$';
 	});
 
 	const [validationErrors, setValidationErrors] = useState<GameSettingsErrors>(
 		{},
 	);
-
-	const [currency, setCurrency] = useState<Currency>('$');
-
-	useEffect(() => {
-		console.log(currency);
-	}, [currency]);
 
 	const updateCurrency = (currency: Currency) => {
 		setCurrency(currency);
