@@ -1,11 +1,17 @@
-import { useState } from 'react';
 import styles from './AdvancedSettings.module.scss';
 import Input from '../../FormElements/Input';
 import Button from '../../Button/Button';
+import { usePokerSettings } from '../../../../store/PokerSettings/usePokerSettings';
 
 const AdvancedSettings = () => {
-	const [isRake, setIsRake] = useState<boolean>(false);
-	const [isAddonAvailable, setIsAddonAvailable] = useState<boolean>(false);
+	const {
+		isRake,
+		isAddonAvailable,
+		handleDisableAddons,
+		handleDisableRake,
+		handleEnableAddons,
+		handleEnableRake,
+	} = usePokerSettings();
 
 	return (
 		<div className={styles.advancedSettingsContainer}>
@@ -17,7 +23,7 @@ const AdvancedSettings = () => {
 					<Button
 						size='big'
 						className={styles.xButton}
-						onClick={() => setIsRake(false)}
+						onClick={handleDisableRake}
 					>
 						X
 					</Button>
@@ -28,7 +34,7 @@ const AdvancedSettings = () => {
 					<input
 						type='checkbox'
 						className={styles.checkbox}
-						onChange={() => setIsRake(true)}
+						onChange={handleEnableRake}
 					/>
 				</div>
 			)}
@@ -46,7 +52,7 @@ const AdvancedSettings = () => {
 					<Button
 						size='big'
 						className={styles.xButton}
-						onClick={() => setIsAddonAvailable(false)}
+						onClick={handleDisableAddons}
 					>
 						X
 					</Button>
@@ -57,7 +63,7 @@ const AdvancedSettings = () => {
 					<input
 						type='checkbox'
 						className={styles.checkbox}
-						onChange={() => setIsAddonAvailable(true)}
+						onChange={handleEnableAddons}
 					/>
 				</div>
 			)}

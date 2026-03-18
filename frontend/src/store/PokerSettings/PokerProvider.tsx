@@ -24,6 +24,25 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		{},
 	);
 
+	const [isRake, setIsRake] = useState<boolean>(false);
+	const [isAddonAvailable, setIsAddonAvailable] = useState<boolean>(false);
+
+	const handleEnableRake = () => {
+		setIsRake(true);
+	};
+
+	const handleDisableRake = () => {
+		setIsRake(false);
+	};
+
+	const handleEnableAddons = () => {
+		setIsAddonAvailable(true);
+	};
+
+	const handleDisableAddons = () => {
+		setIsAddonAvailable(false);
+	};
+
 	const updateCurrency = (currency: Currency) => {
 		setCurrency(currency);
 	};
@@ -114,6 +133,12 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				restartPokerSettings,
 				updateOneSetting,
 				updateCurrency,
+				isRake,
+				isAddonAvailable,
+				handleEnableRake,
+				handleDisableRake,
+				handleEnableAddons,
+				handleDisableAddons,
 			}}
 		>
 			{children}

@@ -29,6 +29,12 @@ export type Currency = 'zł' | '$' | '£' | 'Kč' | '£';
 export type PokerContextSettings = {
 	settings: GameSettings;
 	currency: Currency;
+	isRake: boolean;
+	isAddonAvailable: boolean;
+	handleEnableRake: () => void;
+	handleDisableRake: () => void;
+	handleEnableAddons: () => void;
+	handleDisableAddons: () => void;
 	validateSettings: () => GameSettingsErrors;
 	restartPokerSettings: () => void;
 	validationErrors: GameSettingsErrors;
