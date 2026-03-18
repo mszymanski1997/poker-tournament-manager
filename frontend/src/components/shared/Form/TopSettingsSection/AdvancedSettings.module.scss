@@ -97,6 +97,18 @@
 	}
 }
 
+@media (min-width: 481px) and (max-width: 578px) {
+	.addonContainer {
+		.inputContainer {
+			width: 150px;
+		}
+
+		input {
+			width: 160px;
+		}
+	}
+}
+
 @media (max-width: 480px) {
 	.advancedSettingsContainer {
 		width: 250px;
@@ -117,8 +129,41 @@
 	}
 
 	.advancedSettingsInputContainer {
+		gap: 1rem;
 		.inputContainer {
 			width: 180px;
+		}
+
+		.xButton {
+			padding: 0.5rem 1.25rem;
+		}
+	}
+
+	.addonContainer {
+		.inputContainer {
+			width: 150px;
+		}
+
+		input {
+			width: 120px;
+		}
+	}
+}
+
+@media (max-width: 350px) {
+	.addonContainer {
+		.inputContainer {
+			width: 150px;
+		}
+
+		&:nth-child(2) {
+			input {
+				width: 100px;
+			}
+
+			label {
+				font-size: 0.8rem;
+			}
 		}
 	}
 }

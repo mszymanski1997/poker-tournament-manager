@@ -34,9 +34,14 @@ const AdvancedSettings = () => {
 			)}
 
 			{isAddonAvailable ? (
-				<div className={styles.advancedSettingsInputContainer}>
+				<div
+					className={`${styles.advancedSettingsInputContainer} ${styles.addonContainer}`}
+				>
 					<div className={styles.inputContainer}>
 						<Input label='Addon value:' />
+					</div>
+					<div className={styles.inputContainer}>
+						<Input label='Addons:' />
 					</div>
 					<Button
 						size='big'
