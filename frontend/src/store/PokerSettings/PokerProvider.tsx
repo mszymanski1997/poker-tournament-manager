@@ -5,7 +5,7 @@ import {
 	type GameSettings,
 	type GameSettingsErrors,
 } from './types';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { INITIAL_SETTINGS } from './initialSettings';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
@@ -27,20 +27,28 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const [isRake, setIsRake] = useState<boolean>(false);
 	const [isAddonAvailable, setIsAddonAvailable] = useState<boolean>(false);
 
+	useEffect(() => {
+		console.log(settings);
+	}, [settings]);
+
 	const handleEnableRake = () => {
 		setIsRake(true);
+		updateNestedSetting('rake', 'enable', true);
 	};
 
 	const handleDisableRake = () => {
 		setIsRake(false);
+		updateNestedSetting('rake', 'enable', false);
 	};
 
 	const handleEnableAddons = () => {
 		setIsAddonAvailable(true);
+		updateNestedSetting('addons', 'enable', true);
 	};
 
 	const handleDisableAddons = () => {
 		setIsAddonAvailable(false);
+		updateNestedSetting('addons', 'enable', false);
 	};
 
 	const updateCurrency = (currency: Currency) => {
@@ -112,7 +120,10 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		}
 	};
 
-	const updateOneSetting = (setting: keyof GameSettings, value: number) => {
+	const updateOneSetting = (
+		setting: Exclude<keyof GameSettings, 'rake' | 'addons'>,
+		value: number,
+	) => {
 		setSettings((prev) => {
 			return {
 				...prev,
@@ -121,6 +132,23 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		});
 
 		updateValidationErrors(value, setting);
+	};
+
+	const updateNestedSetting = <
+		K extends 'rake' | 'addons',
+		F extends keyof GameSettings[K],
+	>(
+		key: K,
+		field: F,
+		value: GameSettings[K][F],
+	) => {
+		setSettings((prev) => ({
+			...prev,
+			[key]: {
+				...prev[key],
+				[field]: value,
+			},
+		}));
 	};
 
 	return (
@@ -132,6 +160,7 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				validationErrors,
 				restartPokerSettings,
 				updateOneSetting,
+				updateNestedSetting,
 				updateCurrency,
 				isRake,
 				isAddonAvailable,

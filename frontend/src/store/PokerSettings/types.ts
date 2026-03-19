@@ -4,6 +4,15 @@ export type GameSettings = {
 	buyIns: number;
 	rebuys: number;
 	playersIn: number;
+	rake: {
+		enable: boolean;
+		value: number;
+	};
+	addons: {
+		enable: boolean;
+		value: number;
+		count: number;
+	};
 };
 
 export type PayoutsSettings =
@@ -38,6 +47,17 @@ export type PokerContextSettings = {
 	validateSettings: () => GameSettingsErrors;
 	restartPokerSettings: () => void;
 	validationErrors: GameSettingsErrors;
-	updateOneSetting: (setting: keyof GameSettings, value: number) => void;
+	updateOneSetting: (
+		setting: Exclude<keyof GameSettings, 'rake' | 'addons'>,
+		value: number,
+	) => void;
+	updateNestedSetting: <
+		K extends 'rake' | 'addons',
+		F extends keyof GameSettings[K],
+	>(
+		key: K,
+		field: F,
+		value: GameSettings[K][F],
+	) => void;
 	updateCurrency: (currency: Currency) => void;
 };

@@ -11,6 +11,7 @@ const AdvancedSettings = () => {
 		handleDisableRake,
 		handleEnableAddons,
 		handleEnableRake,
+		updateNestedSetting,
 	} = usePokerSettings();
 
 	return (
@@ -18,7 +19,12 @@ const AdvancedSettings = () => {
 			{isRake ? (
 				<div className={styles.advancedSettingsInputContainer}>
 					<div className={styles.inputContainer}>
-						<Input label='Percent of rake:' />
+						<Input
+							label='Percent of rake:'
+							onChange={(e) =>
+								updateNestedSetting('rake', 'value', +e.target.value)
+							}
+						/>
 					</div>
 					<Button
 						size='big'
@@ -44,10 +50,20 @@ const AdvancedSettings = () => {
 					className={`${styles.advancedSettingsInputContainer} ${styles.addonContainer}`}
 				>
 					<div className={styles.inputContainer}>
-						<Input label='Addon value:' />
+						<Input
+							label='Addon value:'
+							onChange={(e) =>
+								updateNestedSetting('addons', 'value', +e.target.value)
+							}
+						/>
 					</div>
 					<div className={styles.inputContainer}>
-						<Input label='Addons:' />
+						<Input
+							label='Addons:'
+							onChange={(e) =>
+								updateNestedSetting('addons', 'count', +e.target.value)
+							}
+						/>
 					</div>
 					<Button
 						size='big'
