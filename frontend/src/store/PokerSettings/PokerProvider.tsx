@@ -24,30 +24,23 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 		{},
 	);
 
-	const [isRake, setIsRake] = useState<boolean>(false);
-	const [isAddonAvailable, setIsAddonAvailable] = useState<boolean>(false);
-
 	useEffect(() => {
 		console.log(settings);
 	}, [settings]);
 
 	const handleEnableRake = () => {
-		setIsRake(true);
 		updateNestedSetting('rake', 'enable', true);
 	};
 
 	const handleDisableRake = () => {
-		setIsRake(false);
 		updateNestedSetting('rake', 'enable', false);
 	};
 
 	const handleEnableAddons = () => {
-		setIsAddonAvailable(true);
 		updateNestedSetting('addons', 'enable', true);
 	};
 
 	const handleDisableAddons = () => {
-		setIsAddonAvailable(false);
 		updateNestedSetting('addons', 'enable', false);
 	};
 
@@ -162,8 +155,6 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				updateOneSetting,
 				updateNestedSetting,
 				updateCurrency,
-				isRake,
-				isAddonAvailable,
 				handleEnableRake,
 				handleDisableRake,
 				handleEnableAddons,

@@ -5,18 +5,17 @@ import { usePokerSettings } from '../../../../store/PokerSettings/usePokerSettin
 
 const AdvancedSettings = () => {
 	const {
-		isRake,
-		isAddonAvailable,
 		handleDisableAddons,
 		handleDisableRake,
 		handleEnableAddons,
 		handleEnableRake,
 		updateNestedSetting,
+		settings,
 	} = usePokerSettings();
 
 	return (
 		<div className={styles.advancedSettingsContainer}>
-			{isRake ? (
+			{settings.rake.enable ? (
 				<div className={styles.advancedSettingsInputContainer}>
 					<div className={styles.inputContainer}>
 						<Input
@@ -45,7 +44,7 @@ const AdvancedSettings = () => {
 				</div>
 			)}
 
-			{isAddonAvailable ? (
+			{settings.addons.enable ? (
 				<div
 					className={`${styles.advancedSettingsInputContainer} ${styles.addonContainer}`}
 				>
