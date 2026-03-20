@@ -31,6 +31,8 @@ export type GameSettingsErrors = {
 	buyIns?: string;
 	playersIn?: string;
 	rebuys?: string;
+	rake?: string;
+	addonValue?: string;
 };
 
 export type Currency = 'zł' | '$' | '£' | 'Kč' | '£';

@@ -80,7 +80,22 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				'Players in cannot exceed the total number of buy-ins and rebuys.';
 		}
 
-		const integers: (keyof GameSettingsErrors)[] = [
+		if (settings.rake.enable && settings.rake.value <= 0) {
+			newErrors.rake = 'Rake value must be greater than 0';
+		}
+
+		if (settings.addons.enable) {
+			if (settings.addons.value <= settings.startingStack) {
+				newErrors.addonValue =
+					'Addon value must be greater than starting stack';
+			}
+
+			if (settings.addons.value <= 0) {
+				newErrors.addonValue = 'Addon value must be greater than 0';
+			}
+		}
+
+		const integers: Exclude<keyof GameSettings, 'rake' | 'addons'>[] = [
 			'startingStack',
 			'buyInValue',
 			'buyIns',
@@ -93,6 +108,14 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				newErrors[field] = 'The value must be an integer';
 			}
 		});
+
+		if (!Number.isInteger(settings.rake.value)) {
+			newErrors.rake = 'The value must be an integer';
+		}
+
+		if (!Number.isInteger(settings.addons.value)) {
+			newErrors.addonValue = 'The value must be an integer';
+		}
 
 		setValidationErrors(newErrors);
 
@@ -142,6 +165,14 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				[field]: value,
 			},
 		}));
+
+		if (key === 'rake' && field === 'value') {
+			updateValidationErrors(value as number, 'rake');
+		}
+
+		if (key === 'addons' && field === 'value') {
+			updateValidationErrors(value as number, 'addonValue');
+		}
 	};
 
 	return (

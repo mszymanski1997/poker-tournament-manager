@@ -11,6 +11,7 @@ const AdvancedSettings = () => {
 		handleEnableRake,
 		updateNestedSetting,
 		settings,
+		validationErrors,
 	} = usePokerSettings();
 
 	return (
@@ -23,6 +24,10 @@ const AdvancedSettings = () => {
 							onChange={(e) =>
 								updateNestedSetting('rake', 'value', +e.target.value)
 							}
+							value={settings.rake.value}
+							id='rake'
+							error={!!validationErrors.rake}
+							warningText={validationErrors.rake}
 						/>
 					</div>
 					<Button
@@ -54,6 +59,10 @@ const AdvancedSettings = () => {
 							onChange={(e) =>
 								updateNestedSetting('addons', 'value', +e.target.value)
 							}
+							value={settings.addons.value}
+							id='addonValue'
+							error={!!validationErrors.addonValue}
+							warningText={validationErrors.addonValue}
 						/>
 					</div>
 					<div className={styles.inputContainer}>
@@ -62,6 +71,7 @@ const AdvancedSettings = () => {
 							onChange={(e) =>
 								updateNestedSetting('addons', 'count', +e.target.value)
 							}
+							value={settings.addons.count}
 						/>
 					</div>
 					<Button
