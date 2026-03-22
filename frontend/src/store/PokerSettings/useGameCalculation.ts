@@ -3,15 +3,30 @@ import { type PayoutsSettings } from './types';
 
 export const useGameCalculation = () => {
 	const { settings } = usePokerSettings();
-	const { buyInValue, buyIns, rebuys, playersIn, startingStack } = settings;
+	const { buyInValue, buyIns, rebuys, playersIn, startingStack, addons, rake } =
+		settings;
 
 	const totalEntries = buyIns + rebuys;
 
-	const totalChips = startingStack * totalEntries;
+	const totalAddonsValue = addons.enable ? addons.value * addons.count : 0;
+
+	const totalChips = startingStack * totalEntries + totalAddonsValue;
 
 	const averageStack = playersIn ? Math.floor(totalChips / playersIn) : '-';
 
-	const totalMoney = buyIns ? buyInValue * totalEntries : '-';
+	const countTotalMoney = () => {
+		const totalMoney = buyInValue * totalEntries;
+
+		if (!buyIns) return '-';
+
+		if (rake.enable && rake.value > 0) {
+			return Math.round(totalMoney * (1 - rake.value / 100));
+		}
+
+		return totalMoney;
+	};
+
+	const totalMoney = countTotalMoney();
 
 	const setPayouts = (): PayoutsSettings => {
 		if (typeof totalMoney === 'number') {
