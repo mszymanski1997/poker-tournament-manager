@@ -29,9 +29,15 @@ const LeftBar = () => {
 					<span className='value'>{settings.buyIns}</span>
 				</li>
 				<li>
-					<span className='label'>Rebuys:</span>{' '}
+					<span className='label'>Rebuys:</span>
 					<span className='value'>{settings.rebuys}</span>
 				</li>
+				{settings.addons.enable && (
+					<li>
+						<span className='label'>Addons:</span>
+						<span className='value'>{settings.addons.count}</span>
+					</li>
+				)}
 				<li>
 					<span className='label'>Total chips:</span>
 					<span className='value'>{totalChips}</span>
