@@ -28,7 +28,7 @@ const Input = ({
 					{...props}
 				/>
 			</label>
-			<p className='warningMessage'>{error ? warningText : '\u00A0'}</p>
+				<p className='warningMessage'>{error ? warningText : '\u00A0'}</p>
 		</div>
 	);
 };
