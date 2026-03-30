@@ -109,13 +109,17 @@ Planned:
 - Previous tournament structure can be reloaded even days later
 - Reset and load actions require confirmation in a modal
 
-### 📊 Statistics
+## 📊 Statistics & Tournament Logic
 
-- Average stack calculation
-- Total chip count
-- Players-in tracking
-- Time remaining to the next scheduled break
-- Payout-related calculations
+The application provides real-time calculations to support tournament management and decision-making:
+
+- Average stack calculation (based on total chips and active players)
+- Total chip count tracking (including add-ons when enabled)
+- Players-in tracking (active participants during the tournament)
+- Time remaining until the next scheduled break
+- Add-ons support, allowing players to increase their stack during the tournament, with all values automatically reflected in statistics
+- Configurable organizer fee (rake), automatically included in payout calculations
+- Payout-related calculations to assist with accurate prize distribution
 
 ---
 
@@ -135,9 +139,6 @@ Planned:
   - loading saved structures across devices
 - Table balancing system:
   - automatic rebalancing when players join or leave
-- Timer enhancements:
-  - currency selection
-  - add-ons support
 - Further UI/UX improvements
 
 ---
@@ -150,6 +151,9 @@ New features and improvements are planned and will be added incrementally.
 ---
 
 ## 👤 Author
+
+Mateusz Szymański  
+Frontend Developer (in progress)
 
 Created as a portfolio project to demonstrate:
 
