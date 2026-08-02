@@ -2,6 +2,7 @@ import {
   Injectable,
   BadRequestException,
   UnauthorizedException,
+  NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
@@ -57,5 +58,16 @@ export class UsersService {
     };
   }
 
-  async logout() {}
+  async deleteUser(id: string) {
+    const deletedUser = await this.userModel.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return {
+      message: 'User successfully deleted',
+      deletedUserId: deletedUser._id,
+    };
+  }
 }
