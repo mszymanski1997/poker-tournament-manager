@@ -12,8 +12,6 @@ export const BaseLevelSchema = SchemaFactory.createForClass(BaseLevel);
 
 @Schema({ _id: false, versionKey: false })
 export class BlindLevel extends BaseLevel {
-  declare type: 'blind';
-
   @Prop({ required: true })
   smallBlind!: number;
 
@@ -27,11 +25,6 @@ export class BlindLevel extends BaseLevel {
 export const BlindLevelSchema = SchemaFactory.createForClass(BlindLevel);
 
 @Schema({ _id: false, versionKey: false })
-export class BreakLevel extends BaseLevel {
-  declare type: 'break';
-}
+export class BreakLevel extends BaseLevel {}
 
 export const BreakLevelSchema = SchemaFactory.createForClass(BreakLevel);
-
-BaseLevelSchema.discriminator('blind', BlindLevelSchema);
-BaseLevelSchema.discriminator('break', BreakLevelSchema);

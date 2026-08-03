@@ -1,6 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { BaseLevel, BaseLevelSchema } from './tournament-level.schema';
+import {
+  BaseLevel,
+  BaseLevelSchema,
+  BlindLevelSchema,
+  BreakLevelSchema,
+} from './tournament-level.schema';
 
 export type TournamentDocument = HydratedDocument<Tournament>;
 
@@ -18,7 +23,13 @@ export class Tournament {
   @Prop({ required: true })
   startingStack!: number;
 
-  @Prop({ type: [BaseLevelSchema] })
+  @Prop({
+    type: [BaseLevelSchema],
+    discriminators: [
+      { name: 'blind', schema: BlindLevelSchema },
+      { name: 'break', schema: BreakLevelSchema },
+    ],
+  })
   levels!: BaseLevel[];
 }
 
