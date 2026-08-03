@@ -9,6 +9,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from './schemas/user.schema';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -69,5 +70,21 @@ export class UsersService {
       message: 'User successfully deleted',
       deletedUserId: deletedUser._id,
     };
+  }
+
+  async updateUser(id: string, attrs: UpdateUserDto) {
+    const userToUpdate = await this.userModel.findById(id);
+
+    if (!userToUpdate) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    if (attrs.password) {
+      attrs.password = await bcrypt.hash(attrs.password, 10);
+    }
+
+    Object.assign(userToUpdate, attrs);
+
+    return await userToUpdate.save();
   }
 }
