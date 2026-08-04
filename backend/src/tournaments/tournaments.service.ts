@@ -45,7 +45,7 @@ export class TournamentsService {
       id,
       attrs,
       {
-        new: true,
+        returnDocument: 'after',
         runValidators: true,
       },
     );

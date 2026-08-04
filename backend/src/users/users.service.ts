@@ -31,7 +31,6 @@ export class UsersService {
       name,
       email,
       password: hashedPassword,
-      tournaments: [],
     };
 
     const createdNewUser = new this.userModel(newUser);

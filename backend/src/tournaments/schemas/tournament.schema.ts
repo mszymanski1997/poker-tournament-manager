@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Level, LevelSchema } from './tournament-level.schema';
+import { User } from '../../users/schemas/user.schema';
 
 export type TournamentDocument = HydratedDocument<Tournament>;
 
@@ -20,6 +21,9 @@ export class Tournament {
 
   @Prop({ type: [LevelSchema] })
   levels!: Level[];
+
+  @Prop({ type: Types.ObjectId, ref: User.name, required: true })
+  owner!: Types.ObjectId;
 }
 
 export const TournamentSchema = SchemaFactory.createForClass(Tournament);
