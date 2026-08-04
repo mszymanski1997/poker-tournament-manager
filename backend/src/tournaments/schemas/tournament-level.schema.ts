@@ -1,30 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Schema({ discriminatorKey: 'type', _id: false, versionKey: false })
-export class BaseLevel {
-  @Prop({ required: true })
-  type!: string;
+@Schema({ _id: false, versionKey: false })
+export class Level {
+  @Prop({ required: true, enum: ['blind', 'break'] })
+  type!: 'blind' | 'break';
+
   @Prop({ required: true })
   duration!: number;
+
+  @Prop({ required: false })
+  smallBlind?: number;
+
+  @Prop({ required: false })
+  bigBlind?: number;
+
+  @Prop({ required: false })
+  ante?: number;
 }
 
-export const BaseLevelSchema = SchemaFactory.createForClass(BaseLevel);
-
-@Schema({ _id: false, versionKey: false })
-export class BlindLevel extends BaseLevel {
-  @Prop({ required: true })
-  smallBlind!: number;
-
-  @Prop({ required: true })
-  bigBlind!: number;
-
-  @Prop({ required: true })
-  ante!: number;
-}
-
-export const BlindLevelSchema = SchemaFactory.createForClass(BlindLevel);
-
-@Schema({ _id: false, versionKey: false })
-export class BreakLevel extends BaseLevel {}
-
-export const BreakLevelSchema = SchemaFactory.createForClass(BreakLevel);
+export const LevelSchema = SchemaFactory.createForClass(Level);

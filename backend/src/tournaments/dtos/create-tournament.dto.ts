@@ -1,43 +1,41 @@
 import {
-  Equals,
   IsArray,
+  IsEnum,
   IsNumber,
+  IsOptional,
   IsString,
   Min,
   ValidateNested,
 } from 'class-validator';
-
 import { Type } from 'class-transformer';
 
-export class BaseLevelDto {
-  @IsString()
-  type!: 'blind' | 'break';
+export enum LevelType {
+  BLIND = 'blind',
+  BREAK = 'break',
+}
+
+export class TournamentLevelDto {
+  @IsEnum(LevelType, { message: 'Type must be either blind or break' })
+  type!: LevelType;
 
   @IsNumber()
   @Min(1, { message: 'The duration of the level must be at least 1 minute' })
   duration!: number;
-}
 
-export class BlindLevelDto extends BaseLevelDto {
-  @Equals('blind')
-  declare type: 'blind';
-
-  @IsNumber()
-  @Min(1, { message: 'The big blind value must be above 0' })
-  smallBlind!: number;
-
+  @IsOptional()
   @IsNumber()
   @Min(1, { message: 'The small blind value must be above 0' })
-  bigBlind!: number;
+  smallBlind?: number;
 
+  @IsOptional()
+  @IsNumber()
+  @Min(1, { message: 'The big blind value must be above 0' })
+  bigBlind?: number;
+
+  @IsOptional()
   @IsNumber()
   @Min(0, { message: 'The ante value must be at least 0' })
-  ante!: number;
-}
-
-export class BreakLevelDto extends BaseLevelDto {
-  @Equals('break')
-  declare type: 'break';
+  ante?: number;
 }
 
 export class CreateTournamentDto {
@@ -52,20 +50,11 @@ export class CreateTournamentDto {
   currency!: string;
 
   @IsNumber()
-  @Min(1, { message: 'The statring stack must be above 0' })
+  @Min(1, { message: 'The starting stack must be above 0' })
   startingStack!: number;
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => BaseLevelDto, {
-    keepDiscriminatorProperty: true,
-    discriminator: {
-      property: 'type',
-      subTypes: [
-        { value: BlindLevelDto, name: 'blind' },
-        { value: BreakLevelDto, name: 'break' },
-      ],
-    },
-  })
-  levels!: (BlindLevelDto | BreakLevelDto)[];
+  @Type(() => TournamentLevelDto)
+  levels!: TournamentLevelDto[];
 }
