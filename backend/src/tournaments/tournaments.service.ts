@@ -12,16 +12,19 @@ export class TournamentsService {
     private readonly tournamentModel: Model<TournamentDocument>,
   ) {}
 
-  async create(tournament: CreateTournamentDto) {
-    return this.tournamentModel.create(tournament);
+  async create(tournament: CreateTournamentDto, userId: string) {
+    return this.tournamentModel.create({ ...tournament, owner: userId });
   }
 
-  async findAll() {
-    return this.tournamentModel.find({});
+  async findAll(userId: string) {
+    return this.tournamentModel.find({ owner: userId });
   }
 
-  async findOne(id: string) {
-    const tournament = await this.tournamentModel.findById(id);
+  async findOne(id: string, userId: string) {
+    const tournament = await this.tournamentModel.findOne({
+      _id: id,
+      owner: userId,
+    });
 
     if (!tournament) {
       throw new NotFoundException(`Tournament with ID "${id}" not found`);
@@ -30,8 +33,11 @@ export class TournamentsService {
     return tournament;
   }
 
-  async remove(id: string) {
-    const deletedTournament = await this.tournamentModel.findByIdAndDelete(id);
+  async remove(id: string, userId: string) {
+    const deletedTournament = await this.tournamentModel.findOneAndDelete({
+      _id: id,
+      owner: userId,
+    });
 
     if (!deletedTournament) {
       throw new NotFoundException(`Tournament with ID "${id}" not found`);
@@ -40,9 +46,9 @@ export class TournamentsService {
     return deletedTournament;
   }
 
-  async update(id: string, attrs: UpdateTournamentDto) {
-    const updatedTournament = await this.tournamentModel.findByIdAndUpdate(
-      id,
+  async update(id: string, attrs: UpdateTournamentDto, userId: string) {
+    const updatedTournament = await this.tournamentModel.findOneAndUpdate(
+      { _id: id, owner: userId },
       attrs,
       {
         returnDocument: 'after',

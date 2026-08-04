@@ -7,6 +7,7 @@ import {
   Post,
   BadRequestException,
   Patch,
+  Headers,
 } from '@nestjs/common';
 import { TournamentsService } from './tournaments.service';
 import { CreateTournamentDto } from './dtos/create-tournament.dto';
@@ -24,30 +25,42 @@ export class TournamentsController {
   }
 
   @Post()
-  createTournament(@Body() body: CreateTournamentDto) {
-    return this.tournamentsService.create(body);
+  createTournament(
+    @Body() body: CreateTournamentDto,
+    @Headers('x-user-id') userId: string,
+  ) {
+    this.validateID(userId);
+    return this.tournamentsService.create(body, userId);
   }
 
   @Get()
-  findAll() {
-    return this.tournamentsService.findAll();
+  findAll(@Headers('x-user-id') userId: string) {
+    this.validateID(userId);
+    return this.tournamentsService.findAll(userId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string, @Headers('x-user-id') userId: string) {
     this.validateID(id);
-    return this.tournamentsService.findOne(id);
+    this.validateID(userId);
+    return this.tournamentsService.findOne(id, userId);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string, @Headers('x-user-id') userId: string) {
     this.validateID(id);
-    return this.tournamentsService.remove(id);
+    this.validateID(userId);
+    return this.tournamentsService.remove(id, userId);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body: UpdateTournamentDto) {
+  update(
+    @Param('id') id: string,
+    @Body() body: UpdateTournamentDto,
+    @Headers('x-user-id') userId: string,
+  ) {
     this.validateID(id);
-    return this.tournamentsService.update(id, body);
+    this.validateID(userId);
+    return this.tournamentsService.update(id, body, userId);
   }
 }
