@@ -1,4 +1,4 @@
-@import '../../../colors.scss';
+@use '../../../colors.scss' as *;
 
 button {
 	padding: 1rem 2rem;
