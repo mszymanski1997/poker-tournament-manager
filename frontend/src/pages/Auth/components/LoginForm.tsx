@@ -3,28 +3,44 @@ import styles from '../Auth.module.scss';
 import Input from '../../../components/shared/FormElements/Input';
 import Button from '../../../components/shared/Button/Button';
 import { useState, type FormEvent } from 'react';
-import type { formDataType } from '../types';
+import type { LoginFormData, LoginFormErrors } from '../types';
+import { validateLogin } from '../validation';
 
 type LoginFormProps = {
 	handleModeChange: () => void;
 };
 
 const LoginForm = ({ handleModeChange }: LoginFormProps) => {
-	const [formData, setFormData] = useState<Partial<formDataType>>({
+	const [formData, setFormData] = useState<LoginFormData>({
 		email: '',
 		password: '',
 	});
 
-	const handleChange = (att: keyof formDataType, value: string) => {
+	const [formErrors, setFormErros] = useState<LoginFormErrors>({});
+
+	const handleChange = (att: keyof LoginFormData, value: string) => {
 		setFormData((prev) => {
 			return { ...prev, [att]: value };
 		});
+
+		if (formErrors[att]) {
+			setFormErros((prev) => ({ ...prev, [att]: undefined }));
+		}
 	};
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		console.log(formData);
+		const validationErrors = validateLogin(formData);
+
+		if (Object.keys(validationErrors).length > 0) {
+			setFormErros(validationErrors);
+			return;
+		}
+
+		setFormErros({});
+
+		console.log('Sending data', formData);
 	};
 
 	return (
@@ -37,11 +53,15 @@ const LoginForm = ({ handleModeChange }: LoginFormProps) => {
 						label='E-mail'
 						type='email'
 						onChange={(e) => handleChange('email', e.target.value)}
+						error={!!formErrors.email}
+						warningText={formErrors.email}
 					/>
 					<Input
 						label='Password'
 						type='password'
 						onChange={(e) => handleChange('password', e.target.value)}
+						error={!!formErrors.password}
+						warningText={formErrors.password}
 					/>
 				</div>
 

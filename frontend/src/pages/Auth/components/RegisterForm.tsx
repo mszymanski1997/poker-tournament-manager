@@ -3,35 +3,51 @@ import styles from '../Auth.module.scss';
 import Input from '../../../components/shared/FormElements/Input';
 import Button from '../../../components/shared/Button/Button';
 import { useState, type FormEvent } from 'react';
-import type { formDataType } from '../types';
+import type { RegisterFormData, RegisterFormErrors } from '../types';
+import { validateRegister } from '../validation';
 
 type RegisterFormProps = {
 	handleModeChange: () => void;
 };
 
 const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
-	const [formData, setFormData] = useState<formDataType>({
+	const [formData, setFormData] = useState<RegisterFormData>({
 		userName: '',
 		email: '',
 		password: '',
 		confirmPassword: '',
 	});
 
-	const handleChange = (att: keyof formDataType, value: string) => {
+	const [formErrors, setFormErrors] = useState<RegisterFormErrors>({});
+
+	const handleChange = (att: keyof RegisterFormData, value: string) => {
 		setFormData((prev) => {
 			return { ...prev, [att]: value };
 		});
+
+		if (formErrors[att]) {
+			setFormErrors((prev) => ({ ...prev, [att]: undefined }));
+		}
 	};
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		console.log(formData);
+		const validationErrors = validateRegister(formData);
+
+		if (Object.keys(validationErrors).length > 0) {
+			setFormErrors(validationErrors);
+			return;
+		}
+
+		setFormErrors({});
+
+		console.log('Sending data:', formData);
 	};
 
 	return (
 		<>
-			<h1 className={styles.title}>Login</h1>
+			<h1 className={styles.title}>Register</h1>
 
 			<Form className={styles.form} onSubmit={handleSubmit}>
 				<div className={styles.inputsGroup}>
@@ -39,23 +55,31 @@ const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
 						label='Username'
 						type='text'
 						onChange={(e) => handleChange('userName', e.target.value)}
+						error={!!formErrors.userName}
+						warningText={formErrors.userName}
 					/>
 
 					<Input
 						label='E-mail'
 						type='email'
 						onChange={(e) => handleChange('email', e.target.value)}
+						error={!!formErrors.email}
+						warningText={formErrors.email}
 					/>
 					<Input
 						label='Password'
 						type='password'
 						onChange={(e) => handleChange('password', e.target.value)}
+						error={!!formErrors.password}
+						warningText={formErrors.password}
 					/>
 
 					<Input
 						label='Confirm password'
 						type='password'
 						onChange={(e) => handleChange('confirmPassword', e.target.value)}
+						error={!!formErrors.confirmPassword}
+						warningText={formErrors.confirmPassword}
 					/>
 				</div>
 
