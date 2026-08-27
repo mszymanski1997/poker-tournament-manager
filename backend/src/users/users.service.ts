@@ -18,7 +18,7 @@ export class UsersService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(name: string, email: string, password: string) {
+  async signup(userName: string, email: string, password: string) {
     const existingUser = await this.userModel.findOne({ email });
 
     if (existingUser) {
@@ -28,7 +28,7 @@ export class UsersService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = {
-      name,
+      userName,
       email,
       password: hashedPassword,
     };

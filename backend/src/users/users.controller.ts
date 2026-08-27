@@ -8,10 +8,10 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Post('signin')
-  async signIn(@Body() body: CreateUserDto) {
-    const user = await this.usersService.signIn(
-      body.name,
+  @Post('signup')
+  async signup(@Body() body: CreateUserDto) {
+    const user = await this.usersService.signup(
+      body.userName,
       body.email,
       body.password,
     );
