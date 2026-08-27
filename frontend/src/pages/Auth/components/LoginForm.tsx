@@ -16,7 +16,7 @@ const LoginForm = ({ handleModeChange }: LoginFormProps) => {
 		password: '',
 	});
 
-	const [formErrors, setFormErros] = useState<LoginFormErrors>({});
+	const [formErrors, setFormErrors] = useState<LoginFormErrors>({});
 
 	const handleChange = (att: keyof LoginFormData, value: string) => {
 		setFormData((prev) => {
@@ -24,7 +24,7 @@ const LoginForm = ({ handleModeChange }: LoginFormProps) => {
 		});
 
 		if (formErrors[att]) {
-			setFormErros((prev) => ({ ...prev, [att]: undefined }));
+			setFormErrors((prev) => ({ ...prev, [att]: undefined }));
 		}
 	};
 
@@ -34,11 +34,11 @@ const LoginForm = ({ handleModeChange }: LoginFormProps) => {
 		const validationErrors = validateLogin(formData);
 
 		if (Object.keys(validationErrors).length > 0) {
-			setFormErros(validationErrors);
+			setFormErrors(validationErrors);
 			return;
 		}
 
-		setFormErros({});
+		setFormErrors({});
 
 		console.log('Sending data', formData);
 	};
