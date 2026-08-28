@@ -5,6 +5,7 @@ import Button from '../../../components/shared/Button/Button';
 import { useState, type FormEvent } from 'react';
 import type { RegisterFormData, RegisterFormErrors } from '../types';
 import { validateRegister } from '../validation';
+import { register } from '../http';
 
 type RegisterFormProps = {
 	handleModeChange: () => void;
@@ -19,25 +20,6 @@ const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
 	});
 
 	const [formErrors, setFormErrors] = useState<RegisterFormErrors>({});
-
-	const register = async (data: Omit<RegisterFormData, 'confirmPassword'>) => {
-		const { confirmPassword, ...payload } = data as RegisterFormData;
-
-		const response = await fetch('http://localhost:3000/users/signup', {
-			method: 'POST',
-			body: JSON.stringify(payload),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-
-		if (!response.ok) {
-			const errorData = await response.json();
-			throw new Error(errorData.message || 'Failed to register');
-		}
-
-		return response.json();
-	};
 
 	const handleChange = (att: keyof RegisterFormData, value: string) => {
 		setFormData((prev) => {
@@ -60,13 +42,6 @@ const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
 		}
 
 		setFormErrors({});
-
-		try {
-			await register(formData);
-			console.log('Sending data:', formData);
-		} catch (err) {
-			console.log('Register error:', err.message);
-		}
 	};
 
 	return (
