@@ -105,7 +105,7 @@ const RegisterForm = ({
 
 				<div className={styles.actions}>
 					{isError && <ErrorBlock text={error.message} />}
-					<Button type='submit' size='big'>
+					<Button type='submit' size='big' disabled={isPending}>
 						{isPending ? <PendingText text='Signing up' /> : 'Signup'}
 					</Button>
 					<Button type='button' size='big' onClick={handleModeChange}>
