@@ -12,13 +12,17 @@ import ErrorBlock from '../../../components/shared/ErrorBlock/ErrorBlock';
 
 type RegisterFormProps = {
 	handleModeChange: () => void;
+	handleSuccess: () => void;
 };
 
-const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
+const RegisterForm = ({
+	handleModeChange,
+	handleSuccess,
+}: RegisterFormProps) => {
 	const { mutate, isPending, isError, error, reset } = useMutation({
 		mutationFn: (data: RegisterFormData) => register(data),
 		onSuccess: () => {
-			handleModeChange();
+			handleSuccess();
 		},
 	});
 
