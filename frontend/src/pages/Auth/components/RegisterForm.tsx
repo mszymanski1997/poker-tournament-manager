@@ -6,12 +6,22 @@ import { useState, type FormEvent } from 'react';
 import type { RegisterFormData, RegisterFormErrors } from '../types';
 import { validateRegister } from '../validation';
 import { register } from '../http';
+import { useMutation } from '@tanstack/react-query';
+import PendingText from '../../../components/shared/PendingText/PendingText';
+import ErrorBlock from '../../../components/shared/ErrorBlock/ErrorBlock';
 
 type RegisterFormProps = {
 	handleModeChange: () => void;
 };
 
 const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
+	const { mutate, isPending, isError, error, reset } = useMutation({
+		mutationFn: (data: RegisterFormData) => register(data),
+		onSuccess: () => {
+			handleModeChange();
+		},
+	});
+
 	const [formData, setFormData] = useState<RegisterFormData>({
 		userName: '',
 		email: '',
@@ -22,6 +32,10 @@ const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
 	const [formErrors, setFormErrors] = useState<RegisterFormErrors>({});
 
 	const handleChange = (att: keyof RegisterFormData, value: string) => {
+		if (isError) {
+			reset();
+		}
+
 		setFormData((prev) => {
 			return { ...prev, [att]: value };
 		});
@@ -42,6 +56,9 @@ const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
 		}
 
 		setFormErrors({});
+		console.log('działa');
+
+		mutate(formData);
 	};
 
 	return (
@@ -83,8 +100,9 @@ const RegisterForm = ({ handleModeChange }: RegisterFormProps) => {
 				</div>
 
 				<div className={styles.actions}>
+					{isError && <ErrorBlock text={error.message} />}
 					<Button type='submit' size='big'>
-						Sign Up
+						{isPending ? <PendingText text='Signing up' /> : 'Signup'}
 					</Button>
 					<Button type='button' size='big' onClick={handleModeChange}>
 						Already signed in?
