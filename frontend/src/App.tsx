@@ -6,6 +6,7 @@ import Timer from './pages/Timer/Timer';
 import Navigation from './components/shared/Navigation/Navigation';
 import Auth from './pages/Auth/Auth';
 import SavedTournaments from './pages/SavedTournaments/SavedTournaments';
+import AuthProvider from './store/AuthContext/AuthProvider';
 
 const queryClient = new QueryClient();
 
@@ -30,11 +31,13 @@ const router = createBrowserRouter(
 function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<TimerProvider>
-				<PokerProvider>
-					<RouterProvider router={router}></RouterProvider>
-				</PokerProvider>
-			</TimerProvider>
+			<AuthProvider>
+				<TimerProvider>
+					<PokerProvider>
+						<RouterProvider router={router}></RouterProvider>
+					</PokerProvider>
+				</TimerProvider>
+			</AuthProvider>
 		</QueryClientProvider>
 	);
 }
