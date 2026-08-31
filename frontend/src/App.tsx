@@ -7,6 +7,7 @@ import Navigation from './components/shared/Navigation/Navigation';
 import Auth from './pages/Auth/Auth';
 import SavedTournaments from './pages/SavedTournaments/SavedTournaments';
 import AuthProvider from './store/AuthContext/AuthProvider';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,14 @@ const router = createBrowserRouter(
 					element: <Timer />,
 				},
 				{ path: '/auth', element: <Auth /> },
-				{ path: 'saved-tournaments', element: <SavedTournaments /> },
+				{
+					path: 'saved-tournaments',
+					element: (
+						<ProtectedRoute>
+							<SavedTournaments />
+						</ProtectedRoute>
+					),
+				},
 			],
 		},
 	],

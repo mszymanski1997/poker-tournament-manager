@@ -1,4 +1,4 @@
-import { Form } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import styles from '../Auth.module.scss';
 import Input from '../../../components/shared/FormElements/Input';
 import Button from '../../../components/shared/Button/Button';
@@ -16,12 +16,15 @@ type LoginFormProps = {
 };
 
 const LoginForm = ({ handleModeChange }: LoginFormProps) => {
+	const navigate = useNavigate();
+
 	const { login } = useAuthContext();
 
 	const { mutate, isPending, isError, error, reset } = useMutation({
 		mutationFn: (data: LoginFormData) => loginApi(data),
 		onSuccess: (data) => {
 			login(data.accessToken);
+			navigate('/');
 		},
 	});
 

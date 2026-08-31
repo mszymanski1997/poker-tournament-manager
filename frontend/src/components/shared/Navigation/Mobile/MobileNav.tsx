@@ -2,6 +2,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import styles from './MobileNav.module.scss';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../../../../store/AuthContext/useAuthContext';
 
 const MobileNav = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -9,6 +10,8 @@ const MobileNav = () => {
 	const toggleNav = () => {
 		setIsOpen((prev) => !prev);
 	};
+
+	const { isAuthenticated } = useAuthContext();
 
 	return (
 		<nav className={styles.nav}>
@@ -27,11 +30,13 @@ const MobileNav = () => {
 					</Link>
 				</li>
 
-				<li>
-					<Link to='saved-tournaments' onClick={toggleNav}>
-						Saved tournaments
-					</Link>
-				</li>
+				{isAuthenticated && (
+					<li>
+						<Link to='saved-tournaments' onClick={toggleNav}>
+							Saved tournaments
+						</Link>
+					</li>
+				)}
 				<li>
 					<Link to='auth' onClick={toggleNav}>
 						Auth
