@@ -1,4 +1,4 @@
-import { type LoginFormData, type RegisterFormData } from './types';
+import { type LoginFormData, type RegisterFormData } from '../pages/Auth/types';
 
 export const register = async (data: RegisterFormData) => {
 	const payload = {

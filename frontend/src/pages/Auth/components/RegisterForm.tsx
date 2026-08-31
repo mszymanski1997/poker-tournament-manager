@@ -5,7 +5,7 @@ import Button from '../../../components/shared/Button/Button';
 import { useState, type FormEvent } from 'react';
 import type { RegisterFormData, RegisterFormErrors } from '../types';
 import { validateRegister } from '../validation';
-import { register } from '../http';
+import { register } from '../../../api/auth';
 import { useMutation } from '@tanstack/react-query';
 import PendingText from '../../../components/shared/PendingText/PendingText';
 import ErrorBlock from '../../../components/shared/ErrorBlock/ErrorBlock';

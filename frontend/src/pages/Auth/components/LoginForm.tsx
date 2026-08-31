@@ -6,7 +6,7 @@ import { useState, type FormEvent } from 'react';
 import type { LoginFormData, LoginFormErrors } from '../types';
 import { validateLogin } from '../validation';
 import { useMutation } from '@tanstack/react-query';
-import { login as loginApi } from '../http';
+import { login as loginApi } from '../../../api/auth';
 import PendingText from '../../../components/shared/PendingText/PendingText';
 import ErrorBlock from '../../../components/shared/ErrorBlock/ErrorBlock';
 import { useAuthContext } from '../../../store/AuthContext/useAuthContext';
