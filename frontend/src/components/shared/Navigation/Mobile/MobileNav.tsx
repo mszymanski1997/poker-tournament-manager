@@ -3,6 +3,7 @@ import styles from './MobileNav.module.scss';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../../../store/AuthContext/useAuthContext';
+import UserProfile from '../UserProfile/UserProfile';
 
 const MobileNav = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -37,11 +38,15 @@ const MobileNav = () => {
 						</Link>
 					</li>
 				)}
-				<li>
-					<Link to='auth' onClick={toggleNav}>
-						Auth
-					</Link>
-				</li>
+				{isAuthenticated ? (
+					<UserProfile />
+				) : (
+					<li>
+						<Link to='auth' onClick={toggleNav}>
+							Auth
+						</Link>
+					</li>
+				)}
 			</ul>
 		</nav>
 	);
