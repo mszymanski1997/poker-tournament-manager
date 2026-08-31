@@ -58,6 +58,19 @@ export class UsersService {
     };
   }
 
+  async findUser(id: string) {
+    const user = await this.userModel.findById(id).select('-password');
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return {
+      userName: user.userName,
+      email: user.email,
+    };
+  }
+
   async deleteUser(id: string) {
     const deletedUser = await this.userModel.findByIdAndDelete(id);
 
