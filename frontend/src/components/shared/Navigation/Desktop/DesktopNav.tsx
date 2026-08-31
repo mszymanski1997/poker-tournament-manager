@@ -31,7 +31,7 @@ const DesktopNav = () => {
 							to='auth'
 							className={({ isActive }) => (isActive ? styles.active : '')}
 						>
-							Sign up
+							Auth
 						</NavLink>
 					</li>
 				</ul>

@@ -34,7 +34,7 @@ const MobileNav = () => {
 				</li>
 				<li>
 					<Link to='auth' onClick={toggleNav}>
-						Sign up
+						Auth
 					</Link>
 				</li>
 			</ul>

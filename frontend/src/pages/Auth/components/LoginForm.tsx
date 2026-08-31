@@ -6,19 +6,22 @@ import { useState, type FormEvent } from 'react';
 import type { LoginFormData, LoginFormErrors } from '../types';
 import { validateLogin } from '../validation';
 import { useMutation } from '@tanstack/react-query';
-import { login } from '../http';
+import { login as loginApi } from '../http';
 import PendingText from '../../../components/shared/PendingText/PendingText';
 import ErrorBlock from '../../../components/shared/ErrorBlock/ErrorBlock';
+import { useAuthContext } from '../../../store/AuthContext/useAuthContext';
 
 type LoginFormProps = {
 	handleModeChange: () => void;
 };
 
 const LoginForm = ({ handleModeChange }: LoginFormProps) => {
+	const { login } = useAuthContext();
+
 	const { mutate, isPending, isError, error, reset } = useMutation({
-		mutationFn: (data: LoginFormData) => login(data),
+		mutationFn: (data: LoginFormData) => loginApi(data),
 		onSuccess: (data) => {
-			console.log('Login successful, received token:', data.accessToken);
+			login(data.accessToken);
 		},
 	});
 
@@ -55,8 +58,6 @@ const LoginForm = ({ handleModeChange }: LoginFormProps) => {
 
 		setFormErrors({});
 		mutate(formData);
-
-		console.log('Sending data', formData);
 	};
 
 	return (
