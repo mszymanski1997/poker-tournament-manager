@@ -24,9 +24,10 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException('Missing token');
     }
 
-    const [token] = authHeader.split(' ');
-    if (!token) {
-      throw new UnauthorizedException('Missing token');
+    const [type, token] = authHeader.split(' ');
+
+    if (type !== 'Bearer' || !token) {
+      throw new UnauthorizedException('Invalid token format');
     }
 
     try {
