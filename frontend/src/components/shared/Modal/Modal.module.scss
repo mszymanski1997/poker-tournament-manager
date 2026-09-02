@@ -23,6 +23,12 @@
 	padding: 1.5rem 2.5rem;
 }
 
+@media (min-width: 1401px) {
+	.formModal {
+		top: 53%;
+	}
+}
+
 @media (max-width: 1400px) {
 	.formModal {
 		padding: 0;
