@@ -1,5 +1,11 @@
-export const getUser = async (id: string) => {
-	const response = await fetch(`http://localhost:3000/users/${id}`);
+export const getUser = async (token: string | null) => {
+	const response = await fetch('http://localhost:3000/users/me', {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+	});
 
 	if (!response.ok) {
 		const error = await response.json();

@@ -7,16 +7,16 @@ import PendingText from '../../PendingText/PendingText';
 import ErrorBlock from '../../ErrorBlock/ErrorBlock';
 
 const UserProfile = () => {
-	const { userId, logout } = useAuthContext();
+	const { logout, token } = useAuthContext();
 
 	const { data, isLoading, isError, error } = useQuery({
-		queryKey: ['user', userId],
-		queryFn: () => getUser(userId!),
-		enabled: !!userId,
+		queryKey: ['user', 'me', token],
+		queryFn: () => getUser(token!),
+		enabled: !!token,
 	});
 
 	if (isLoading) return <PendingText text='Loading' />;
-	if (isError) return <ErrorBlock text={error.message} />;
+	if (isError) return <ErrorBlock text={error?.message} />;
 
 	return (
 		<li className={styles.userProfile}>
