@@ -5,7 +5,7 @@ import {
 	type GameSettings,
 	type GameSettingsErrors,
 } from './types';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { INITIAL_SETTINGS } from './initialSettings';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
@@ -23,10 +23,6 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const [validationErrors, setValidationErrors] = useState<GameSettingsErrors>(
 		{},
 	);
-
-	useEffect(() => {
-		console.log(settings);
-	}, [settings]);
 
 	const handleEnableRake = () => {
 		updateNestedSetting('rake', 'enable', true);
