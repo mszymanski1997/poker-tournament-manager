@@ -1,4 +1,5 @@
 import Button from '../../../../components/shared/Button/Button';
+import TournamentRow from '../TournamentRow/TournamentRow';
 import styles from './TournamentsTable.module.scss';
 
 const TournamentsTable = () => {
@@ -22,17 +23,12 @@ const TournamentsTable = () => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td className={styles.nameCell}>Deepstack</td>
-						<td>100 PLN</td>
-						<td>500 BB</td>
-						<td>20 min</td>
-						<td className={styles.actionsCell}>
-							<Button noMove>Load</Button>
-							<Button noMove>Edit</Button>
-							<Button noMove>Delete</Button>
-						</td>
-					</tr>
+					<TournamentRow
+						name='Deepstack'
+						buyIn='200 PLN'
+						startingStack='250BB'
+						duration='20min'
+					/>
 				</tbody>
 			</table>
 		</div>
