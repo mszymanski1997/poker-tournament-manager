@@ -1,7 +1,7 @@
-import styles from './SavedTournaments.module.scss';
+import TournamentsTable from './components/TournamentsTable/TournamentsTable';
 
 const SavedTournaments = () => {
-	return <h1 className={styles.title}>SavedTournaments</h1>;
+	return <TournamentsTable />;
 };
 
 export default SavedTournaments;
