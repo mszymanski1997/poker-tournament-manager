@@ -6,7 +6,9 @@ const TournamentsTable = () => {
 		<div className={styles.tableWrapper}>
 			<div className={styles.tableHeader}>
 				<h2>Saved Tournaments</h2>
-				<Button className={styles.addButton}>+ Add new tournament</Button>
+				<Button className={styles.addButton} noMove>
+					+ Add new tournament
+				</Button>
 			</div>
 
 			<table className={styles.table}>
@@ -26,9 +28,9 @@ const TournamentsTable = () => {
 						<td>500 BB</td>
 						<td>20 min</td>
 						<td className={styles.actionsCell}>
-							<Button>Load</Button>
-							<Button>Edit</Button>
-							<Button>Delete</Button>
+							<Button noMove>Load</Button>
+							<Button noMove>Edit</Button>
+							<Button noMove>Delete</Button>
 						</td>
 					</tr>
 				</tbody>

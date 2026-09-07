@@ -21,7 +21,9 @@ const UserProfile = () => {
 	return (
 		<li className={styles.userProfile}>
 			<span className={styles.userName}>{data.userName}</span>
-			<Button onClick={logout}>Logout</Button>
+			<Button onClick={logout} noMove>
+				Logout
+			</Button>
 		</li>
 	);
 };

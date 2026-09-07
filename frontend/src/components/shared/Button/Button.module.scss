@@ -30,6 +30,12 @@ button {
 	font-weight: 500;
 }
 
+.noMove {
+	&:hover {
+		transform: none;
+	}
+}
+
 @media (max-width: 1400px) {
 	button {
 		font-size: 2.1rem;

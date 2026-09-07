@@ -1,7 +1,7 @@
 .tableWrapper {
 	width: 80%;
 	max-width: 1200px;
-	margin: 5rem auto;
+	margin: 7rem auto;
 	overflow-x: auto;
 }
 
@@ -34,6 +34,7 @@
 		&:hover {
 			background-color: #262630;
 			border-color: #3f3f4e;
+			transform: none;
 		}
 	}
 }
