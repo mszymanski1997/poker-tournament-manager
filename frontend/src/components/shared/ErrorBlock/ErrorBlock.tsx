@@ -2,11 +2,12 @@ import styles from './ErrorBlock.module.scss';
 
 type ErrorBlockProps = {
 	text: string;
+	className?: string;
 };
 
-const ErrorBlock = ({ text }: ErrorBlockProps) => {
+const ErrorBlock = ({ text, className = '' }: ErrorBlockProps) => {
 	return (
-		<div className={styles.wrapper}>
+		<div className={`${styles.wrapper} ${className}`}>
 			<p className={styles.text}>{text}</p>
 		</div>
 	);
