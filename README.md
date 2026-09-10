@@ -2,15 +2,20 @@
 
 A web application designed to manage live poker tournaments by handling blind levels, timing, and essential tournament statistics in a clear and reliable way.
 
-This project was built as a **portfolio application**, focusing on real-world logic, state management, persistence, and user safety.
+This project was built as a **portfolio application**, focusing on real-world logic, complex state management, persistence, and scalable full-stack architecture.
 
 ---
 
 ## 🌐 Live Demo
 
-The application is deployed using **GitHub Pages** and can be accessed here:
+The live demo currently deployed on GitHub Pages represents the initial frontend-only prototype (Timer page with local storage persistence):
 
 👉 **https://mszymanski1997.github.io/poker-tournament-manager/**
+
+> **Note on Current Development Status:**  
+> The project has evolved into a full-stack application.
+> The active codebase includes a complete *Nest.js + MongoDB* backend API and an updated React.js frontend with JWT authentication, real-time data fetching, and saved tournament dashboards.
+> A full multi-environment deployment (frontend + API + DB) will be published once the remaining features are completed.
 
 ---
 
@@ -59,18 +64,21 @@ The tournament can be reset or restored at any time, with confirmation modals to
 
 ## 🧰 Technologies Used
 
+
+
 - **React**
 - **TypeScript**
-- **SCSS**
+- **SCSS Modules**
 - **React Context API** (two separate contexts for state management)
-- **Custom React Hooks**
+- **React Query** (@tanstack/react-query) for server-state management
 - **LocalStorage** for persistent data
 
-Planned:
+Backend:
 
 - **Node.js**
-- **Express**
-- **MongoDB**
+- **Nest.js**
+- **MongoDB & Mongoose**
+- **JWT / Bcrypt** (for secure authentication)
 
 ---
 
@@ -131,33 +139,29 @@ The application provides real-time calculations to support tournament management
 
 ---
 
-## 🚀 Future Plans
+## 🔐 Auth & Dashboard (Full-Stack Features)
 
-- Backend integration using **Node.js, Express, and MongoDB**
-  - user authentication
-  - saving multiple blind structures per user
-  - loading saved structures across devices
-- Table balancing system:
-  - automatic rebalancing when players join or leave
-- Further UI/UX improvements
+- User registration and JWT-based authentication
+- Saved Tournaments Dashboard: fetch and display all user-created tournament templates directly from MongoDB via REST API
 
 ---
 
 ## 📌 Project Status
 
-The application is **fully functional** and actively maintained.  
-New features and improvements are planned and will be added incrementally.
+The application is under active development.
+
+The core backend API is fully integrated, and full client-side CRUD capabilities for saved structures are currently being implemented before final deployment.
 
 ---
 
 ## 👤 Author
 
 Mateusz Szymański  
-Frontend Developer (in progress)
+Fullstack Developer (in progress)
 
 Created as a portfolio project to demonstrate:
 
-- complex state management
-- persistence
+- complex state management & server synchronization
+- full-stack architecture (React.js + Nest.js + MongoDB)
 - real-world business logic
 - scalable frontend architecture
