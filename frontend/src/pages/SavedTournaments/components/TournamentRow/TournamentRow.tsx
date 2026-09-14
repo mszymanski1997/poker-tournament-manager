@@ -1,11 +1,13 @@
 import styles from './TournamentRow.module.scss';
 import Button from '../../../../components/shared/Button/Button';
+import DeleteTournamentButton from './Buttons/DeleteTournamentButton';
 
 type TournamentRowProps = {
 	name: string;
 	buyIn: string;
 	startingStack: string;
 	duration: string;
+	id: string;
 };
 
 const TournamentRow = ({
@@ -13,9 +15,10 @@ const TournamentRow = ({
 	buyIn,
 	startingStack,
 	duration,
+	id,
 }: TournamentRowProps) => {
 	return (
-		<tr>
+		<tr id={id}>
 			<td className={styles.nameCell}>{name}</td>
 			<td>{buyIn}</td>
 			<td>{startingStack}</td>
@@ -23,7 +26,7 @@ const TournamentRow = ({
 			<td className={styles.actionsCell}>
 				<Button noMove>Load</Button>
 				<Button noMove>Edit</Button>
-				<Button noMove>Delete</Button>
+				<DeleteTournamentButton id={id} />
 			</td>
 		</tr>
 	);

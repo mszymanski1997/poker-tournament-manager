@@ -73,6 +73,7 @@ const TournamentsTable = () => {
 						{allTournaments?.map((tournament: SavedTournament) => (
 							<TournamentRow
 								key={tournament._id}
+								id={tournament._id}
 								name={tournament.name}
 								buyIn={formatBuyIn(tournament.buyIn, tournament.currency)}
 								startingStack={formatStartingStack(
