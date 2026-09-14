@@ -7,6 +7,11 @@ import { useAuthContext } from '../../../../store/AuthContext/useAuthContext';
 import { useQuery } from '@tanstack/react-query';
 import PendingText from '../../../../components/shared/PendingText/PendingText';
 import ErrorBlock from '../../../../components/shared/ErrorBlock/ErrorBlock';
+import {
+	formatBuyIn,
+	formatLevelsDuration,
+	formatStartingStack,
+} from '../../util/tournamentFormatter';
 
 const TournamentsTable = () => {
 	const { token } = useAuthContext();
@@ -69,9 +74,12 @@ const TournamentsTable = () => {
 							<TournamentRow
 								key={tournament._id}
 								name={tournament.name}
-								buyIn={tournament.buyIn.toString()}
-								startingStack={tournament.startingStack.toString()}
-								duration={tournament.levels?.[0].duration?.toString() ?? ''}
+								buyIn={formatBuyIn(tournament.buyIn, tournament.currency)}
+								startingStack={formatStartingStack(
+									tournament.startingStack,
+									tournament.levels,
+								)}
+								duration={formatLevelsDuration(tournament.levels)}
 							/>
 						))}
 					</tbody>
