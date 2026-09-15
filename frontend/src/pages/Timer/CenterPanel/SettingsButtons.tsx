@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import type { Level } from '../../../store/TimerSettings/types';
+import WarningContainer from '../../../components/shared/Modal/WarningContainer';
 
 const SettingsButtons = () => {
 	const {
@@ -67,20 +68,13 @@ const SettingsButtons = () => {
 				isOpen={isSettingsLoadingModalOpen}
 				onClose={closeLoadingSettingsModal}
 			>
-				<div className={styles.modalContainer}>
-					<h2>Are you sure that you want to load last settings?</h2>
-
-					<div className={styles.warning}>
-						<p>Loading the structure will restart the tournament.</p>
-					</div>
-
-					<div className={styles.restartButtons}>
-						<Button onClick={closeLoadingSettingsModal}>Cancel</Button>
-						<Button onClick={loadSettings} className={styles.buttonDanger}>
-							Load settings
-						</Button>
-					</div>
-				</div>
+				<WarningContainer
+					questionText='Are you sure that you want to load last settings?'
+					warningText='Loading the structure will restart the tournament.'
+					cancelButtonAction={closeLoadingSettingsModal}
+					confirmButtonText='Load settings'
+					confirmButtonAction={loadSettings}
+				></WarningContainer>
 			</Modal>
 
 			<div className={styles.settingsButtons}>
