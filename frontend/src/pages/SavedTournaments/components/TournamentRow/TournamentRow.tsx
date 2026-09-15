@@ -26,7 +26,7 @@ const TournamentRow = ({
 			<td className={styles.actionsCell}>
 				<Button noMove>Load</Button>
 				<Button noMove>Edit</Button>
-				<DeleteTournamentButton id={id} />
+				<DeleteTournamentButton id={id} tournamentName={name} />
 			</td>
 		</tr>
 	);
