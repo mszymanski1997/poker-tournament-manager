@@ -1,13 +1,4 @@
-import {
-  IsArray,
-  IsEnum,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Min,
-  ValidateNested,
-} from 'class-validator';
-import { Type } from 'class-transformer';
+import { Min, IsOptional, IsEnum, IsNumber } from 'class-validator';
 
 export enum LevelType {
   BLIND = 'blind',
@@ -36,25 +27,4 @@ export class TournamentLevelDto {
   @IsNumber()
   @Min(0, { message: 'The ante value must be at least 0' })
   ante?: number;
-}
-
-export class CreateTournamentDto {
-  @IsString()
-  name!: string;
-
-  @IsNumber()
-  @Min(0, { message: 'The buy-in value must be at least 0' })
-  buyIn!: number;
-
-  @IsString()
-  currency!: string;
-
-  @IsNumber()
-  @Min(1, { message: 'The starting stack must be above 0' })
-  startingStack!: number;
-
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => TournamentLevelDto)
-  levels!: TournamentLevelDto[];
 }

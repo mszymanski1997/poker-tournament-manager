@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { TournamentsService } from './tournaments.service';
-import { CreateTournamentDto } from './dtos/create-tournament.dto';
+import { CreateTournamentDto } from './dtos/create-tournament/create-tournament.dto';
 import { UpdateTournamentDto } from './dtos/update-tournament-dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
