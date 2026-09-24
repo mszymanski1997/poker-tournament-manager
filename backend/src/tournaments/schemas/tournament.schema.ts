@@ -2,6 +2,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { Level, LevelSchema } from './tournament-level.schema';
 import { User } from '../../users/schemas/user.schema';
+import {
+  AddonsSettings,
+  AddonsSettingsSchema,
+  RakeSettings,
+  RakeSettingsSchema,
+} from './tournament-advanced-settings.schema';
 
 export type TournamentDocument = HydratedDocument<Tournament>;
 
@@ -18,6 +24,12 @@ export class Tournament {
 
   @Prop({ required: true })
   startingStack!: number;
+
+  @Prop({ type: RakeSettingsSchema, default: () => ({}) })
+  rake!: RakeSettings;
+
+  @Prop({ type: AddonsSettingsSchema, default: () => ({}) })
+  addons!: AddonsSettings;
 
   @Prop({ type: [LevelSchema] })
   levels!: Level[];
