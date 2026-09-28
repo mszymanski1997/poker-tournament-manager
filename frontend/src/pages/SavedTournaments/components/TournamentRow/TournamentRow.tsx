@@ -8,6 +8,7 @@ type TournamentRowProps = {
 	startingStack: string;
 	duration: string;
 	id: string;
+	isAddon: boolean;
 };
 
 const TournamentRow = ({
@@ -16,6 +17,7 @@ const TournamentRow = ({
 	startingStack,
 	duration,
 	id,
+	isAddon,
 }: TournamentRowProps) => {
 	return (
 		<tr id={id}>
@@ -23,6 +25,7 @@ const TournamentRow = ({
 			<td>{buyIn}</td>
 			<td>{startingStack}</td>
 			<td>{duration}</td>
+			<td>{isAddon ? 'YES' : 'NO'}</td>
 			<td className={styles.actionsCell}>
 				<Button noMove>Load</Button>
 				<Button noMove>Edit</Button>

@@ -66,6 +66,7 @@ const TournamentsTable = () => {
 							<th>Buy-in</th>
 							<th>Starting stack</th>
 							<th>Levels duration</th>
+							<th>Addons</th>
 							<th className={styles.actionsHeader}>Actions</th>
 						</tr>
 					</thead>
@@ -75,7 +76,13 @@ const TournamentsTable = () => {
 								key={tournament._id}
 								id={tournament._id}
 								name={tournament.name}
-								buyIn={formatBuyIn(tournament.buyIn, tournament.currency)}
+								isAddon={tournament.addons.enabled}
+								buyIn={formatBuyIn(
+									tournament.buyIn,
+									tournament.currency,
+									tournament.rake.enabled,
+									tournament.rake.value,
+								)}
 								startingStack={formatStartingStack(
 									tournament.startingStack,
 									tournament.levels,

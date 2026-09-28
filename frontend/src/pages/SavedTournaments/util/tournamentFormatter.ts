@@ -2,7 +2,12 @@ import type { SavedTournamentLevel } from '../types';
 
 type CurrencySymbol = 'zł' | '€' | '$' | 'Kč' | '£';
 
-export const formatBuyIn = (amount: number, currency: string) => {
+export const formatBuyIn = (
+	amount: number,
+	currency: string,
+	isRake: boolean,
+	rake: number,
+) => {
 	let symbol: CurrencySymbol = 'zł';
 
 	if (currency === 'PLN') {
@@ -15,6 +20,17 @@ export const formatBuyIn = (amount: number, currency: string) => {
 		symbol = 'Kč';
 	} else if (currency === 'GBP') {
 		symbol = '£';
+	}
+
+	if (isRake && rake > 0) {
+		const totalBuyInPrice = amount;
+		const totalBuyInPriceWithoutRake = Math.round(
+			totalBuyInPrice * (1 - rake / 100),
+		);
+
+		const rakeAmount = totalBuyInPrice - totalBuyInPriceWithoutRake;
+
+		return `${totalBuyInPriceWithoutRake}${symbol} + ${rakeAmount}${symbol}`;
 	}
 
 	return `${amount}${symbol}`;
