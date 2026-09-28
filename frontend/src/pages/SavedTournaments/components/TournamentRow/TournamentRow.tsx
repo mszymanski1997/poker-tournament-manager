@@ -1,6 +1,7 @@
 import styles from './TournamentRow.module.scss';
 import Button from '../../../../components/shared/Button/Button';
 import DeleteTournamentButton from './Buttons/DeleteTournamentButton';
+import LoadTournamentButton from './Buttons/LoadTournamentButton';
 
 type TournamentRowProps = {
 	name: string;
@@ -27,7 +28,7 @@ const TournamentRow = ({
 			<td>{duration}</td>
 			<td>{isAddon ? 'YES' : 'NO'}</td>
 			<td className={styles.actionsCell}>
-				<Button noMove>Load</Button>
+				<LoadTournamentButton />
 				<Button noMove>Edit</Button>
 				<DeleteTournamentButton id={id} tournamentName={name} />
 			</td>

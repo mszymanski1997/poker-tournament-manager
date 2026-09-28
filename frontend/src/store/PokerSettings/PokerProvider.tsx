@@ -7,6 +7,7 @@ import {
 } from './types';
 import { useState, type ReactNode } from 'react';
 import { INITIAL_SETTINGS } from './initialSettings';
+import type { SavedTournament } from '../../pages/SavedTournaments/types';
 
 export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const settingsStorage = useLocalStorage<GameSettings>('settings');
@@ -15,6 +16,25 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 	const [settings, setSettings] = useState<GameSettings>(() => {
 		return settingsStorage.getValueWithExpiry() ?? INITIAL_SETTINGS;
 	});
+
+	const loadSettingsFromBackend = (tournament: SavedTournament) => {
+		setSettings({
+			startingStack: tournament.startingStack,
+			buyInValue: tournament.buyIn,
+			buyIns: 0,
+			rebuys: 0,
+			playersIn: 0,
+			rake: {
+				enable: tournament.rake.enabled,
+				value: tournament.rake.value,
+			},
+			addons: {
+				enable: tournament.addons.enabled,
+				value: tournament.addons.value,
+				count: 0,
+			},
+		});
+	};
 
 	const [currency, setCurrency] = useState<Currency>(() => {
 		return currencyStorage.getValueWithExpiry() ?? '$';
@@ -186,6 +206,7 @@ export const PokerProvider = ({ children }: { children: ReactNode }) => {
 				handleDisableRake,
 				handleEnableAddons,
 				handleDisableAddons,
+				loadSettingsFromBackend,
 			}}
 		>
 			{children}

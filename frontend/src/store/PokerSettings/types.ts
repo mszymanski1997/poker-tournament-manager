@@ -1,3 +1,5 @@
+import type { SavedTournament } from '../../pages/SavedTournaments/types';
+
 export type GameSettings = {
 	startingStack: number;
 	buyInValue: number;
@@ -60,4 +62,5 @@ export type PokerContextSettings = {
 		value: GameSettings[K][F],
 	) => void;
 	updateCurrency: (currency: Currency) => void;
+	loadSettingsFromBackend: (tournament: SavedTournament) => void;
 };
