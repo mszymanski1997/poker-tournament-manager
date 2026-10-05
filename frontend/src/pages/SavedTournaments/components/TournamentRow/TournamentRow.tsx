@@ -2,35 +2,41 @@ import styles from './TournamentRow.module.scss';
 import Button from '../../../../components/shared/Button/Button';
 import DeleteTournamentButton from './Buttons/DeleteTournamentButton';
 import LoadTournamentButton from './Buttons/LoadTournamentButton';
+import type { SavedTournament } from '../../types';
+import {
+	formatBuyIn,
+	formatLevelsDuration,
+	formatStartingStack,
+} from '../../util/tournamentFormatter';
 
 type TournamentRowProps = {
-	name: string;
-	buyIn: string;
-	startingStack: string;
-	duration: string;
-	id: string;
-	isAddon: boolean;
+	tournament: SavedTournament;
 };
 
-const TournamentRow = ({
-	name,
-	buyIn,
-	startingStack,
-	duration,
-	id,
-	isAddon,
-}: TournamentRowProps) => {
+const TournamentRow = ({ tournament }: TournamentRowProps) => {
 	return (
-		<tr id={id}>
-			<td className={styles.nameCell}>{name}</td>
-			<td>{buyIn}</td>
-			<td>{startingStack}</td>
-			<td>{duration}</td>
-			<td>{isAddon ? 'YES' : 'NO'}</td>
+		<tr id={tournament._id}>
+			<td className={styles.nameCell}>{tournament.name}</td>
+			<td>
+				{formatBuyIn(
+					tournament.buyIn,
+					tournament.currency,
+					tournament.rake.enabled,
+					tournament.rake.value,
+				)}
+			</td>
+			<td>
+				{formatStartingStack(tournament.startingStack, tournament.levels)}
+			</td>
+			<td>{formatLevelsDuration(tournament.levels)}</td>
+			<td>{tournament.addons.enabled ? 'YES' : 'NO'}</td>
 			<td className={styles.actionsCell}>
-				<LoadTournamentButton />
+				<LoadTournamentButton tournament={tournament} />
 				<Button noMove>Edit</Button>
-				<DeleteTournamentButton id={id} tournamentName={name} />
+				<DeleteTournamentButton
+					id={tournament._id}
+					tournamentName={tournament.name}
+				/>
 			</td>
 		</tr>
 	);
