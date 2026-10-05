@@ -1,3 +1,5 @@
+import type { SavedTournamentLevel } from '../../pages/SavedTournaments/types';
+
 export type BlindLevel = {
 	type: 'blind';
 	id: string;
@@ -53,6 +55,7 @@ export type TimerContextValue = {
 	resumeTournament: () => void;
 	restartTournament: () => void;
 	loadLastSettings: () => void;
+	loadLevelsFromBackend: (levels: SavedTournamentLevel[]) => void;
 
 	closeFormModal: () => void;
 	openFormModal: () => void;

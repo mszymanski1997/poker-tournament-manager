@@ -19,6 +19,8 @@ import type {
 	LevelLocalStorageData,
 } from './types';
 
+import type { SavedTournamentLevel } from '../../pages/SavedTournaments/types.ts';
+
 import { DEFAULT_LEVELS } from './defaultLevels';
 
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
@@ -238,6 +240,33 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 		setIsFormModalOpen(false);
 	};
 
+	const loadLevelsFromBackend = (savedLevels: SavedTournamentLevel[]) => {
+		restartTournament();
+
+		const formattedLevels: Level[] = savedLevels.map((level) => {
+			const id = crypto.randomUUID();
+
+			if (level.type === 'break') {
+				return {
+					id,
+					type: 'break',
+					duration: level.duration,
+				};
+			}
+
+			return {
+				id,
+				type: 'blind',
+				duration: level.duration,
+				bigBlind: level.bigBlind ?? 0,
+				smallBlind: level.smallBlind ?? 0,
+				ante: level.ante ?? 0,
+			};
+		});
+
+		setLevels(formattedLevels);
+	};
+
 	// counting time logic
 
 	const lastMinuteSoundRef = useRef<HTMLAudioElement | null>(null);
@@ -355,6 +384,7 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 				timeLeft,
 				loadLastSettings,
 				totalTournamentDuration,
+				loadLevelsFromBackend,
 			}}
 		>
 			{children}
