@@ -1,0 +1,48 @@
+.wrapper {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	&:hover .tooltip {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(-50%) translateY(-6px);
+	}
+}
+
+.tooltip {
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(0);
+
+	white-space: nowrap;
+	background-color: #1e1e1e;
+	color: #ffffff;
+	padding: 6px 10px;
+	border-radius: 6px;
+	font-size: 0.75rem;
+	font-weight: 500;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+	opacity: 0;
+	visibility: hidden;
+	transition:
+		opacity 0.2s ease,
+		transform 0.2s ease,
+		visibility 0.2s;
+	pointer-events: none;
+	z-index: 100;
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		border-width: 5px;
+		border-style: solid;
+		border-color: #1e1e1e transparent transparent transparent;
+	}
+}

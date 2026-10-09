@@ -10,6 +10,8 @@ import {
 } from 'react-icons/md';
 import { useTimerSettings } from '../../../store/TimerSettings/useTimerSettings';
 import { useBlindsFormatter } from '../../../hooks/useBlindsFormatter';
+import { usePokerSettings } from '../../../store/PokerSettings/usePokerSettings';
+import DisabledTooltip from '../../../components/shared/DisabledTooltip/DisabledTooltip';
 
 const CentralPanel = () => {
 	const {
@@ -24,9 +26,26 @@ const CentralPanel = () => {
 		isTournamentFinished,
 	} = useTimerSettings();
 
+	const { settings } = usePokerSettings();
+
 	const formatBlind = useBlindsFormatter();
 
 	const isBlind = currentLevel.type === 'blind';
+
+	const isPlayBtnDisabled =
+		isTournamentFinished || settings.playersIn <= 1 || settings.buyIns <= 1;
+
+	const getDisabledReason = () => {
+		if (isTournamentFinished) {
+			return 'Tournament is finished';
+		} else if (settings.buyIns <= 1) {
+			return 'Add at least 2 buy-ins to start';
+		} else if (settings.playersIn <= 1) {
+			return 'Add at least 2 players to start';
+		}
+
+		return '';
+	};
 
 	return (
 		<>
@@ -52,22 +71,37 @@ const CentralPanel = () => {
 				)}
 
 				<div className={styles.timerButtons}>
-					<Button onClick={previousLevel} disabled={isFirstLevel}>
-						<MdSkipPrevious />
-					</Button>
+					<DisabledTooltip
+						isDisabled={isFirstLevel}
+						text='Already at the first level'
+					>
+						<Button onClick={previousLevel} disabled={isFirstLevel}>
+							<MdSkipPrevious />
+						</Button>
+					</DisabledTooltip>
 					{isRunning ? (
 						<Button onClick={stopTimer}>
 							<MdPause />
 						</Button>
 					) : (
-						<Button onClick={startTimer} disabled={isTournamentFinished}>
-							<MdPlayArrow />
-						</Button>
+						<DisabledTooltip
+							isDisabled={isPlayBtnDisabled}
+							text={getDisabledReason()}
+						>
+							<Button onClick={startTimer} disabled={isPlayBtnDisabled}>
+								<MdPlayArrow />
+							</Button>
+						</DisabledTooltip>
 					)}
 
-					<Button onClick={nextLevel} disabled={isLastLevel}>
-						<MdSkipNext />
-					</Button>
+					<DisabledTooltip
+						isDisabled={isLastLevel}
+						text='Already at the last level'
+					>
+						<Button onClick={nextLevel} disabled={isLastLevel}>
+							<MdSkipNext />
+						</Button>
+					</DisabledTooltip>
 				</div>
 				<SettingsButtons />
 			</div>
