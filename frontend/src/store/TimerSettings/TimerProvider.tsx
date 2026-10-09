@@ -241,8 +241,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	const loadLevelsFromBackend = (savedLevels: SavedTournamentLevel[]) => {
-		restartTournament();
-
 		const formattedLevels: Level[] = savedLevels.map((level) => {
 			const id = crypto.randomUUID();
 

@@ -12,8 +12,8 @@ type LoadTournamentButtonProps = {
 };
 
 const LoadTournamentButton = ({ tournament }: LoadTournamentButtonProps) => {
-	const { loadSettingsFromBackend } = usePokerSettings();
-	const { loadLevelsFromBackend } = useTimerSettings();
+	const { loadSettingsFromBackend, restartPokerSettings } = usePokerSettings();
+	const { loadLevelsFromBackend, restartTournament } = useTimerSettings();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const openModal = () => {
@@ -27,6 +27,9 @@ const LoadTournamentButton = ({ tournament }: LoadTournamentButtonProps) => {
 	const navigate = useNavigate();
 
 	const loadSettings = () => {
+		restartPokerSettings();
+		restartTournament();
+
 		loadSettingsFromBackend(tournament);
 		loadLevelsFromBackend(tournament.levels);
 		navigate('/');
