@@ -6,7 +6,7 @@ export type Rake = {
 export type Addon = {
 	enabled: boolean;
 	value: number;
-	count: boolean;
+	count: number;
 };
 
 export type SavedTournamentLevel = {
