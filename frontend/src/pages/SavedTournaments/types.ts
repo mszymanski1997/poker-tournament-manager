@@ -15,6 +15,7 @@ export type SavedTournamentLevel = {
 	bigBlind?: number;
 	smallBlind?: number;
 	ante?: number;
+	id?: string;
 };
 
 export type SavedTournament = {
@@ -22,9 +23,9 @@ export type SavedTournament = {
 	buyIn: number;
 	startingStack: number;
 	currency: string;
-	owner: string;
-	_id: string;
-	rake: Rake;
-	addons: Addon;
+	owner?: string;
+	_id?: string;
+	rake?: Rake;
+	addons?: Addon;
 	levels: SavedTournamentLevel[];
 };
