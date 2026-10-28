@@ -65,6 +65,7 @@ const TopSettingsSection = () => {
 				/>
 
 				<CurrencySelect
+					isWorkingWithBackend={false}
 					label='Choose currency'
 					onChange={(e) => updateCurrency(e.target.value as Currency)}
 					value={currency}

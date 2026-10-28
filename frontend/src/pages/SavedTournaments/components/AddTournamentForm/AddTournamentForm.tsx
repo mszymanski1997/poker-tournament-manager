@@ -2,8 +2,11 @@ import styles from '../../../../components/shared/Form/Form.module.scss';
 import Button from '../../../../components/shared/Button/Button';
 import TopSettings from './TopSettings';
 import BottomSettings from './BottomSettings';
+import { useSavedTournament } from '../../store/useSavedTournament';
 
 const AddTournamentForm = () => {
+	const { showSavedTournament } = useSavedTournament();
+
 	return (
 		<div className={styles.container}>
 			<form className={styles.form} noValidate>
@@ -20,7 +23,7 @@ const AddTournamentForm = () => {
 
 					<Button size='big'>Add Break</Button>
 
-					<Button size='big' type='submit'>
+					<Button size='big' onClick={showSavedTournament}>
 						Save
 					</Button>
 				</div>

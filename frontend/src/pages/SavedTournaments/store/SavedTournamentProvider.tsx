@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { SavedTournament } from '../types';
+import type { TopSettingsType } from './types';
 import { useState } from 'react';
 import { SavedTournamentContext } from './SavedTournamentContext';
 
@@ -32,7 +33,7 @@ export const SavedTournamentProvider = ({
 				duration: 0,
 				id: crypto.randomUUID(),
 			},
-			{           
+			{
 				type: 'blind',
 				bigBlind: 0,
 				smallBlind: 0,
@@ -43,8 +44,26 @@ export const SavedTournamentProvider = ({
 		],
 	});
 
+	const updateOneSetting = (
+		setting: keyof TopSettingsType,
+		value: number | string,
+	) => {
+		setSavedTournament((prev) => {
+			return {
+				...prev,
+				[setting]: value,
+			};
+		});
+	};
+
+	const showSavedTournament = () => {
+		console.log(savedTournament);
+	};
+
 	return (
-		<SavedTournamentContext.Provider value={{ savedTournament }}>
+		<SavedTournamentContext.Provider
+			value={{ savedTournament, updateOneSetting, showSavedTournament }}
+		>
 			{children}
 		</SavedTournamentContext.Provider>
 	);
