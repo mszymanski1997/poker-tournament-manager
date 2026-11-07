@@ -16,8 +16,6 @@ export class AddonsSettings {
   enabled!: boolean;
   @Prop({ default: 0 })
   value!: number;
-  @Prop({ default: 0 })
-  count!: number;
 }
 
 export const AddonsSettingsSchema =

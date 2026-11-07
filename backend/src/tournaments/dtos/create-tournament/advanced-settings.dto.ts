@@ -20,9 +20,4 @@ export class AddonsDto {
   @IsNumber()
   @Min(1, { message: 'Value of addon must be more than 0' })
   value?: number;
-
-  @IsOptional()
-  @IsNumber()
-  @Min(0, { message: 'Addon count cannot be negative' })
-  count?: number;
 }
