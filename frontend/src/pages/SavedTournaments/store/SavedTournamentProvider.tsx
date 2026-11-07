@@ -56,13 +56,67 @@ export const SavedTournamentProvider = ({
 		});
 	};
 
+	const setRakeEnabled = () => {
+		setSavedTournament((prev) => {
+			return {
+				...prev,
+				rake: {
+					enabled: true,
+					value: 0,
+				},
+			};
+		});
+	};
+
+	const setAddonsEnabled = () => {
+		setSavedTournament((prev) => {
+			return {
+				...prev,
+				addons: {
+					enabled: true,
+					value: 0,
+				},
+			};
+		});
+	};
+
+	const setSettingDisabled = (setting: 'rake' | 'addons') => {
+		setSavedTournament((prev) => {
+			const updated = { ...prev };
+			delete updated[setting];
+			return updated;
+		});
+	};
+
+	const updateNestedSetting = (
+		group: 'rake' | 'addons',
+
+		value: number,
+	) => {
+		setSavedTournament((prev) => ({
+			...prev,
+			[group]: {
+				...prev[group],
+				value,
+			},
+		}));
+	};
+
 	const showSavedTournament = () => {
 		console.log(savedTournament);
 	};
 
 	return (
 		<SavedTournamentContext.Provider
-			value={{ savedTournament, updateOneSetting, showSavedTournament }}
+			value={{
+				savedTournament,
+				updateOneSetting,
+				showSavedTournament,
+				setRakeEnabled,
+				setAddonsEnabled,
+				setSettingDisabled,
+				updateNestedSetting,
+			}}
 		>
 			{children}
 		</SavedTournamentContext.Provider>

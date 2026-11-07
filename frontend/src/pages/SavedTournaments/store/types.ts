@@ -10,8 +10,18 @@ export type TopSettingsType = {
 export type SavedTournamentContextTypes = {
 	savedTournament: SavedTournament;
 	showSavedTournament: () => void;
+
 	updateOneSetting: (
 		setting: keyof TopSettingsType,
 		value: string | number,
 	) => void;
+
+	updateNestedSetting: (
+		group: 'rake' | 'addons',
+		value: number,
+	) => void;
+
+	setRakeEnabled: () => void;
+	setAddonsEnabled: () => void;
+	setSettingDisabled: (setting: 'addons' | 'rake') => void;
 };

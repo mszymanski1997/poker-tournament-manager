@@ -3,6 +3,7 @@ import Button from '../../../../components/shared/Button/Button';
 import TopSettings from './TopSettings';
 import BottomSettings from './BottomSettings';
 import { useSavedTournament } from '../../store/useSavedTournament';
+import AdvancedSettings from './AdvancedSettings';
 
 const AddTournamentForm = () => {
 	const { showSavedTournament } = useSavedTournament();
@@ -13,6 +14,8 @@ const AddTournamentForm = () => {
 				<h2 className={styles.title}>Save settings</h2>
 
 				<TopSettings />
+
+				<AdvancedSettings />
 
 				<h2 className={styles.subtitle}>Blinds Settings</h2>
 
