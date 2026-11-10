@@ -88,11 +88,7 @@ export const SavedTournamentProvider = ({
 		});
 	};
 
-	const updateNestedSetting = (
-		group: 'rake' | 'addons',
-
-		value: number,
-	) => {
+	const updateNestedSetting = (group: 'rake' | 'addons', value: number) => {
 		setSavedTournament((prev) => ({
 			...prev,
 			[group]: {
@@ -100,6 +96,41 @@ export const SavedTournamentProvider = ({
 				value,
 			},
 		}));
+	};
+
+	const addNewLevel = (type: 'break' | 'blind') => {
+		let newLevel;
+
+		if (type === 'break') {
+			newLevel = {
+				type: 'break' as const,
+				duration: 0,
+				id: crypto.randomUUID(),
+			};
+		} else {
+			newLevel = {
+				type: 'blind' as const,
+				bigBlind: 0,
+				smallBlind: 0,
+				ante: 0,
+				duration: 0,
+				id: crypto.randomUUID(),
+			};
+		}
+
+		setSavedTournament((prev) => ({
+			...prev,
+			levels: [...prev.levels, newLevel],
+		}));
+	};
+
+	const removeLevel = (id: string) => {
+		setSavedTournament((prev) => {
+			return {
+				...prev,
+				levels: [...prev.levels.filter((level) => level.id !== id)],
+			};
+		});
 	};
 
 	const showSavedTournament = () => {
@@ -116,6 +147,8 @@ export const SavedTournamentProvider = ({
 				setAddonsEnabled,
 				setSettingDisabled,
 				updateNestedSetting,
+				addNewLevel,
+				removeLevel,
 			}}
 		>
 			{children}

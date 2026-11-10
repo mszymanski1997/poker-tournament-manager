@@ -16,12 +16,12 @@ export type SavedTournamentContextTypes = {
 		value: string | number,
 	) => void;
 
-	updateNestedSetting: (
-		group: 'rake' | 'addons',
-		value: number,
-	) => void;
+	updateNestedSetting: (group: 'rake' | 'addons', value: number) => void;
 
 	setRakeEnabled: () => void;
 	setAddonsEnabled: () => void;
 	setSettingDisabled: (setting: 'addons' | 'rake') => void;
+
+	addNewLevel: (type: 'break' | 'blind') => void;
+	removeLevel: (id: string) => void;
 };

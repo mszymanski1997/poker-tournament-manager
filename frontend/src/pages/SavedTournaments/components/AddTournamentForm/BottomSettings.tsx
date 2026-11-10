@@ -4,7 +4,7 @@ import Input from '../../../../components/shared/FormElements/Input';
 import { useSavedTournament } from '../../store/useSavedTournament';
 
 const BottomSettings = () => {
-	const { savedTournament } = useSavedTournament();
+	const { savedTournament, removeLevel } = useSavedTournament();
 
 	return (
 		<>
@@ -24,7 +24,12 @@ const BottomSettings = () => {
 								<Input label='Ante:' />
 								<Input label='Duration:' />
 							</div>
-							<Button className={styles.xButton}>X</Button>
+							<Button
+								className={styles.xButton}
+								onClick={() => removeLevel(level.id as string)}
+							>
+								X
+							</Button>
 						</div>
 					);
 				}
@@ -36,7 +41,12 @@ const BottomSettings = () => {
 						id={`settings-${level.id}`}
 					>
 						<Input label='Break Duration:' />
-						<Button className={styles.xButton}>X</Button>
+						<Button
+							className={styles.xButton}
+							onClick={() => removeLevel(level.id as string)}
+						>
+							X
+						</Button>
 					</div>
 				);
 			})}

@@ -6,7 +6,7 @@ import { useSavedTournament } from '../../store/useSavedTournament';
 import AdvancedSettings from './AdvancedSettings';
 
 const AddTournamentForm = () => {
-	const { showSavedTournament } = useSavedTournament();
+	const { showSavedTournament, addNewLevel } = useSavedTournament();
 
 	return (
 		<div className={styles.container}>
@@ -22,9 +22,13 @@ const AddTournamentForm = () => {
 				<BottomSettings />
 
 				<div className={styles.buttons}>
-					<Button size='big'>Add Blind</Button>
+					<Button size='big' onClick={() => addNewLevel('blind')}>
+						Add Blind
+					</Button>
 
-					<Button size='big'>Add Break</Button>
+					<Button size='big' onClick={() => addNewLevel('break')}>
+						Add Break
+					</Button>
 
 					<Button size='big' onClick={showSavedTournament}>
 						Save
