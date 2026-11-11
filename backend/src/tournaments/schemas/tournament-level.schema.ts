@@ -6,6 +6,9 @@ export class Level {
   type!: 'blind' | 'break';
 
   @Prop({ required: true })
+  id!: string;
+
+  @Prop({ required: true })
   duration!: number;
 
   @Prop({ required: false })

@@ -1,4 +1,11 @@
-import { Min, IsOptional, IsEnum, IsNumber } from 'class-validator';
+import {
+  Min,
+  IsOptional,
+  IsEnum,
+  IsNumber,
+  IsString,
+  IsNotEmpty,
+} from 'class-validator';
 
 export enum LevelType {
   BLIND = 'blind',
@@ -12,6 +19,10 @@ export class TournamentLevelDto {
   @IsNumber()
   @Min(1, { message: 'The duration of the level must be at least 1 minute' })
   duration!: number;
+
+  @IsString()
+  @IsNotEmpty({ message: 'The ID is required' })
+  id!: string;
 
   @IsOptional()
   @IsNumber()
