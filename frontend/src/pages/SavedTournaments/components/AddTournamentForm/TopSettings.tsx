@@ -18,7 +18,7 @@ const TopSettings = () => {
 				<Input
 					label='Starting stack:'
 					id='startingStack'
-					onChange={(e) => updateOneSetting('startingStack', e.target.value)}
+					onChange={(e) => updateOneSetting('startingStack', +e.target.value)}
 				/>
 			</div>
 
@@ -26,7 +26,7 @@ const TopSettings = () => {
 				<Input
 					label='Buy-in-value:'
 					id='buyInValue'
-					onChange={(e) => updateOneSetting('buyIn', e.target.value)}
+					onChange={(e) => updateOneSetting('buyIn', +e.target.value)}
 				/>
 				<CurrencySelect
 					isWorkingWithBackend={true}
