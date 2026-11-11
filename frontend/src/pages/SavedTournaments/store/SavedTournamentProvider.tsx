@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { SavedTournament } from '../types';
+import type { SavedTournament, SavedTournamentLevel } from '../types';
 import type { TopSettingsType } from './types';
 import { useState } from 'react';
 import { SavedTournamentContext } from './SavedTournamentContext';
@@ -98,6 +98,23 @@ export const SavedTournamentProvider = ({
 		}));
 	};
 
+	const updateLevel = (
+		id: string,
+		key: keyof Omit<SavedTournamentLevel, 'id' | 'type'>,
+		value: number,
+	) => {
+		setSavedTournament((prev) => {
+			return {
+				...prev,
+				levels: [
+					...prev.levels.map((level) =>
+						level.id === id ? { ...level, [key]: value } : level,
+					),
+				],
+			};
+		});
+	};
+
 	const addNewLevel = (type: 'break' | 'blind') => {
 		let newLevel;
 
@@ -149,6 +166,7 @@ export const SavedTournamentProvider = ({
 				updateNestedSetting,
 				addNewLevel,
 				removeLevel,
+				updateLevel,
 			}}
 		>
 			{children}

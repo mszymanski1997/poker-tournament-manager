@@ -1,4 +1,4 @@
-import type { SavedTournament } from '../types';
+import type { SavedTournament, SavedTournamentLevel } from '../types';
 
 export type TopSettingsType = {
 	name: string;
@@ -17,6 +17,12 @@ export type SavedTournamentContextTypes = {
 	) => void;
 
 	updateNestedSetting: (group: 'rake' | 'addons', value: number) => void;
+
+	updateLevel: (
+		id: string,
+		key: keyof Omit<SavedTournamentLevel, 'id' | 'type'>,
+		value: number,
+	) => void;
 
 	setRakeEnabled: () => void;
 	setAddonsEnabled: () => void;

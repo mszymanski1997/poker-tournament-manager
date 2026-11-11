@@ -4,7 +4,7 @@ import Input from '../../../../components/shared/FormElements/Input';
 import { useSavedTournament } from '../../store/useSavedTournament';
 
 const BottomSettings = () => {
-	const { savedTournament, removeLevel } = useSavedTournament();
+	const { savedTournament, removeLevel, updateLevel } = useSavedTournament();
 
 	return (
 		<>
@@ -17,12 +17,36 @@ const BottomSettings = () => {
 							id={`settings-${level.id}`}
 						>
 							<div className={styles.fieldsRow}>
-								<Input label='Big Blind:' />
-								<Input label='Small Blind:' />
+								<Input
+									label='Big Blind:'
+									onChange={(e) =>
+										updateLevel(level.id as string, 'bigBlind', +e.target.value)
+									}
+								/>
+								<Input
+									label='Small Blind:'
+									onChange={(e) =>
+										updateLevel(
+											level.id as string,
+											'smallBlind',
+											+e.target.value,
+										)
+									}
+								/>
 							</div>
 							<div className={styles.fieldsRow}>
-								<Input label='Ante:' />
-								<Input label='Duration:' />
+								<Input
+									label='Ante:'
+									onChange={(e) =>
+										updateLevel(level.id as string, 'ante', +e.target.value)
+									}
+								/>
+								<Input
+									label='Duration:'
+									onChange={(e) =>
+										updateLevel(level.id as string, 'duration', +e.target.value)
+									}
+								/>
 							</div>
 							<Button
 								className={styles.xButton}
@@ -40,7 +64,12 @@ const BottomSettings = () => {
 						key={level.id}
 						id={`settings-${level.id}`}
 					>
-						<Input label='Break Duration:' />
+						<Input
+							label='Break Duration:'
+							onChange={(e) =>
+								updateLevel(level.id as string, 'duration', +e.target.value)
+							}
+						/>
 						<Button
 							className={styles.xButton}
 							onClick={() => removeLevel(level.id as string)}
