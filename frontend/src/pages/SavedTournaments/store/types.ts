@@ -1,4 +1,8 @@
-import type { SavedTournament, SavedTournamentLevel } from '../types';
+import type {
+	SavedTournament,
+	SavedTournamentLevel,
+	TournamentFormErros,
+} from '../types';
 
 export type TopSettingsType = {
 	name: string;
@@ -30,4 +34,7 @@ export type SavedTournamentContextTypes = {
 
 	addNewLevel: (type: 'break' | 'blind') => void;
 	removeLevel: (id: string) => void;
+
+	addTournamentFormErrors: TournamentFormErros;
+	setErrors: (errors: TournamentFormErros) => void;
 };

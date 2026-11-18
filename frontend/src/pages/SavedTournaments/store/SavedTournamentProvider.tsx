@@ -1,5 +1,9 @@
 import type { ReactNode } from 'react';
-import type { SavedTournament, SavedTournamentLevel } from '../types';
+import type {
+	SavedTournament,
+	SavedTournamentLevel,
+	TournamentFormErros,
+} from '../types';
 import type { TopSettingsType } from './types';
 import { useState } from 'react';
 import { SavedTournamentContext } from './SavedTournamentContext';
@@ -43,6 +47,13 @@ export const SavedTournamentProvider = ({
 			},
 		],
 	});
+
+	const [addTournamentFormErrors, setAddTournamentFormErrors] =
+		useState<TournamentFormErros>({});
+
+	const setErrors = (errors: TournamentFormErros) => {
+		setAddTournamentFormErrors(errors);
+	};
 
 	const updateOneSetting = (
 		setting: keyof TopSettingsType,
@@ -167,6 +178,8 @@ export const SavedTournamentProvider = ({
 				addNewLevel,
 				removeLevel,
 				updateLevel,
+				addTournamentFormErrors,
+				setErrors,
 			}}
 		>
 			{children}
